@@ -46,7 +46,7 @@ public class AllItemsActivity extends AppCompatActivity {
         public TextView mNameTextView;
         public ProductHolder(View itemView){
             super(itemView);
-            mNameTextView = (TextView)itemView;
+            mNameTextView = (TextView)itemView.findViewById(R.id.tvProductName);
         }
 
     }
@@ -62,8 +62,8 @@ public class AllItemsActivity extends AppCompatActivity {
         @Override
         public ProductHolder onCreateViewHolder(ViewGroup parent,int viewType){
             LayoutInflater layoutInflater = LayoutInflater.from(getBaseContext());
-            //View view = layoutInflater.inflate(R.layout.product_list_item,parent,false);
-            View view = layoutInflater.inflate(android.R.layout.simple_list_item_1,parent,false);
+            View view = layoutInflater.inflate(R.layout.product_list_item,parent,false);
+            //View view = layoutInflater.inflate(android.R.layout.simple_list_item_1,parent,false);
             return new ProductHolder(view);
         }
 
