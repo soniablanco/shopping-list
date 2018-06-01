@@ -9,6 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.UpdateManager;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class AllItemsActivity extends AppCompatActivity {
@@ -16,6 +26,17 @@ public class AllItemsActivity extends AppCompatActivity {
     private RecyclerView mProductsRecyclerView;
     private ProductListAdapter mAdapter;
 
+    // Define the products Firebase DatabaseReference
+    private DatabaseReference productsDB;
+
+    // Define a String ArrayList for the teachers
+    //private ArrayList<String> teachersList = new ArrayList<>();
+
+    // Define a ListView to display the data
+    //private ListView listViewTeachers;
+
+    // Define an ArrayAdapter for the list
+    //private ArrayAdapter<String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +52,74 @@ public class AllItemsActivity extends AppCompatActivity {
         // use a linear layout manager
         mProductsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        productsDB = FirebaseDatabase.getInstance().getReference();
+        productsDB = productsDB.child("allproducts");
+
         updateUI();
+
+        //HockeyApp
+        checkForUpdates();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkForCrashes();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterManagers();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterManagers();
     }
 
     private void updateUI(){
-        ProductListItemsTestData data = ProductListItemsTestData.get(this);
-        List<ProductListItem> productList = data.getProductListItems();
+        //ProductListItemsTestData data = ProductListItemsTestData.get(this);
+        final List<ProductListItem> productList = new ArrayList<>();//data.getProductListItems();
 
         mAdapter = new ProductListAdapter(productList);
         mProductsRecyclerView.setAdapter(mAdapter);
+
+        productsDB.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                // Get the value from the DataSnapshot and add it to the products' list
+                Product product = dataSnapshot.getValue(Product.class);
+                ProductListItem productItem = new ProductListItem();
+                productItem.setName(product.name);
+                productList.add(productItem);
+
+                // Notify the ArrayAdapter that there was a change
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private class ProductHolder extends RecyclerView.ViewHolder{
@@ -76,5 +156,18 @@ public class AllItemsActivity extends AppCompatActivity {
         public int getItemCount(){
             return mProductList.size();
         }
+    }
+
+    private void checkForCrashes() {
+        CrashManager.register(this);
+    }
+
+    private void checkForUpdates() {
+        // Remove this for store builds!
+        UpdateManager.register(this);
+    }
+
+    private void unregisterManagers() {
+        UpdateManager.unregister();
     }
 }
