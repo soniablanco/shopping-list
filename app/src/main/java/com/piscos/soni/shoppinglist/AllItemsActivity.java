@@ -1,5 +1,9 @@
 package com.piscos.soni.shoppinglist;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,7 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +86,7 @@ public class AllItemsActivity extends AppCompatActivity {
         unregisterManagers();
     }
 
-    private void updateUI(){
+    private void updateUI() {
         //ProductListItemsTestData data = ProductListItemsTestData.get(this);
         final List<ProductListItem> productList = new ArrayList<>();//data.getProductListItems();
 
@@ -94,6 +101,7 @@ public class AllItemsActivity extends AppCompatActivity {
                 Product product = dataSnapshot.getValue(Product.class);
                 ProductListItem productItem = new ProductListItem();
                 productItem.setName(product.name);
+                productItem.setCode(product.code);
                 productList.add(productItem);
 
                 // Notify the ArrayAdapter that there was a change
@@ -122,11 +130,34 @@ public class AllItemsActivity extends AppCompatActivity {
         });
     }
 
+    public File getPhotoFile(ProductListItem product){
+        File externalFilesDir = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if(externalFilesDir == null){
+            return null;
+        }
+        return new File(externalFilesDir,product.getCode());
+    }
+
     private class ProductHolder extends RecyclerView.ViewHolder{
         public TextView mNameTextView;
+        public ImageView mPhotoView;
+        private ProductListItem mModel;
         public ProductHolder(View itemView){
             super(itemView);
             mNameTextView = (TextView)itemView.findViewById(R.id.tvProductName);
+            mPhotoView = (ImageView)itemView.findViewById(R.id.imPhotoView);
+
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    final Intent captureImage = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
+                    captureImage.putExtra(MediaStore.EXTRA_OUTPUT,getPhotoFile(mModel));
+                    startActivityForResult(captureImage,2);
+                    //Toast.makeText(v.getContext(), "Position is " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            });
         }
 
     }
@@ -150,6 +181,7 @@ public class AllItemsActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ProductHolder holder,int position){
             ProductListItem item = mProductList.get(position);
+            holder.mModel = item;
             holder.mNameTextView.setText(item.getName());
         }
         @Override

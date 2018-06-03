@@ -10,4 +10,15 @@ public class ProductListItem {
     public void setName(String mName) {
         this.mName = mName;
     }
+
+    private String mCode;
+
+    public String getCode() {
+        return mCode;
+    }
+
+    public void setCode(String mCode) {
+        this.mCode = mCode;
+    }
+
 }
