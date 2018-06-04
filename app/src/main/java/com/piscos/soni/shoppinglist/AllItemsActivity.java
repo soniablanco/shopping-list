@@ -1,5 +1,6 @@
 package com.piscos.soni.shoppinglist;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
@@ -148,6 +149,24 @@ public class AllItemsActivity extends AppCompatActivity {
     return uri;
     }
     public static final int PHOTO_CAPTURE = 102;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PHOTO_CAPTURE) {
+            Context context = getApplicationContext();
+            CharSequence text;
+            int duration = Toast.LENGTH_SHORT;
+
+            if (resultCode == RESULT_OK) {
+                text = "OK";
+            }
+            else{
+                text = "Oh NO";
+            }
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+    }
     private class ProductHolder extends RecyclerView.ViewHolder{
         public TextView mNameTextView;
         public ImageView mPhotoView;
@@ -167,12 +186,13 @@ public class AllItemsActivity extends AppCompatActivity {
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoURI(mModel));
                     AllItemsActivity.this.startActivityForResult(intent, PHOTO_CAPTURE);
 
-                    return  false;
+                    return  true;
                 }
             });
         }
 
     }
+
 
     private class ProductListAdapter extends RecyclerView.Adapter<ProductHolder>{
 
