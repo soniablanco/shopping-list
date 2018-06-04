@@ -18,6 +18,16 @@
             </intent-filter>
         </activity>
         <meta-data android:name="net.hockeyapp.android.appIdentifier" android:value="${HOCKEYAPP_APP_ID}" />
+
+
+        <provider android:name="android.support.v4.content.FileProvider" android:authorities="com.piscos.soni.shoppinglist"   android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/paths"/>
+        </provider>
+
+
     </application>
 
 </manifest>
