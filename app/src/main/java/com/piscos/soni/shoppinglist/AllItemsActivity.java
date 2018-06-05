@@ -179,11 +179,13 @@ public class AllItemsActivity extends AppCompatActivity {
     }
 
     public void uploadPhoto(Uri fileUri) {
+        List<String> path = fileUri.getPathSegments();
+        String name = path.get(path.size()-1);
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://shopping-list-123.appspot.com/");
 
         StorageReference storageRef = storage.getReference();
 
-        StorageReference photoRemoteRef = storageRef.child("mountains.jpg");
+        StorageReference photoRemoteRef = storageRef.child(name);
 
         /*Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
         StorageReference riversRef = storageRef.child("images/"+file.getLastPathSegment());*/
