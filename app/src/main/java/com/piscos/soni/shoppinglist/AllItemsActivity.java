@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,11 +18,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
@@ -149,6 +155,7 @@ public class AllItemsActivity extends AppCompatActivity {
     return uri;
     }
     public static final int PHOTO_CAPTURE = 102;
+    private Uri freshlyUploadedPhotoPath;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -159,6 +166,9 @@ public class AllItemsActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
                 text = "OK";
+                Uri photoUri = freshlyUploadedPhotoPath;
+                freshlyUploadedPhotoPath = null;
+                uploadPhoto(photoUri);
             }
             else{
                 text = "Oh NO";
@@ -167,6 +177,40 @@ public class AllItemsActivity extends AppCompatActivity {
             toast.show();
         }
     }
+
+    public void uploadPhoto(Uri fileUri) {
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://shopping-list-123.appspot.com/");
+
+        StorageReference storageRef = storage.getReference();
+
+        StorageReference photoRemoteRef = storageRef.child("mountains.jpg");
+
+        /*Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
+        StorageReference riversRef = storageRef.child("images/"+file.getLastPathSegment());*/
+
+        UploadTask uploadTask = photoRemoteRef.putFile(fileUri);
+
+        // Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+              int j=3;
+              j=j+1;
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Context context = getApplicationContext();
+                CharSequence text = "Yahoo";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+            }
+        });
+    }
+
     private class ProductHolder extends RecyclerView.ViewHolder{
         public TextView mNameTextView;
         public ImageView mPhotoView;
@@ -183,7 +227,8 @@ public class AllItemsActivity extends AppCompatActivity {
 
 
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, getPhotoURI(mModel));
+                    freshlyUploadedPhotoPath = getPhotoURI(mModel);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT,freshlyUploadedPhotoPath );
                     AllItemsActivity.this.startActivityForResult(intent, PHOTO_CAPTURE);
 
                     return  true;
