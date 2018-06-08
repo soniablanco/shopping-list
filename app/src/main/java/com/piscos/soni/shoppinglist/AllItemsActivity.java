@@ -2,6 +2,7 @@ package com.piscos.soni.shoppinglist;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -28,11 +29,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,6 +114,7 @@ public class AllItemsActivity extends AppCompatActivity {
                 ProductListItem productItem = new ProductListItem();
                 productItem.setName(product.name);
                 productItem.setCode(product.code);
+                productItem.mPhotoUrl = product.photoUrl;
                 productList.add(productItem);
 
                 // Notify the ArrayAdapter that there was a change
@@ -118,7 +123,8 @@ public class AllItemsActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                int o =1;
+                o++;
             }
 
             @Override
@@ -167,14 +173,41 @@ public class AllItemsActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 text = "OK";
                 Uri photoUri = freshlyUploadedPhotoPath;
-                freshlyUploadedPhotoPath = null;
-                uploadPhoto(photoUri);
+                //freshlyUploadedPhotoPath = null;
+                //uploadPhoto(photoUri);
+                // start cropping activity for pre-acquired image saved on the device
+                CropImage.activity(photoUri).setOutputUri(photoUri).setAspectRatio(10,10).setFixAspectRatio(true)
+                        .start(AllItemsActivity.this);
             }
             else{
                 text = "Oh NO";
             }
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+        }
+        else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+
+            Toast toast = Toast.makeText(getApplicationContext(), "Cropping", Toast.LENGTH_SHORT);
+            toast.show();
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+                uploadPhoto(freshlyUploadedPhotoPath);
+               /* File auxFile = new File(resultUri.getPath());
+                if (auxFile != null) {
+                    FileOutputStream fout;
+                    try {
+                        fout = new FileOutputStream(auxFile);
+                        currentImage.compress(Bitmap.CompressFormat.PNG, 70, fout);
+                        fout.flush();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Uri uri=Uri.fromFile(file);
+                }*/
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
         }
     }
 
@@ -233,6 +266,14 @@ public class AllItemsActivity extends AppCompatActivity {
                     intent.putExtra(MediaStore.EXTRA_OUTPUT,freshlyUploadedPhotoPath );
                     AllItemsActivity.this.startActivityForResult(intent, PHOTO_CAPTURE);
 
+                    // start picker to get image for cropping and then use the image in cropping activity
+                    /*CropImage.activity()
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .start(AllItemsActivity.this);*/
+
+
+
+
                     return  true;
                 }
             });
@@ -260,8 +301,16 @@ public class AllItemsActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ProductHolder holder,int position){
             ProductListItem item = mProductList.get(position);
+
             holder.mModel = item;
             holder.mNameTextView.setText(item.getName());
+            if (item.mPhoto!=null){
+                    holder.mPhotoView.setImageBitmap(item.mPhoto);
+            }
+            else{
+                holder.mPhotoView.setImageBitmap(null);
+                item.Download();
+            }
         }
         @Override
         public int getItemCount(){

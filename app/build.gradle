@@ -6,7 +6,7 @@ android {
         applicationId "com.piscos.soni.shoppinglist"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 6
+        versionCode 7
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [HOCKEYAPP_APP_ID: "d191dcb438714d0c91d43e2adaf01da6"]
@@ -31,6 +31,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'net.hockeyapp.android:HockeySDK:5.1.0'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
 }
 
 apply plugin: 'com.google.gms.google-services'
