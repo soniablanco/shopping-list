@@ -38,6 +38,7 @@ import net.hockeyapp.android.UpdateManager;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AllItemsActivity extends AppCompatActivity {
@@ -214,11 +215,16 @@ public class AllItemsActivity extends AppCompatActivity {
     public void uploadPhoto(Uri fileUri) {
         List<String> path = fileUri.getPathSegments();
         String name = path.get(path.size()-1);
+
+        String[] f = name.split("\\.");
+        List<String> itemList = new ArrayList<String>(Arrays.asList(f));
+        String folder = itemList.get(0);
+
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://shopping-list-123.appspot.com/");
 
         StorageReference storageRef = storage.getReference();
 
-        StorageReference photoRemoteRef = storageRef.child(name);
+        StorageReference photoRemoteRef = storageRef.child(folder+"/"+name);
 
         /*Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
         StorageReference riversRef = storageRef.child("images/"+file.getLastPathSegment());*/

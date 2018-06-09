@@ -42,7 +42,12 @@ public class ProductListItem {
             String[] items = mPhotoUrl.split("/");
             List<String> itemList = new ArrayList<String>(Arrays.asList(items));
 
-            StorageReference islandRef = storageRef.child(itemList.get(itemList.size()-1));
+            String name = itemList.get(itemList.size()-1);
+            String[] f = name.split("\\.");
+            List<String> itemsList = new ArrayList<String>(Arrays.asList(f));
+            String folder = itemsList.get(0);
+
+            StorageReference islandRef = storageRef.child(folder+"/"+name);
 
             final long ONE_MEGABYTE = 10240 * 10240;
             islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
