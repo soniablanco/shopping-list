@@ -9,3 +9,4 @@
 /captures
 .externalNativeBuild
 .idea/
+FirebaseFunctions/functions/node_modules/
