@@ -25,6 +25,7 @@ public class ProductListItem {
     }
 
     private String mCode;
+    public  DownloadListener mListener;
 
     public String getCode() {
         return mCode;
@@ -37,7 +38,9 @@ public class ProductListItem {
     public void  Download(){
         if(mPhotoUrl != null && mPhotoUrl!= "") {
             FirebaseStorage storage = FirebaseStorage.getInstance("gs://shopping-list-123.appspot.com/");
-            StorageReference storageRef = storage.getReference();
+            StorageReference storageRef = storage.getReference(mPhotoUrl);
+
+
 
             String[] items = mPhotoUrl.split("/");
             List<String> itemList = new ArrayList<String>(Arrays.asList(items));
@@ -47,18 +50,21 @@ public class ProductListItem {
             List<String> itemsList = new ArrayList<String>(Arrays.asList(f));
             String folder = itemsList.get(0);
 
-            StorageReference islandRef = storageRef.child(folder+"/"+name);
+            //StorageReference islandRef = storageRef.child(folder+"/"+name);
 
             final long ONE_MEGABYTE = 10240 * 10240;
-            islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {
                     mPhoto = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    mListener.onSuccess(ProductListItem.this);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
                     // Handle any errors
+                    int j =1;
+                    j++;
                 }
             });
         }

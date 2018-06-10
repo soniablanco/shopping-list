@@ -11,7 +11,11 @@
   },
   "dependencies": {
     "firebase-admin": "~5.12.1",
-    "firebase-functions": "^1.0.3"
+    "firebase-functions": "^1.0.3",
+    "@google-cloud/storage": "^0.4.0",
+    "child-process-promise": "^2.2.0",
+    "mkdirp": "^0.5.1",
+    "mkdirp-promise": "^4.0.0"
   },
   "devDependencies": {
     "eslint": "^4.12.0",

@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.DownloadListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,8 +38,10 @@ import net.hockeyapp.android.UpdateManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class AllItemsActivity extends AppCompatActivity {
@@ -99,7 +102,7 @@ public class AllItemsActivity extends AppCompatActivity {
         unregisterManagers();
     }
 
-    private void updateUI() {
+    public void updateUI() {
         //ProductListItemsTestData data = ProductListItemsTestData.get(this);
         final List<ProductListItem> productList = new ArrayList<>();//data.getProductListItems();
 
@@ -115,7 +118,7 @@ public class AllItemsActivity extends AppCompatActivity {
                 ProductListItem productItem = new ProductListItem();
                 productItem.setName(product.name);
                 productItem.setCode(product.code);
-                productItem.mPhotoUrl = product.photoUrl;
+                productItem.mPhotoUrl = product.thumbnailUrl;
                 productList.add(productItem);
 
                 // Notify the ArrayAdapter that there was a change
@@ -214,11 +217,11 @@ public class AllItemsActivity extends AppCompatActivity {
 
     public void uploadPhoto(Uri fileUri) {
         List<String> path = fileUri.getPathSegments();
-        String name = path.get(path.size()-1);
+        final String name = path.get(path.size()-1);
 
         String[] f = name.split("\\.");
         List<String> itemList = new ArrayList<String>(Arrays.asList(f));
-        String folder = itemList.get(0);
+        final String folder = itemList.get(0);
 
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://shopping-list-123.appspot.com/");
 
@@ -241,11 +244,26 @@ public class AllItemsActivity extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                String url = folder+"/"+name;
+                String thumbnailUrl =  folder+"/thumbnail_"+name;
+
+                DatabaseReference urlDR = FirebaseDatabase.getInstance().getReference("allproducts"+"/"+ folder + "/photoUrl");
+                urlDR.setValue(url);
+
+                DatabaseReference thumbUrlDR = FirebaseDatabase.getInstance().getReference("allproducts"+"/"+ folder + "/thumbnailUrl");
+                thumbUrlDR.setValue(thumbnailUrl);
+
+                DatabaseReference tsDR = FirebaseDatabase.getInstance().getReference("allproducts"+"/"+ folder + "/photoTimeStamp");
+                Date ts = new Date();
+                tsDR.setValue(ts.getTime());
+
                 Context context = getApplicationContext();
                 CharSequence text = "Yahoo";
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+                AllItemsActivity.this.updateUI();
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                 // ...
             }
@@ -266,19 +284,10 @@ public class AllItemsActivity extends AppCompatActivity {
                 @Override
                 public boolean onLongClick(View v) {
 
-
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     freshlyUploadedPhotoPath = getPhotoURI(mModel);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT,freshlyUploadedPhotoPath );
                     AllItemsActivity.this.startActivityForResult(intent, PHOTO_CAPTURE);
-
-                    // start picker to get image for cropping and then use the image in cropping activity
-                    /*CropImage.activity()
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .start(AllItemsActivity.this);*/
-
-
-
 
                     return  true;
                 }
@@ -305,11 +314,23 @@ public class AllItemsActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(ProductHolder holder,int position){
-            ProductListItem item = mProductList.get(position);
+        public void onBindViewHolder(final ProductHolder holder,int position){
+            final ProductListItem item = mProductList.get(position);
 
             holder.mModel = item;
             holder.mNameTextView.setText(item.getName());
+            final com.piscos.soni.shoppinglist.DownloadListener downloadListener=new com.piscos.soni.shoppinglist.DownloadListener(){
+
+                @Override
+                public void onSuccess(ProductListItem productListItem) {
+                    if (productListItem==item) {
+                        if (item.mPhoto != null) {
+                            holder.mPhotoView.setImageBitmap(item.mPhoto);
+                        }
+                    }
+                }
+            };
+            holder.mModel.mListener=downloadListener;
             if (item.mPhoto!=null){
                     holder.mPhotoView.setImageBitmap(item.mPhoto);
             }
