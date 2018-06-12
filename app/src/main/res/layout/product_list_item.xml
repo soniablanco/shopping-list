@@ -8,12 +8,12 @@
 
     <ImageView
         android:id="@+id/imPhotoView"
-        android:layout_width="57dp"
-        android:layout_height="57dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         android:visibility="visible"
 
@@ -22,8 +22,8 @@
 
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:color/holo_red_dark"
-        tools:layout_height="50dp"
-        tools:layout_width="50dp" />
+        tools:layout_height="80dp"
+        tools:layout_width="80dp" />
 
     <TextView
         android:id="@+id/tvProductName"
