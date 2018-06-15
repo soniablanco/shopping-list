@@ -35,6 +35,16 @@ public class ProductListItem {
         this.mCode = mCode;
     }
 
+    public ProductListItem(){
+
+    }
+
+    public ProductListItem(String name, String code, String photoUrl){
+        this.mName = name;
+        this.mCode = code;
+        this.mPhotoUrl = photoUrl;
+    }
+
     public void  Download(){
         if(mPhotoUrl != null && mPhotoUrl!= "") {
             FirebaseStorage storage = FirebaseStorage.getInstance("gs://shopping-list-123.appspot.com/");

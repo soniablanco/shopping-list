@@ -37,8 +37,6 @@ import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -50,16 +48,10 @@ public class AllItemsActivity extends AppCompatActivity {
     private ProductListAdapter mAdapter;
 
     // Define the products Firebase DatabaseReference
-    private DatabaseReference productsDB;
+    //private DatabaseReference productsDB;
 
-    // Define a String ArrayList for the teachers
-    //private ArrayList<String> teachersList = new ArrayList<>();
+    private ProductsData productsData;
 
-    // Define a ListView to display the data
-    //private ListView listViewTeachers;
-
-    // Define an ArrayAdapter for the list
-    //private ArrayAdapter<String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +67,10 @@ public class AllItemsActivity extends AppCompatActivity {
         // use a linear layout manager
         mProductsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        productsDB = FirebaseDatabase.getInstance().getReference();
-        productsDB = productsDB.child("allproducts");
+        /*productsDB = FirebaseDatabase.getInstance().getReference();
+        productsDB = productsDB.child("allproducts");*/
+
+        productsData = new ProductsData();
 
         updateUI();
 
@@ -103,22 +97,24 @@ public class AllItemsActivity extends AppCompatActivity {
     }
 
     public void updateUI() {
-        //ProductListItemsTestData data = ProductListItemsTestData.get(this);
-        final List<ProductListItem> productList = new ArrayList<>();//data.getProductListItems();
 
-        mAdapter = new ProductListAdapter(productList);
-        mProductsRecyclerView.setAdapter(mAdapter);
+        productsData.FetchProducts(new OnAllProductsDownloadedListener() {
+            @Override
+            public void onReady(List<ProductListItem> products) {
+                mAdapter = new ProductListAdapter(products);
+                mProductsRecyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
 
-        productsDB.addChildEventListener(new ChildEventListener() {
+
+       /* productsDB.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 // Get the value from the DataSnapshot and add it to the products' list
                 Product product = dataSnapshot.getValue(Product.class);
-                ProductListItem productItem = new ProductListItem();
-                productItem.setName(product.name);
-                productItem.setCode(product.code);
-                productItem.mPhotoUrl = product.thumbnailUrl;
+                ProductListItem productItem = new ProductListItem(product.name,product.code,product.thumbnailUrl);
                 productList.add(productItem);
 
                 // Notify the ArrayAdapter that there was a change
@@ -145,7 +141,7 @@ public class AllItemsActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
     }
 
     public Uri getPhotoURI(ProductListItem product){
@@ -162,7 +158,7 @@ public class AllItemsActivity extends AppCompatActivity {
         String targetFileAbsPath = this.getFilesDir()+"/"+uniqueMediaFolderRelPath;
         File file = new File(targetFileAbsPath);
         Uri uri = FileProvider.getUriForFile(this, "com.piscos.soni.shoppinglist", file);
-    return uri;
+        return uri;
     }
     public static final int PHOTO_CAPTURE = 102;
     private Uri freshlyUploadedPhotoPath;
@@ -170,15 +166,11 @@ public class AllItemsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PHOTO_CAPTURE) {
-            Context context = getApplicationContext();
             CharSequence text;
-            int duration = Toast.LENGTH_SHORT;
 
             if (resultCode == RESULT_OK) {
                 text = "OK";
                 Uri photoUri = freshlyUploadedPhotoPath;
-                //freshlyUploadedPhotoPath = null;
-                //uploadPhoto(photoUri);
                 // start cropping activity for pre-acquired image saved on the device
                 CropImage.activity(photoUri).setOutputUri(photoUri).setAspectRatio(10,10).setFixAspectRatio(true)
                         .start(AllItemsActivity.this);
@@ -186,7 +178,7 @@ public class AllItemsActivity extends AppCompatActivity {
             else{
                 text = "Oh NO";
             }
-            Toast toast = Toast.makeText(context, text, duration);
+            Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
             toast.show();
         }
         else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -197,24 +189,13 @@ public class AllItemsActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
                 uploadPhoto(freshlyUploadedPhotoPath);
-               /* File auxFile = new File(resultUri.getPath());
-                if (auxFile != null) {
-                    FileOutputStream fout;
-                    try {
-                        fout = new FileOutputStream(auxFile);
-                        currentImage.compress(Bitmap.CompressFormat.PNG, 70, fout);
-                        fout.flush();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    Uri uri=Uri.fromFile(file);
-                }*/
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
         }
     }
 
+    public static final String FIREBASE_BUCKET = "gs://shopping-list-123.appspot.com/";
     public void uploadPhoto(Uri fileUri) {
         List<String> path = fileUri.getPathSegments();
         final String name = path.get(path.size()-1);
@@ -223,23 +204,16 @@ public class AllItemsActivity extends AppCompatActivity {
         List<String> itemList = new ArrayList<String>(Arrays.asList(f));
         final String folder = itemList.get(0);
 
-        FirebaseStorage storage = FirebaseStorage.getInstance("gs://shopping-list-123.appspot.com/");
-
-        StorageReference storageRef = storage.getReference();
-
+        StorageReference storageRef = FirebaseStorage.getInstance(FIREBASE_BUCKET).getReference();
         StorageReference photoRemoteRef = storageRef.child(folder+"/"+name);
-
-        /*Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
-        StorageReference riversRef = storageRef.child("images/"+file.getLastPathSegment());*/
-
         UploadTask uploadTask = photoRemoteRef.putFile(fileUri);
 
         // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-              int j=3;
-              j=j+1;
+                int j=3;
+                j=j+1;
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -258,10 +232,7 @@ public class AllItemsActivity extends AppCompatActivity {
                 Date ts = new Date();
                 tsDR.setValue(ts.getTime());
 
-                Context context = getApplicationContext();
-                CharSequence text = "Yahoo";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
+                Toast toast = Toast.makeText(getApplicationContext(), "Yahoo", Toast.LENGTH_SHORT);
                 toast.show();
                 AllItemsActivity.this.updateUI();
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
@@ -332,7 +303,7 @@ public class AllItemsActivity extends AppCompatActivity {
             };
             holder.mModel.mListener=downloadListener;
             if (item.mPhoto!=null){
-                    holder.mPhotoView.setImageBitmap(item.mPhoto);
+                holder.mPhotoView.setImageBitmap(item.mPhoto);
             }
             else{
                 holder.mPhotoView.setImageBitmap(null);
