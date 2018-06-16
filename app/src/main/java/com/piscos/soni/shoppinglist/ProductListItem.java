@@ -25,11 +25,13 @@ public class ProductListItem {
     }
 
     private String mCode;
-    public  DownloadListener mListener;
+    //public  PhotoDownloadListener mListener;
 
     public String getCode() {
         return mCode;
     }
+
+    private static final String FIREBASE_BUCKET = "gs://shopping-list-123.appspot.com/";
 
     public void setCode(String mCode) {
         this.mCode = mCode;
@@ -45,12 +47,10 @@ public class ProductListItem {
         this.mPhotoUrl = photoUrl;
     }
 
-    public void  Download(){
+    public void  Download(final PhotoDownloadListener listener){
         if(mPhotoUrl != null && mPhotoUrl!= "") {
-            FirebaseStorage storage = FirebaseStorage.getInstance("gs://shopping-list-123.appspot.com/");
+            FirebaseStorage storage = FirebaseStorage.getInstance(FIREBASE_BUCKET);
             StorageReference storageRef = storage.getReference(mPhotoUrl);
-
-
 
             String[] items = mPhotoUrl.split("/");
             List<String> itemList = new ArrayList<String>(Arrays.asList(items));
@@ -67,7 +67,8 @@ public class ProductListItem {
                 @Override
                 public void onSuccess(byte[] bytes) {
                     mPhoto = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    mListener.onSuccess(ProductListItem.this);
+                    listener.onSuccess(ProductListItem.this);
+                   // mListener.onSuccess(ProductListItem.this);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

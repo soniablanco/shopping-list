@@ -1,5 +1,5 @@
 package com.piscos.soni.shoppinglist;
 
-public interface DownloadListener {
+public interface PhotoDownloadListener {
     void onSuccess(ProductListItem item);
 }

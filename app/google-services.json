@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1045890415542-nhaati5a78t749bvabof00g8rmejl06n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.piscos.soni.shoppinglist",
+            "certificate_hash": "b48e7c9f9758b024ddbcb0f3224ea8d79cc5226f"
+          }
+        },
+        {
           "client_id": "1045890415542-llkovajpbf691ob2s04qg078ulq9o63b.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

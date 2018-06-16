@@ -1,10 +1,7 @@
 package com.piscos.soni.shoppinglist;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
@@ -15,23 +12,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.DownloadListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
@@ -98,7 +90,7 @@ public class AllItemsActivity extends AppCompatActivity {
 
     public void updateUI() {
 
-        productsData.FetchProducts(new OnAllProductsDownloadedListener() {
+        productsData.fetchProducts(new ProductsDownloadedListener() {
             @Override
             public void onReady(List<ProductListItem> products) {
                 mAdapter = new ProductListAdapter(products);
@@ -196,6 +188,8 @@ public class AllItemsActivity extends AppCompatActivity {
     }
 
     public static final String FIREBASE_BUCKET = "gs://shopping-list-123.appspot.com/";
+
+
     public void uploadPhoto(Uri fileUri) {
         List<String> path = fileUri.getPathSegments();
         final String name = path.get(path.size()-1);
@@ -290,24 +284,24 @@ public class AllItemsActivity extends AppCompatActivity {
 
             holder.mModel = item;
             holder.mNameTextView.setText(item.getName());
-            final com.piscos.soni.shoppinglist.DownloadListener downloadListener=new com.piscos.soni.shoppinglist.DownloadListener(){
 
-                @Override
-                public void onSuccess(ProductListItem productListItem) {
-                    if (productListItem==item) {
-                        if (item.mPhoto != null) {
-                            holder.mPhotoView.setImageBitmap(item.mPhoto);
-                        }
-                    }
-                }
-            };
-            holder.mModel.mListener=downloadListener;
+            //holder.mModel.mListener=downloadListener;
             if (item.mPhoto!=null){
                 holder.mPhotoView.setImageBitmap(item.mPhoto);
             }
             else{
                 holder.mPhotoView.setImageBitmap(null);
-                item.Download();
+                item.Download(new PhotoDownloadListener(){
+
+                    @Override
+                    public void onSuccess(ProductListItem productListItem) {
+                        if (productListItem==item) {
+                            if (item.mPhoto != null) {
+                                holder.mPhotoView.setImageBitmap(item.mPhoto);
+                            }
+                        }
+                    }
+                });
             }
         }
         @Override
