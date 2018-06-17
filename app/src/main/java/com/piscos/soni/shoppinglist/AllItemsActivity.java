@@ -1,5 +1,6 @@
 package com.piscos.soni.shoppinglist;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -39,9 +40,6 @@ public class AllItemsActivity extends AppCompatActivity {
     private RecyclerView mProductsRecyclerView;
     private ProductListAdapter mAdapter;
 
-    // Define the products Firebase DatabaseReference
-    //private DatabaseReference productsDB;
-
     private ProductsData productsData;
 
 
@@ -58,9 +56,6 @@ public class AllItemsActivity extends AppCompatActivity {
 
         // use a linear layout manager
         mProductsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        /*productsDB = FirebaseDatabase.getInstance().getReference();
-        productsDB = productsDB.child("allproducts");*/
 
         productsData = new ProductsData();
 
@@ -99,59 +94,8 @@ public class AllItemsActivity extends AppCompatActivity {
             }
         });
 
-
-       /* productsDB.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                // Get the value from the DataSnapshot and add it to the products' list
-                Product product = dataSnapshot.getValue(Product.class);
-                ProductListItem productItem = new ProductListItem(product.name,product.code,product.thumbnailUrl);
-                productList.add(productItem);
-
-                // Notify the ArrayAdapter that there was a change
-                mAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                int o =1;
-                o++;
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
     }
 
-    public Uri getPhotoURI(ProductListItem product){
-
-        final String internalStoragePath = this.getFilesDir()+"/";
-        String attachmentsFolderRelPath="pictures/";
-        String attachmentsFolderAbsPath=internalStoragePath+attachmentsFolderRelPath;
-        File attachmentsFolder = new File(attachmentsFolderAbsPath);
-        if (!attachmentsFolder.exists()) {
-            attachmentsFolder.mkdirs();
-        }
-        String uniqueMediaFolderRelPath="pictures/"+product.getCode()+".bmp";
-
-        String targetFileAbsPath = this.getFilesDir()+"/"+uniqueMediaFolderRelPath;
-        File file = new File(targetFileAbsPath);
-        Uri uri = FileProvider.getUriForFile(this, "com.piscos.soni.shoppinglist", file);
-        return uri;
-    }
     public static final int PHOTO_CAPTURE = 102;
     private Uri freshlyUploadedPhotoPath;
 
@@ -179,60 +123,16 @@ public class AllItemsActivity extends AppCompatActivity {
             toast.show();
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
-                uploadPhoto(freshlyUploadedPhotoPath);
+                productsData.uploadPhoto(AllItemsActivity.this, freshlyUploadedPhotoPath, new PhotoUploadListener() {
+                    @Override
+                    public void onReady(Context context) {
+                        AllItemsActivity.this.updateUI();
+                    }
+                });
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
         }
-    }
-
-    public static final String FIREBASE_BUCKET = "gs://shopping-list-123.appspot.com/";
-
-
-    public void uploadPhoto(Uri fileUri) {
-        List<String> path = fileUri.getPathSegments();
-        final String name = path.get(path.size()-1);
-
-        String[] f = name.split("\\.");
-        List<String> itemList = new ArrayList<String>(Arrays.asList(f));
-        final String folder = itemList.get(0);
-
-        StorageReference storageRef = FirebaseStorage.getInstance(FIREBASE_BUCKET).getReference();
-        StorageReference photoRemoteRef = storageRef.child(folder+"/"+name);
-        UploadTask uploadTask = photoRemoteRef.putFile(fileUri);
-
-        // Register observers to listen for when the download is done or if it fails
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                int j=3;
-                j=j+1;
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                String url = folder+"/"+name;
-                String thumbnailUrl =  folder+"/thumbnail_"+name;
-
-                DatabaseReference urlDR = FirebaseDatabase.getInstance().getReference("allproducts"+"/"+ folder + "/photoUrl");
-                urlDR.setValue(url);
-
-                DatabaseReference thumbUrlDR = FirebaseDatabase.getInstance().getReference("allproducts"+"/"+ folder + "/thumbnailUrl");
-                thumbUrlDR.setValue(thumbnailUrl);
-
-                DatabaseReference tsDR = FirebaseDatabase.getInstance().getReference("allproducts"+"/"+ folder + "/photoTimeStamp");
-                Date ts = new Date();
-                tsDR.setValue(ts.getTime());
-
-                Toast toast = Toast.makeText(getApplicationContext(), "Yahoo", Toast.LENGTH_SHORT);
-                toast.show();
-                AllItemsActivity.this.updateUI();
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
-            }
-        });
     }
 
     private class ProductHolder extends RecyclerView.ViewHolder{
@@ -250,7 +150,7 @@ public class AllItemsActivity extends AppCompatActivity {
                 public boolean onLongClick(View v) {
 
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    freshlyUploadedPhotoPath = getPhotoURI(mModel);
+                    freshlyUploadedPhotoPath = ProductsData.getPhotoURI(AllItemsActivity.this,mModel);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT,freshlyUploadedPhotoPath );
                     AllItemsActivity.this.startActivityForResult(intent, PHOTO_CAPTURE);
 
@@ -285,14 +185,12 @@ public class AllItemsActivity extends AppCompatActivity {
             holder.mModel = item;
             holder.mNameTextView.setText(item.getName());
 
-            //holder.mModel.mListener=downloadListener;
             if (item.mPhoto!=null){
                 holder.mPhotoView.setImageBitmap(item.mPhoto);
             }
             else{
                 holder.mPhotoView.setImageBitmap(null);
-                item.Download(new PhotoDownloadListener(){
-
+                productsData.downloadPhoto(item, new PhotoDownloadListener() {
                     @Override
                     public void onSuccess(ProductListItem productListItem) {
                         if (productListItem==item) {

@@ -55,7 +55,7 @@ public class ProductsData {
         });
     }
 
-    public Uri getPhotoURI(Context context, ProductListItem product){
+    public static Uri getPhotoURI(Context context, ProductListItem product){
 
         final String internalStoragePath = context.getFilesDir()+"/";
         String attachmentsFolderRelPath="pictures/";
@@ -84,6 +84,7 @@ public class ProductsData {
     }
 
     public void uploadPhoto(final Context context,Uri fileUri,final PhotoUploadListener listener) {
+
         final FBChildTarget target = getUploadChildTarget(fileUri);
 
         StorageReference storageRef = FirebaseStorage.getInstance(FIREBASE_BUCKET).getReference();
