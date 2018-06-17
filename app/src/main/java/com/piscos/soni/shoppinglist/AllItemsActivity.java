@@ -2,10 +2,9 @@ package com.piscos.soni.shoppinglist;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,22 +16,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class AllItemsActivity extends AppCompatActivity {
@@ -40,7 +28,10 @@ public class AllItemsActivity extends AppCompatActivity {
     private RecyclerView mProductsRecyclerView;
     private ProductListAdapter mAdapter;
 
-    private ProductsData productsData;
+    private FBProductsRepository productsData;
+
+    public static final int PHOTO_CAPTURE = 102;
+    private CameraAccess mCameraAccess;
 
 
     @Override
@@ -49,16 +40,12 @@ public class AllItemsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_all_items);
 
         mProductsRecyclerView = (RecyclerView) findViewById(R.id.rv_product_list);
-
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mProductsRecyclerView.setHasFixedSize(true);
-
         // use a linear layout manager
         mProductsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        productsData = new ProductsData();
-
+        productsData = new FBProductsRepository();
         updateUI();
 
         //HockeyApp
@@ -96,9 +83,6 @@ public class AllItemsActivity extends AppCompatActivity {
 
     }
 
-    public static final int PHOTO_CAPTURE = 102;
-    private Uri freshlyUploadedPhotoPath;
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PHOTO_CAPTURE) {
@@ -106,9 +90,8 @@ public class AllItemsActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
                 text = "OK";
-                Uri photoUri = freshlyUploadedPhotoPath;
                 // start cropping activity for pre-acquired image saved on the device
-                CropImage.activity(photoUri).setOutputUri(photoUri).setAspectRatio(10,10).setFixAspectRatio(true)
+                CropImage.activity(mCameraAccess.mTargetUri).setOutputUri(mCameraAccess.mTargetUri).setAspectRatio(10,10).setFixAspectRatio(true)
                         .start(AllItemsActivity.this);
             }
             else{
@@ -123,7 +106,7 @@ public class AllItemsActivity extends AppCompatActivity {
             toast.show();
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-                productsData.uploadPhoto(AllItemsActivity.this, freshlyUploadedPhotoPath, new PhotoUploadListener() {
+                productsData.uploadPhoto(AllItemsActivity.this, mCameraAccess.mTargetUri,mCameraAccess.mName, new PhotoUploadListener() {
                     @Override
                     public void onReady(Context context) {
                         AllItemsActivity.this.updateUI();
@@ -150,10 +133,12 @@ public class AllItemsActivity extends AppCompatActivity {
                 public boolean onLongClick(View v) {
 
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    freshlyUploadedPhotoPath = ProductsData.getPhotoURI(AllItemsActivity.this,mModel);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT,freshlyUploadedPhotoPath );
+                    //freshlyUploadedPhotoPath = FBProductsRepository.getPhotoURI(AllItemsActivity.this,mModel);
+                    mCameraAccess = new CameraAccess();
+                    mCameraAccess.mTargetUri = FBProductsRepository.getPhotoURI(AllItemsActivity.this,mModel);
+                    mCameraAccess.mName = mModel.getCode();
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT,mCameraAccess.mTargetUri );
                     AllItemsActivity.this.startActivityForResult(intent, PHOTO_CAPTURE);
-
                     return  true;
                 }
             });
@@ -190,12 +175,12 @@ public class AllItemsActivity extends AppCompatActivity {
             }
             else{
                 holder.mPhotoView.setImageBitmap(null);
-                productsData.downloadPhoto(item, new PhotoDownloadListener() {
+                productsData.downloadPhoto(item.mPhotoUrl,item.getCode(), new PhotoDownloadListener() {
                     @Override
-                    public void onSuccess(ProductListItem productListItem) {
-                        if (productListItem==item) {
-                            if (item.mPhoto != null) {
-                                holder.mPhotoView.setImageBitmap(item.mPhoto);
+                    public void onSuccess(String productCode, Bitmap productPhoto) {
+                        if (productCode == item.getCode()) {
+                            if (productPhoto != null) {
+                                holder.mPhotoView.setImageBitmap(productPhoto);
                             }
                         }
                     }
@@ -219,5 +204,10 @@ public class AllItemsActivity extends AppCompatActivity {
 
     private void unregisterManagers() {
         UpdateManager.unregister();
+    }
+
+    private class CameraAccess{
+        public Uri mTargetUri;
+        public String mName;
     }
 }

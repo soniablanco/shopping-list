@@ -19,17 +19,16 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 
-public class ProductsData {
+public class FBProductsRepository {
     private DatabaseReference productsDB;
     private static final String NODE = "allproducts";
     private static final String FIREBASE_BUCKET = "gs://shopping-list-123.appspot.com/";
 
-    public ProductsData(){
+    public FBProductsRepository(){
         productsDB = FirebaseDatabase.getInstance().getReference();
         productsDB = productsDB.child(NODE);
     }
@@ -42,8 +41,8 @@ public class ProductsData {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    Product product = ds.getValue(Product.class);
-                    productList.add(new ProductListItem(product.name,product.code, product.thumbnailUrl));
+                    FBProduct product = ds.getValue(FBProduct.class);
+                    productList.add(new ProductListItem(product.name, product.code, product.thumbnailUrl));
                 }
                 listener.onReady(productList);
             }
@@ -72,23 +71,10 @@ public class ProductsData {
         return uri;
     }
 
-    private static FBChildTarget getUploadChildTarget(Uri fileUri){
-        List<String> path = fileUri.getPathSegments();
-        final String name = path.get(path.size()-1);
-
-        String[] f = name.split("\\.");
-        List<String> itemList = new ArrayList<String>(Arrays.asList(f));
-        final String folder = itemList.get(0);
-
-        return new FBChildTarget(folder,name);
-    }
-
-    public void uploadPhoto(final Context context,Uri fileUri,final PhotoUploadListener listener) {
-
-        final FBChildTarget target = getUploadChildTarget(fileUri);
+    public void uploadPhoto(final Context context,Uri fileUri, final String fileName,final PhotoUploadListener listener) {
 
         StorageReference storageRef = FirebaseStorage.getInstance(FIREBASE_BUCKET).getReference();
-        StorageReference photoRemoteRef = storageRef.child(target.folder + "/" + target.name);
+        StorageReference photoRemoteRef = storageRef.child(fileName + "/" + fileName +".bmp");
         UploadTask uploadTask = photoRemoteRef.putFile(fileUri);
 
         // Register observers to listen for when the download is done or if it fails
@@ -101,39 +87,37 @@ public class ProductsData {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                updateProductPhotoInfo(target);
+                updateProductPhotoInfo(fileName);
                 listener.onReady(context);
             }
         });
     }
 
-    private void updateProductPhotoInfo(FBChildTarget target){
-        String url = target.folder+"/"+target.name;
-        String thumbnailUrl =  target.folder+"/thumbnail_"+target.name;
+    private void updateProductPhotoInfo(String fileName){
+        String url = fileName+"/"+fileName +".bmp";
+        String thumbnailUrl =  fileName+"/thumbnail_"+fileName + ".bmp";
 
-        DatabaseReference urlDR = FirebaseDatabase.getInstance().getReference(NODE+"/"+ target.folder + "/photoUrl");
+        DatabaseReference urlDR = FirebaseDatabase.getInstance().getReference(NODE+"/"+ fileName + "/photoUrl");
         urlDR.setValue(url);
 
-        DatabaseReference thumbUrlDR = FirebaseDatabase.getInstance().getReference(NODE+"/"+ target.folder + "/thumbnailUrl");
+        DatabaseReference thumbUrlDR = FirebaseDatabase.getInstance().getReference(NODE+"/"+ fileName + "/thumbnailUrl");
         thumbUrlDR.setValue(thumbnailUrl);
 
-        DatabaseReference tsDR = FirebaseDatabase.getInstance().getReference(NODE+"/"+ target.folder + "/photoTimeStamp");
+        DatabaseReference tsDR = FirebaseDatabase.getInstance().getReference(NODE+"/"+ fileName + "/photoTimeStamp");
         Date ts = new Date();
         tsDR.setValue(ts.getTime());
     }
 
-    public void downloadPhoto(final ProductListItem product,final PhotoDownloadListener listener){
-        if(product.mPhotoUrl != null && product.mPhotoUrl!= "") {
+    public void downloadPhoto(final String photoUrl,final String fileName, final PhotoDownloadListener listener){
+        if(photoUrl != null && photoUrl!= "") {
             FirebaseStorage storage = FirebaseStorage.getInstance(FIREBASE_BUCKET);
-            StorageReference storageRef = storage.getReference(product.mPhotoUrl);
+            StorageReference storageRef = storage.getReference(photoUrl);
 
             final long ONE_MEGABYTE = 10240 * 10240;
             storageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {
-                    product.mPhoto = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    listener.onSuccess(product);
-                    // mListener.onSuccess(ProductListItem.this);
+                    listener.onSuccess(fileName,BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

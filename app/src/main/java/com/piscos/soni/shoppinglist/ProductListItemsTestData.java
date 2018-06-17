@@ -20,7 +20,7 @@ public class ProductListItemsTestData {
         mProductListItems = new ArrayList<>();
         for (int i=0; i<10;i++){
             ProductListItem item = new ProductListItem();
-            item.setName("Product " + i);
+            item.setName("FBProduct " + i);
             mProductListItems.add(item);
         }
     }
