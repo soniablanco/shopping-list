@@ -178,10 +178,9 @@ public class AllItemsActivity extends AppCompatActivity {
                 productsData.downloadPhoto(item.mPhotoUrl,item.getCode(), new PhotoDownloadListener() {
                     @Override
                     public void onSuccess(String productCode, Bitmap productPhoto) {
-                        if (productCode == item.getCode()) {
-                            if (productPhoto != null) {
-                                holder.mPhotoView.setImageBitmap(productPhoto);
-                            }
+                        item.mPhoto=productPhoto;
+                        if (productCode == holder.mModel.getCode()) {
+                            holder.mPhotoView.setImageBitmap(productPhoto);
                         }
                     }
                 });
