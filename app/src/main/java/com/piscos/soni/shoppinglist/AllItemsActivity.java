@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,6 +26,8 @@ import net.hockeyapp.android.UpdateManager;
 
 import java.util.List;
 
+import static com.piscos.soni.shoppinglist.ProductsManager.GetProducts;
+
 public class AllItemsActivity extends AppCompatActivity {
 
     private RecyclerView mProductsRecyclerView;
@@ -33,6 +38,7 @@ public class AllItemsActivity extends AppCompatActivity {
     public static final int PHOTO_CAPTURE = 102;
     private CameraAccess mCameraAccess;
 
+    final ProductsManager pm = new ProductsManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +78,18 @@ public class AllItemsActivity extends AppCompatActivity {
 
     public void updateUI() {
 
-        productsData.fetchProducts(new ProductsDownloadedListener() {
+       /* productsData.fetchProducts(new ProductsDownloadedListener() {
             @Override
             public void onReady(List<ProductListItem> products) {
                 mAdapter = new ProductListAdapter(products);
                 mProductsRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
             }
-        });
-
+        });*/
+        List<ProductListItem> products = pm.GetProducts();
+        mAdapter = new ProductListAdapter(products);
+        mProductsRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -175,7 +184,8 @@ public class AllItemsActivity extends AppCompatActivity {
             }
             else{
                 holder.mPhotoView.setImageBitmap(null);
-                productsData.downloadPhoto(item.mPhotoUrl,item.getCode(), new PhotoDownloadListener() {
+                //productsData.downloadPhoto(item.mPhotoUrl,item.getCode(), new PhotoDownloadListener() {
+                item.fetchPhoto(AllItemsActivity.this, new PhotoDownloadListener() {
                     @Override
                     public void onSuccess(String productCode, Bitmap productPhoto) {
                         item.mPhoto=productPhoto;
@@ -208,5 +218,37 @@ public class AllItemsActivity extends AppCompatActivity {
     private class CameraAccess{
         public Uri mTargetUri;
         public String mName;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.all_items_list, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_item_sync:
+                SyncData();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    private void SyncData(){
+        productsData.fetchProducts(new ProductsDownloadedListener() {
+            @Override
+            public void onReady(List<ProductListItem> products) {
+                pm.UpdateDatabase(products);
+                for(ProductListItem item:products){
+                    item.DownloadPhoto(AllItemsActivity.this);
+                }
+            }
+        });
     }
 }

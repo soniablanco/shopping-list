@@ -54,6 +54,7 @@ public class FBProductsRepository {
         });
     }
 
+
     public static Uri getPhotoURI(Context context, ProductListItem product){
 
         final String internalStoragePath = context.getFilesDir()+"/";
@@ -129,4 +130,6 @@ public class FBProductsRepository {
             });
         }
     }
+
+
 }
