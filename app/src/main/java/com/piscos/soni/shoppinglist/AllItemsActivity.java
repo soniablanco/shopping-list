@@ -187,11 +187,17 @@ public class AllItemsActivity extends AppCompatActivity {
                 //productsData.downloadPhoto(item.mPhotoUrl,item.getCode(), new PhotoDownloadListener() {
                 item.fetchPhoto(AllItemsActivity.this, new PhotoDownloadListener() {
                     @Override
-                    public void onSuccess(String productCode, Bitmap productPhoto) {
-                        item.mPhoto=productPhoto;
-                        if (productCode == holder.mModel.getCode()) {
-                            holder.mPhotoView.setImageBitmap(productPhoto);
-                        }
+                    public void onSuccess(final String productCode, final  Bitmap productPhoto) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                item.mPhoto = productPhoto;
+                                if (productCode == holder.mModel.getCode())
+                                {
+                                    holder.mPhotoView.setImageBitmap(productPhoto);
+                                }
+                            }
+                        });
                     }
                 });
             }
@@ -232,7 +238,13 @@ public class AllItemsActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_item_sync:
-                SyncData();
+                SyncData(new DataSynchronizationListener() {
+                    @Override
+                    public void onReady() {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Synchronization OK", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                });
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -240,13 +252,44 @@ public class AllItemsActivity extends AppCompatActivity {
 
     }
 
-    private void SyncData(){
+   /* private void SyncData(){
         productsData.fetchProducts(new ProductsDownloadedListener() {
             @Override
             public void onReady(List<ProductListItem> products) {
                 pm.UpdateDatabase(products);
                 for(ProductListItem item:products){
                     item.DownloadPhoto(AllItemsActivity.this);
+                }
+                Toast toast = Toast.makeText(getApplicationContext(), "Synchronization OK", Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
+    }*/
+
+    private void SyncData(final DataSynchronizationListener listener){//listener 1
+        productsData.fetchProducts(new ProductsDownloadedListener() {
+            @Override
+            public  void onReady(List<ProductListItem> products) {
+                pm.UpdateDatabase(products);
+                final int[] photosCount = new int[1];
+                photosCount[0] = 0;
+                for (ProductListItem p:products){
+                    if(p.mPhotoUrl != null && p.mPhotoUrl != ""){
+                        photosCount[0] = photosCount[0] + 1;
+                    }
+                }
+                final int[] processed = new int[1];
+                processed[0] = 0;
+                for(ProductListItem item:products){
+                    item.DownloadPhoto(AllItemsActivity.this,new PhotosSynchronizationListener(){
+                        @Override
+                        public synchronized void onReady() {
+                            processed[0] = processed[0]+1;
+                            if(processed[0] == photosCount[0]){
+                                listener.onReady();
+                            }
+                        }
+                    });//=>{cuantashecompletado=cuantashecompletado+1  cuantasfotos=completdo =<> cuandotemrine() listener2
                 }
             }
         });

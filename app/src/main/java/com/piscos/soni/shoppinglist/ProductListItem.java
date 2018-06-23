@@ -51,7 +51,7 @@ public class ProductListItem {
 
     public String mPhotoUrl;
 
-    public void DownloadPhoto(Context context){
+    public void DownloadPhoto(Context context,final PhotosSynchronizationListener listener){
         final String thumbnail = getThumbnailAbsPath(context);
         FBProductsRepository productsData = new FBProductsRepository();
         productsData.downloadPhoto(this.mPhotoUrl,this.getCode(), new PhotoDownloadListener() {
@@ -67,6 +67,7 @@ public class ProductListItem {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                listener.onReady();
             }
         });
     }
@@ -86,18 +87,36 @@ public class ProductListItem {
         return context.getFilesDir()+"/"+this.mThumbnailPath;
 
     }
-
-    public void fetchPhoto(Context context,PhotoDownloadListener listener){
-        String imagePath = this.getThumbnailAbsPath(context);
+    private synchronized void Fetchfoto(final Context context,final PhotoDownloadListener listener){
+        if (ProductListItem.this.mPhoto!=null) {
+            listener.onSuccess(ProductListItem.this.getCode(), ProductListItem.this.mPhoto);
+            return;
+        }
+        String imagePath = ProductListItem.this.getThumbnailAbsPath(context);
         File imgFile = new  File(imagePath);
         if(imgFile.exists()) {
             Bitmap myBitmap = BitmapFactory.decodeFile(imagePath);
-            this.mPhoto = myBitmap;
-            listener.onSuccess(this.getCode(), this.mPhoto);
+            ProductListItem.this.mPhoto = myBitmap;
+            listener.onSuccess(ProductListItem.this.getCode(), ProductListItem.this.mPhoto);
         }
         else{
-            this.mPhoto = null;
+            ProductListItem.this.mPhoto = null;
         }
+
+    }
+
+    public void fetchPhoto(final Context context,final PhotoDownloadListener listener){
+
+
+        new Thread() {
+            public void run() {
+
+                Fetchfoto(context,listener);
+                }
+            }
+        .start();
+
+
 
     }
 }
