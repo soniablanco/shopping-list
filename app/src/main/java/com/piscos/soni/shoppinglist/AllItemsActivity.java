@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,10 +42,23 @@ public class AllItemsActivity extends AppCompatActivity {
 
     final ProductsManager pm = new ProductsManager();
 
+    private FloatingActionButton mBtnAdd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_items);
+
+        mBtnAdd = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+
+        mBtnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(AllItemsActivity.this,NewShoppingListActivity.class);
+                startActivity(i);
+            }
+        });
 
         mProductsRecyclerView = (RecyclerView) findViewById(R.id.rv_product_list);
         // use this setting to improve performance if you know that changes

@@ -37,4 +37,18 @@ public class ProductsManager {
         });
         return  products;
     }
+
+    public static  List<ShoppingListItem> GetProducts2(){
+        final List<ShoppingListItem> products =  new ArrayList<>();
+        DB.Operate(new DBOperation() {
+            @Override
+            public void Operate(SQLiteDatabase db) {
+                Cursor c=db.rawQuery("select Name,Code,ThumbnailUrl from Products",new String[]{});
+                while(c.moveToNext()) {
+                    products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2)));
+                }
+            }
+        });
+        return  products;
+    }
 }
