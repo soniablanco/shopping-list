@@ -2,18 +2,26 @@ package com.piscos.soni.shoppinglist;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
+
+import me.himanshusoni.quantityview.QuantityView;
 
 public class NewShoppingListActivity extends AppCompatActivity {
 
@@ -49,13 +57,31 @@ public class NewShoppingListActivity extends AppCompatActivity {
         public ImageView mPhotoView;
         public me.himanshusoni.quantityview.QuantityView mQuantity;
         private ShoppingListItem mModel;
+        //public ConstraintLayout mContainer;
 
-        public ShoppingListHolder(View itemView){
+        public ShoppingListHolder(final View itemView){
             super(itemView);
             mNameTextView = (TextView)itemView.findViewById(R.id.tvSLProductName);
             mPhotoView = (ImageView)itemView.findViewById(R.id.imSLPhotoView);
-            //mQuantity = (TextView)itemView.findViewById(R.id.tvSLProductQuantity);
             mQuantity = (me.himanshusoni.quantityview.QuantityView)itemView.findViewById(R.id.quantityView_default);
+            mQuantity.setOnQuantityChangeListener(new QuantityView.OnQuantityChangeListener() {
+                @Override
+                public void onQuantityChanged(int oldQuantity, int newQuantity, boolean programmatically) {
+                    mModel.mQuantity = newQuantity;
+                    if(newQuantity > 0){
+                        mModel.mItemColor = "#7986CB";
+                    }
+                    else{
+                        mModel.mItemColor = "#FFFFFF";
+                    }
+                    itemView.setBackgroundColor(Color.parseColor(mModel.mItemColor));
+                }
+
+                @Override
+                public void onLimitReached() {
+
+                }
+            });
         }
 
     }
@@ -84,6 +110,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
             holder.mModel = item;
             holder.mNameTextView.setText(item.getName());
             holder.mQuantity.setQuantity(item.mQuantity);
+            holder.itemView.setBackgroundColor(Color.parseColor(item.mItemColor));
 
             if (item.mPhoto!=null){
                 holder.mPhotoView.setImageBitmap(item.mPhoto);
@@ -113,5 +140,24 @@ public class NewShoppingListActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.new_shopping_list, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_item_save_new_shopping_list:
+                Toast toast = Toast.makeText(getApplicationContext(), "Ready to save", Toast.LENGTH_LONG);
+                toast.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 }
