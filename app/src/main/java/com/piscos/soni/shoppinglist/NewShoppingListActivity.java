@@ -47,14 +47,15 @@ public class NewShoppingListActivity extends AppCompatActivity {
     private class ShoppingListHolder extends RecyclerView.ViewHolder{
         public TextView mNameTextView;
         public ImageView mPhotoView;
-        public TextView mQuantity;
+        public me.himanshusoni.quantityview.QuantityView mQuantity;
         private ShoppingListItem mModel;
 
         public ShoppingListHolder(View itemView){
             super(itemView);
             mNameTextView = (TextView)itemView.findViewById(R.id.tvSLProductName);
             mPhotoView = (ImageView)itemView.findViewById(R.id.imSLPhotoView);
-            mQuantity = (TextView)itemView.findViewById(R.id.tvSLProductQuantity);
+            //mQuantity = (TextView)itemView.findViewById(R.id.tvSLProductQuantity);
+            mQuantity = (me.himanshusoni.quantityview.QuantityView)itemView.findViewById(R.id.quantityView_default);
         }
 
     }
@@ -82,7 +83,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
             holder.mModel = item;
             holder.mNameTextView.setText(item.getName());
-            holder.mQuantity.setText(Double.toString(item.mQuantity));
+            holder.mQuantity.setQuantity(item.mQuantity);
 
             if (item.mPhoto!=null){
                 holder.mPhotoView.setImageBitmap(item.mPhoto);

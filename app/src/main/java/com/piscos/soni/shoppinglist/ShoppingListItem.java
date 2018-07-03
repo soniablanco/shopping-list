@@ -2,7 +2,7 @@ package com.piscos.soni.shoppinglist;
 
 public class ShoppingListItem extends ProductListItem{
 
-    public double mQuantity;
+    public int mQuantity;
     public ShoppingListItem(){
         mQuantity = 0;
     }
