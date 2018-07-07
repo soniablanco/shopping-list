@@ -16,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,8 +26,6 @@ import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
 
 import java.util.List;
-
-import static com.piscos.soni.shoppinglist.ProductsManager.GetProducts;
 
 public class AllItemsActivity extends AppCompatActivity {
 
@@ -55,7 +52,7 @@ public class AllItemsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(AllItemsActivity.this,NewShoppingListActivity.class);
+                Intent i = new Intent(AllItemsActivity.this,ShoppingListActivity.class);
                 startActivity(i);
             }
         });

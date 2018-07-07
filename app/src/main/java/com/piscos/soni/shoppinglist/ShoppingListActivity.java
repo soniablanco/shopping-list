@@ -1,11 +1,8 @@
 package com.piscos.soni.shoppinglist;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,15 +16,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import me.himanshusoni.quantityview.QuantityView;
 
-public class NewShoppingListActivity extends AppCompatActivity {
+public class ShoppingListActivity extends AppCompatActivity {
 
     private RecyclerView mProductsRecyclerView;
-    private NewShoppingListActivity.ShoppingListAdapter mAdapter;
+    private ShoppingListActivity.ShoppingListAdapter mAdapter;
     final ProductsManager pm = new ProductsManager();
+    final ShoppingListManager slm = new ShoppingListManager();
+    private List<ShoppingListItem> mProducts = new ArrayList<>();
+
+    private ShoppingList mShoppingList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +43,13 @@ public class NewShoppingListActivity extends AppCompatActivity {
         // use a linear layout manager
         mProductsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        mShoppingList = ShoppingList.GetNewShoppingList();//ShoppingList.GetShoppingListById(7);
         updateUI();
     }
 
-    public void updateUI() {
 
-        List<ShoppingListItem> products = pm.GetProducts2();
-        mAdapter = new ShoppingListAdapter(products);
+    public void updateUI() {
+        mAdapter = new ShoppingListAdapter(mShoppingList.Items);
         mProductsRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
@@ -57,7 +59,6 @@ public class NewShoppingListActivity extends AppCompatActivity {
         public ImageView mPhotoView;
         public me.himanshusoni.quantityview.QuantityView mQuantity;
         private ShoppingListItem mModel;
-        //public ConstraintLayout mContainer;
 
         public ShoppingListHolder(final View itemView){
             super(itemView);
@@ -67,14 +68,9 @@ public class NewShoppingListActivity extends AppCompatActivity {
             mQuantity.setOnQuantityChangeListener(new QuantityView.OnQuantityChangeListener() {
                 @Override
                 public void onQuantityChanged(int oldQuantity, int newQuantity, boolean programmatically) {
-                    mModel.mQuantity = newQuantity;
-                    if(newQuantity > 0){
-                        mModel.mItemColor = "#7986CB";
-                    }
-                    else{
-                        mModel.mItemColor = "#FFFFFF";
-                    }
-                    itemView.setBackgroundColor(Color.parseColor(mModel.mItemColor));
+                    mModel.setQuantity(newQuantity);
+                    itemView.setBackgroundColor(Color.parseColor(mModel.getItemColor()));
+                    mShoppingList.UpdateItem(mModel);
                 }
 
                 @Override
@@ -87,7 +83,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
     }
 
 
-    private class ShoppingListAdapter extends RecyclerView.Adapter<NewShoppingListActivity.ShoppingListHolder>{
+    private class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListActivity.ShoppingListHolder>{
 
         private List<ShoppingListItem> mShoppingList;
 
@@ -96,28 +92,28 @@ public class NewShoppingListActivity extends AppCompatActivity {
         }
 
         @Override
-        public NewShoppingListActivity.ShoppingListHolder onCreateViewHolder(ViewGroup parent, int viewType){
+        public ShoppingListActivity.ShoppingListHolder onCreateViewHolder(ViewGroup parent, int viewType){
             LayoutInflater layoutInflater = LayoutInflater.from(getBaseContext());
             View view = layoutInflater.inflate(R.layout.shopping_list_item,parent,false);
             //View view = layoutInflater.inflate(android.R.layout.simple_list_item_1,parent,false);
-            return new NewShoppingListActivity.ShoppingListHolder(view);
+            return new ShoppingListActivity.ShoppingListHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final NewShoppingListActivity.ShoppingListHolder holder, int position){
+        public void onBindViewHolder(final ShoppingListActivity.ShoppingListHolder holder, int position){
             final ShoppingListItem item = mShoppingList.get(position);
 
             holder.mModel = item;
             holder.mNameTextView.setText(item.getName());
-            holder.mQuantity.setQuantity(item.mQuantity);
-            holder.itemView.setBackgroundColor(Color.parseColor(item.mItemColor));
+            holder.mQuantity.setQuantity(item.getQuantity());
+            holder.itemView.setBackgroundColor(Color.parseColor(item.getItemColor()));
 
             if (item.mPhoto!=null){
                 holder.mPhotoView.setImageBitmap(item.mPhoto);
             }
             else{
                 holder.mPhotoView.setImageBitmap(null);
-                item.fetchPhoto(NewShoppingListActivity.this, new PhotoDownloadListener() {
+                item.fetchPhoto(ShoppingListActivity.this, new PhotoDownloadListener() {
                     @Override
                     public void onSuccess(final String productCode, final Bitmap productPhoto) {
                         runOnUiThread(new Runnable() {
@@ -140,7 +136,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
@@ -152,6 +148,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_item_save_new_shopping_list:
+                //saveShoppingList(mProducts);
                 Toast toast = Toast.makeText(getApplicationContext(), "Ready to save", Toast.LENGTH_LONG);
                 toast.show();
                 return true;
@@ -159,5 +156,12 @@ public class NewShoppingListActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 
-    }
+    }*/
+
+    /*public void saveShoppingList(List<ShoppingListItem> items){
+       int res =  ShoppingListManager.CreateShoppingList();
+       if (res!= -1){
+           ShoppingListManager.AddShoppingListItems(res,items);
+       }
+    }*/
 }
