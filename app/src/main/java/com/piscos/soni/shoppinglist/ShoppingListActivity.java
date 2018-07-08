@@ -1,5 +1,7 @@
 package com.piscos.soni.shoppinglist;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -25,11 +27,22 @@ public class ShoppingListActivity extends AppCompatActivity {
 
     private RecyclerView mProductsRecyclerView;
     private ShoppingListActivity.ShoppingListAdapter mAdapter;
-    final ProductsManager pm = new ProductsManager();
-    final ShoppingListManager slm = new ShoppingListManager();
-    private List<ShoppingListItem> mProducts = new ArrayList<>();
+
+    private static final String EXTRA_SHOPPING_LIST_ID = "com.piscos.soni.shoppinglist.shoppingListId";
 
     private ShoppingList mShoppingList;
+
+    public static Intent newIntent(Context packageContext, int shoppingListId){
+        Intent i = new Intent(packageContext,ShoppingListActivity.class);
+        if(shoppingListId > 0){
+            i.putExtra(EXTRA_SHOPPING_LIST_ID,shoppingListId);
+        }
+        return i;
+    }
+
+    public static Intent newIntent(Context packageContext){
+        return newIntent(packageContext,0);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +56,13 @@ public class ShoppingListActivity extends AppCompatActivity {
         // use a linear layout manager
         mProductsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mShoppingList = ShoppingList.GetNewShoppingList();//ShoppingList.GetShoppingListById(7);
+        int shoppingListId = getIntent().getIntExtra(EXTRA_SHOPPING_LIST_ID,0);
+        if (shoppingListId == 0) {
+            mShoppingList = ShoppingList.GetNewShoppingList();//ShoppingList.GetShoppingListById(7);
+        }
+        else{
+            mShoppingList = ShoppingList.GetShoppingListById(shoppingListId);
+        }
         updateUI();
     }
 

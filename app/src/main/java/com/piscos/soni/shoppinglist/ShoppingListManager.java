@@ -111,6 +111,20 @@ public class ShoppingListManager {
         return  products;
     }
 
+    public static List<ShoppingListElement> GetAllShoppingLists(){
+        final List<ShoppingListElement> shoppingLists =  new ArrayList<>();
+        DB.Operate(new DBOperation() {
+            @Override
+            public void Operate(SQLiteDatabase db) {
+                Cursor c=db.rawQuery("select Id,Name, 2 from ShoppingLists",new String[]{});
+                while(c.moveToNext()) {
+                    shoppingLists.add(new ShoppingListElement(c.getInt(0),c.getString(1),c.getInt(2)));
+                }
+            }
+        });
+        return shoppingLists;
+    }
+
     /*public static ShoppingList GetShoppingList(final int ShoppingListId){
 
         DB.Operate(new DBOperation() {
