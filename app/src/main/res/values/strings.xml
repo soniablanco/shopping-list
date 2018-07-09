@@ -2,4 +2,7 @@
     <string name="app_name">ShoppingList</string>
     <string name="sync_data">Sync</string>
     <string name="save_shopping_list">Save</string>
-</resources>
+    <string name="all_products">Products</string>
+    <string name="shopping_lists_history">History</string>
+    <string name="sync_confirmation">Synchronization OK</string>
+    </resources>

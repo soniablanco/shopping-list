@@ -46,17 +46,6 @@ public class AllItemsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_items);
 
-        mBtnAdd = (FloatingActionButton) findViewById(R.id.floatingActionButton);
-
-        mBtnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent i = new Intent(AllItemsActivity.this,ShoppingListActivity.class);
-                startActivity(i);
-            }
-        });
-
         mProductsRecyclerView = (RecyclerView) findViewById(R.id.rv_product_list);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -253,7 +242,7 @@ public class AllItemsActivity extends AppCompatActivity {
                 SyncData(new DataSynchronizationListener() {
                     @Override
                     public void onReady() {
-                        Toast toast = Toast.makeText(getApplicationContext(), "Synchronization OK", Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(getApplicationContext(), R.string.sync_confirmation, Toast.LENGTH_LONG);
                         toast.show();
                     }
                 });

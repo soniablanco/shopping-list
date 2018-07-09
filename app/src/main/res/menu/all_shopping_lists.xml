@@ -2,9 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/menu_lists_history"
+        android:title="@string/shopping_lists_history"
+        android:icon="@android:drawable/ic_menu_recent_history"
+        />
+    <item
         android:id="@+id/menu_item_products"
-        android:icon="@android:drawable/s"
-        android:title="@string/sync_data"
-        app:showAsAction="ifRoom"/>
-
+        android:title="@string/all_products"
+        android:icon="@android:drawable/ic_dialog_info"
+        />
 </menu>
