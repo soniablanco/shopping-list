@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
+import java.util.UUID;
 
 import me.himanshusoni.quantityview.QuantityView;
 
@@ -26,16 +27,16 @@ public class ShoppingListActivity extends AppCompatActivity {
 
     private ShoppingList mShoppingList;
 
-    public static Intent newIntent(Context packageContext, int shoppingListId){
+    public static Intent newIntent(Context packageContext, UUID shoppingListId){
         Intent i = new Intent(packageContext,ShoppingListActivity.class);
-        if(shoppingListId > 0){
-            i.putExtra(EXTRA_SHOPPING_LIST_ID,shoppingListId);
+        if(shoppingListId != null) {
+            i.putExtra(EXTRA_SHOPPING_LIST_ID, shoppingListId.toString());
         }
         return i;
     }
 
     public static Intent newIntent(Context packageContext){
-        return newIntent(packageContext,0);
+        return newIntent(packageContext,null);
     }
 
     @Override
@@ -50,12 +51,15 @@ public class ShoppingListActivity extends AppCompatActivity {
         // use a linear layout manager
         mProductsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        int shoppingListId = getIntent().getIntExtra(EXTRA_SHOPPING_LIST_ID,0);
-        if (shoppingListId == 0) {
+        String shoppingListId = getIntent().getStringExtra(EXTRA_SHOPPING_LIST_ID);
+        if (shoppingListId == null) {
             mShoppingList = ShoppingList.GetNewShoppingList();//ShoppingList.GetShoppingListById(7);
         }
+        else if (shoppingListId.isEmpty()) {
+            mShoppingList = ShoppingList.GetNewShoppingList();
+        }
         else{
-            mShoppingList = ShoppingList.GetShoppingListById(shoppingListId);
+            mShoppingList = ShoppingList.GetShoppingListById(UUID.fromString(shoppingListId));
         }
         updateUI();
     }

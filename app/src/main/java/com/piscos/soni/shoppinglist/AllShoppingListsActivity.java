@@ -43,8 +43,14 @@ public class AllShoppingListsActivity extends AppCompatActivity {
         // use a linear layout manager
         mProductsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        updateUI();
+        //updateUI();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updateUI();
     }
 
     public void updateUI() {
@@ -67,7 +73,7 @@ public class AllShoppingListsActivity extends AppCompatActivity {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = ShoppingListActivity.newIntent(AllShoppingListsActivity.this,mModel.mId);
+                    Intent i = ShoppingListActivity.newIntent(AllShoppingListsActivity.this,mModel.mUUID);
                     startActivity(i);
                 }
             });

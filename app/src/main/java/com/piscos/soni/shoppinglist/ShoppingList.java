@@ -4,11 +4,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-
+import java.util.UUID;
 
 
 public class ShoppingList {
-    private int mId;
+    private UUID mId;
     private String mName;
     public List<ShoppingListItem> Items;
 
@@ -20,12 +20,13 @@ public class ShoppingList {
         ShoppingList sl = new ShoppingList();
         DateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH:mm:ss.SSS");
         sl.mName = df.format(Calendar.getInstance().getTime());
-        sl.mId = ShoppingListManager.CreateShoppingList(sl.mName);
+        sl.mId = UUID.randomUUID();
+        ShoppingListManager.CreateShoppingList(sl.mName,sl.mId);
         sl.Items = ShoppingListManager.GetAllProducts();
         return sl;
     }
 
-    public static ShoppingList GetShoppingListById(int id){
+    public static ShoppingList GetShoppingListById(UUID id){
         ShoppingList sl = new ShoppingList();
         sl.mName = ShoppingListManager.GetShoppingListName(id);
         sl.mId = id;
@@ -45,7 +46,7 @@ public class ShoppingList {
         return items;
     }
 
-    public int getId() {
+    public UUID getId() {
         return mId;
     }
 

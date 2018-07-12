@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import sqlite.utils.DB;
 import sqlite.utils.DBOperation;
@@ -27,23 +28,16 @@ public class ShoppingListManager {
         return  products;
     }
 
-    public static int CreateShoppingList(final String name)  {
-        final int[] id = new int[1];
-        id[0] = 0;
+    public static void CreateShoppingList(final String name,final UUID uuid)  {
         DB.RunTransaction(new DBTransaction() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                db.execSQL("insert into ShoppingLists (Name) values (?)",new Object[]{name});
-                Cursor c = db.rawQuery("select last_insert_rowid()",new String[]{});
-                while(c.moveToNext()) {
-                    id[0] = Integer.valueOf(c.getString(0));
-                }
+                db.execSQL("insert into ShoppingLists (Name,UUID) values (?,?)",new Object[]{name, uuid});
             }
         });
-        return id[0];
     }
 
-    public static void AddShoppingListProducts(final int shoppingListId, final List<ShoppingListItem> products){
+    public static void AddShoppingListProducts(final UUID shoppingListId, final List<ShoppingListItem> products){
         DB.RunTransaction(new DBTransaction() {
             @Override
             public void Operate(SQLiteDatabase db) {
@@ -56,7 +50,7 @@ public class ShoppingListManager {
 
     }
 
-    public static void AddShoppingListProduct(final int shoppingListId, final ShoppingListItem product){
+    public static void AddShoppingListProduct(final UUID shoppingListId, final ShoppingListItem product){
         DB.RunTransaction(new DBTransaction() {
             @Override
             public void Operate(SQLiteDatabase db) {
@@ -71,7 +65,7 @@ public class ShoppingListManager {
         });
     }
 
-    public static void DeleteShoppingListProduct(final int shoppingListId, final ShoppingListItem product){
+    public static void DeleteShoppingListProduct(final UUID shoppingListId, final ShoppingListItem product){
         DB.RunTransaction(new DBTransaction() {
             @Override
             public void Operate(SQLiteDatabase db) {
@@ -80,7 +74,7 @@ public class ShoppingListManager {
         });
     }
 
-    public static String GetShoppingListName(final int shoppingListId){
+    public static String GetShoppingListName(final UUID shoppingListId){
         final String[] name= new String [1];
         DB.Operate(new DBOperation() {
             @Override
@@ -94,7 +88,7 @@ public class ShoppingListManager {
         return name[0];
     }
 
-    public static List<ShoppingListItem> GetShoppingListProducts(final int shoppingListId){
+    public static List<ShoppingListItem> GetShoppingListProducts(final UUID shoppingListId){
         final List<ShoppingListItem> products =  new ArrayList<>();
         DB.Operate(new DBOperation() {
             @Override
@@ -116,9 +110,9 @@ public class ShoppingListManager {
         DB.Operate(new DBOperation() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                Cursor c=db.rawQuery("select Id,Name, 2 from ShoppingLists",new String[]{});
+                Cursor c=db.rawQuery("select Id,Name, 2,UUID from ShoppingLists",new String[]{});
                 while(c.moveToNext()) {
-                    shoppingLists.add(new ShoppingListElement(c.getInt(0),c.getString(1),c.getInt(2)));
+                    shoppingLists.add(new ShoppingListElement(c.getInt(0),c.getString(1),c.getInt(2),UUID.fromString(c.getString(3))));
                 }
             }
         });
