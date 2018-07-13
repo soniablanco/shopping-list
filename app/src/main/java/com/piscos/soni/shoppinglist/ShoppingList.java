@@ -62,4 +62,14 @@ public class ShoppingList {
             ShoppingListManager.AddShoppingListProduct(this.mId,item);
         }
     }
+
+    public void synchronizeList(){
+        ShoppingList toUpload = new ShoppingList();
+        toUpload.mName = this.mName;
+        toUpload.mId = this.getId();
+        toUpload.Items = ShoppingListManager.GetShoppingListItems(this.getId());
+
+        FBShoppingListsRepository repo = new FBShoppingListsRepository();
+        repo.updloadList(toUpload);
+    }
 }

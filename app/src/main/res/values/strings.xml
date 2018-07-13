@@ -5,4 +5,5 @@
     <string name="all_products">Products</string>
     <string name="shopping_lists_history">History</string>
     <string name="sync_confirmation">Synchronization OK</string>
+    <string name="sync_list">Sync</string>
     </resources>

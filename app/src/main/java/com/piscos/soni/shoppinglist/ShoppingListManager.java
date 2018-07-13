@@ -56,10 +56,10 @@ public class ShoppingListManager {
             public void Operate(SQLiteDatabase db) {
                 Cursor c = db.rawQuery("select Name from ShoppingListItems where ShoppingListId = ? and Code = ?",new String[]{String.valueOf(shoppingListId),String.valueOf(product.getCode())});
                 if (c.moveToNext()){
-                    db.execSQL("Update ShoppingListItems Set Quantity = ? where ShoppingListId = ? and Code = ?",new Object[]{product.getQuantity(),shoppingListId,product.getCode()});
+                    db.execSQL("Update ShoppingListItems Set Quantity = ?, WasModified =?,TimeStamp =? where ShoppingListId = ? and Code = ?",new Object[]{product.getQuantity(),1,product.getTimestamp(),shoppingListId,product.getCode()});
                 }
                 else {
-                    db.execSQL("insert into ShoppingListItems (Name, Code, ThumbnailPath,Quantity,ShoppingListId) values (?,?,?,?,?)", new Object[]{product.getName(),product.getCode(),product.getThumbnailPath(),product.getQuantity(),shoppingListId});
+                    db.execSQL("insert into ShoppingListItems (Name, Code, ThumbnailPath,Quantity,ShoppingListId,WasModified,TimeStamp) values (?,?,?,?,?,?,?)", new Object[]{product.getName(),product.getCode(),product.getThumbnailPath(),product.getQuantity(),shoppingListId,1,product.getTimestamp()});
                 }
             }
         });
@@ -79,7 +79,7 @@ public class ShoppingListManager {
         DB.Operate(new DBOperation() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                Cursor c=db.rawQuery("select Name from ShoppingLists where Id = ?",new String[]{String.valueOf(shoppingListId)});
+                Cursor c=db.rawQuery("select Name from ShoppingLists where UUID = ?",new String[]{String.valueOf(shoppingListId)});
                 if(c.moveToFirst()) {
                     name[0] = c.getString(0);
                 }
@@ -93,12 +93,27 @@ public class ShoppingListManager {
         DB.Operate(new DBOperation() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                Cursor c=db.rawQuery("select Products.Name,Products.Code,Products.ThumbnailPath, ifnull(ShoppingListItems.Quantity,0) from Products " +
+                Cursor c=db.rawQuery("select Products.Name,Products.Code,Products.ThumbnailPath, ifnull(ShoppingListItems.Quantity,0),ShoppingListItems.TimeStamp from Products " +
                         "left join ShoppingListItems " +
                         "on Products.Code = ShoppingListItems.Code " +
                         "and ShoppingListItems.ShoppingListId = ?",new String[]{String.valueOf(shoppingListId)});
                 while(c.moveToNext()) {
-                    products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2),c.getInt(3)));
+                    products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2),c.getInt(3),c.getLong(4)));
+                }
+            }
+        });
+        return  products;
+    }
+
+    public static List<ShoppingListItem> GetShoppingListItems(final UUID shoppingListId){
+        final List<ShoppingListItem> products =  new ArrayList<>();
+        DB.Operate(new DBOperation() {
+            @Override
+            public void Operate(SQLiteDatabase db) {
+                Cursor c=db.rawQuery("select ShoppingListItems.Name,ShoppingListItems.Code,ShoppingListItems.ThumbnailPath, ShoppingListItems.Quantity,ShoppingListItems.TimeStamp from ShoppingListItems " +
+                        "where ShoppingListItems.ShoppingListId = ?",new String[]{String.valueOf(shoppingListId)});
+                while(c.moveToNext()) {
+                    products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2),c.getInt(3),c.getLong(4)));
                 }
             }
         });

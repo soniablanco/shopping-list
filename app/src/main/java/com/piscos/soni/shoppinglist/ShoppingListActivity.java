@@ -9,10 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -153,7 +158,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         }
     }
 
-   /* @Override
+   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
@@ -164,21 +169,18 @@ public class ShoppingListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.menu_item_save_new_shopping_list:
-                //saveShoppingList(mProducts);
-                Toast toast = Toast.makeText(getApplicationContext(), "Ready to save", Toast.LENGTH_LONG);
+            case R.id.menu_item_sync_shopping_list:
+                syncShoppingList();
+                Toast toast = Toast.makeText(getApplicationContext(), "Synchronization OK", Toast.LENGTH_LONG);
                 toast.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
-    }*/
+    }
 
-    /*public void saveShoppingList(List<ShoppingListItem> items){
-       int res =  ShoppingListManager.CreateShoppingList();
-       if (res!= -1){
-           ShoppingListManager.AddShoppingListItems(res,items);
-       }
-    }*/
+    public void syncShoppingList(){
+        mShoppingList.synchronizeList();
+    }
 }
