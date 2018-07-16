@@ -7,6 +7,6 @@ public class FBShoppingListItem {
     public String name;
     public String code;
     public int quantity;
-    public Timestamp timestamp;
+    public long timestamp;
     public UUID shoppingListId;
 }

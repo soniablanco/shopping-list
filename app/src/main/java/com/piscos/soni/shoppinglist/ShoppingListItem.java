@@ -1,7 +1,5 @@
 package com.piscos.soni.shoppinglist;
 
-import java.security.Timestamp;
-
 public class ShoppingListItem extends ProductListItem{
 
     public static final String SELECTED_COLOUR = "#7986CB";
@@ -16,6 +14,7 @@ public class ShoppingListItem extends ProductListItem{
             mItemColor = UNSELECTED_COLOUR;
         }
         mTimestamp = System.currentTimeMillis()/1000;
+        mUpdated = true;
     }
 
     public int getQuantity() {
@@ -45,14 +44,22 @@ public class ShoppingListItem extends ProductListItem{
         super.setCode(code);
         super.mPhotoUrl = photoUrl;
         setQuantity(0);
-
+        mUpdated = false;
     }
 
-    public ShoppingListItem(String name, String code, String photoUrl, int quantity,long timestamp){
+    public ShoppingListItem(String name, String code, String photoUrl, int quantity,long timestamp,boolean updated){
         super.setName(name);
         super.setCode(code);
         super.mPhotoUrl = photoUrl;
         setQuantity(quantity);
         mTimestamp = timestamp;
+        mUpdated = updated;
     }
+
+    /*public boolean isUpdated() {
+        return mUpdated;
+    }*/
+
+    public boolean mUpdated;
+
 }

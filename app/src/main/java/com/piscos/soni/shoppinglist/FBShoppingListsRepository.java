@@ -1,8 +1,14 @@
 package com.piscos.soni.shoppinglist;
 
+import android.support.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,7 +32,7 @@ public class FBShoppingListsRepository {
         DatabaseReference shoppingListName = shoppingList.child("name");
         shoppingListName.setValue(sl.getName());
 
-        uploadListItems(sl.getId(),sl.Items);
+        //uploadListItems(sl.getId(),sl.Items);
     }
 
     public void uploadListItem(UUID slUUID, ShoppingListItem sli){
@@ -50,5 +56,24 @@ public class FBShoppingListsRepository {
         for(ShoppingListItem i: slItems){
             uploadListItem(slUUID,i);
         }
+    }
+
+   public  void  fetchListItems(final ShoppingListItemsDownloadedListener listener){
+        final List<ShoppingListItem> productList = new ArrayList<>();
+       shoppingListItemsDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    FBShoppingListItem product = ds.getValue(FBShoppingListItem.class);
+                    productList.add(new ShoppingListItem(product.name, product.code, "",product.quantity,product.timestamp,true));
+                }
+                listener.onReady(productList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

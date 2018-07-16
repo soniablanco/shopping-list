@@ -171,8 +171,8 @@ public class ShoppingListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_item_sync_shopping_list:
                 syncShoppingList();
-                Toast toast = Toast.makeText(getApplicationContext(), "Synchronization OK", Toast.LENGTH_LONG);
-                toast.show();
+                /*Toast toast = Toast.makeText(getApplicationContext(), "Synchronization OK", Toast.LENGTH_LONG);
+                toast.show();*/
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

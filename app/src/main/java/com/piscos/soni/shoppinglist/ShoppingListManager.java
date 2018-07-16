@@ -65,6 +65,7 @@ public class ShoppingListManager {
         });
     }
 
+
     public static void DeleteShoppingListProduct(final UUID shoppingListId, final ShoppingListItem product){
         DB.RunTransaction(new DBTransaction() {
             @Override
@@ -93,12 +94,12 @@ public class ShoppingListManager {
         DB.Operate(new DBOperation() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                Cursor c=db.rawQuery("select Products.Name,Products.Code,Products.ThumbnailPath, ifnull(ShoppingListItems.Quantity,0),ShoppingListItems.TimeStamp from Products " +
+                Cursor c=db.rawQuery("select Products.Name,Products.Code,Products.ThumbnailPath, ifnull(ShoppingListItems.Quantity,0),ShoppingListItems.TimeStamp,ShoppingListItems.WasModified from Products " +
                         "left join ShoppingListItems " +
                         "on Products.Code = ShoppingListItems.Code " +
                         "and ShoppingListItems.ShoppingListId = ?",new String[]{String.valueOf(shoppingListId)});
                 while(c.moveToNext()) {
-                    products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2),c.getInt(3),c.getLong(4)));
+                    products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2),c.getInt(3),c.getLong(4),c.getInt(5)!=0));
                 }
             }
         });
@@ -110,10 +111,10 @@ public class ShoppingListManager {
         DB.Operate(new DBOperation() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                Cursor c=db.rawQuery("select ShoppingListItems.Name,ShoppingListItems.Code,ShoppingListItems.ThumbnailPath, ShoppingListItems.Quantity,ShoppingListItems.TimeStamp from ShoppingListItems " +
+                Cursor c=db.rawQuery("select ShoppingListItems.Name,ShoppingListItems.Code,ShoppingListItems.ThumbnailPath, ShoppingListItems.Quantity,ShoppingListItems.TimeStamp,ShoppingListItems.WasModified from ShoppingListItems " +
                         "where ShoppingListItems.ShoppingListId = ?",new String[]{String.valueOf(shoppingListId)});
                 while(c.moveToNext()) {
-                    products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2),c.getInt(3),c.getLong(4)));
+                    products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2),c.getInt(3),c.getLong(4),c.getInt(5)!=0));
                 }
             }
         });
@@ -134,6 +135,17 @@ public class ShoppingListManager {
         return shoppingLists;
     }
 
+    public static void UpdateShoppingListProduct(final UUID shoppingListId, final ShoppingListItem product){
+        DB.RunTransaction(new DBTransaction() {
+            @Override
+            public void Operate(SQLiteDatabase db) {
+                Cursor c = db.rawQuery("select Name from ShoppingListItems where ShoppingListId = ? and Code = ?",new String[]{String.valueOf(shoppingListId),String.valueOf(product.getCode())});
+                if (c.moveToNext()){
+                    db.execSQL("Update ShoppingListItems Set Quantity = ?, WasModified =?,TimeStamp =? where ShoppingListId = ? and Code = ?",new Object[]{product.getQuantity(),product.mUpdated,product.getTimestamp(),shoppingListId,product.getCode()});
+                }
+            }
+        });
+    }
     /*public static ShoppingList GetShoppingList(final int ShoppingListId){
 
         DB.Operate(new DBOperation() {

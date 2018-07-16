@@ -2,6 +2,7 @@ package com.piscos.soni.shoppinglist;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
@@ -64,12 +65,60 @@ public class ShoppingList {
     }
 
     public void synchronizeList(){
-        ShoppingList toUpload = new ShoppingList();
+        final ShoppingList toUpload = new ShoppingList();
         toUpload.mName = this.mName;
         toUpload.mId = this.getId();
-        toUpload.Items = ShoppingListManager.GetShoppingListItems(this.getId());
 
-        FBShoppingListsRepository repo = new FBShoppingListsRepository();
-        repo.updloadList(toUpload);
+        final FBShoppingListsRepository repo = new FBShoppingListsRepository();
+        repo.fetchListItems(new ShoppingListItemsDownloadedListener() {
+            @Override
+            public void onReady(List<ShoppingListItem> items) {
+
+                toUpload.Items = getItemsForUpdate(items);
+                repo.updloadList(toUpload);
+                for(ShoppingListItem i: toUpload.Items){
+                    repo.uploadListItem(toUpload.mId,i);
+                    i.mUpdated =false;
+                    ShoppingListManager.UpdateShoppingListProduct(toUpload.mId,i);
+                }
+            }
+        });
+
     }
+
+    private List<ShoppingListItem> getUpdatedItems(){
+        List<ShoppingListItem> items = ShoppingListManager.GetShoppingListItems(this.getId());
+        List<ShoppingListItem> forUpdate = new ArrayList<>();
+        for(ShoppingListItem i:items) {
+            if(i.mUpdated) {
+                forUpdate.add(i);
+            }
+        }
+        return forUpdate;
+    }
+
+    private List<ShoppingListItem> getItemsForUpdate(List<ShoppingListItem> items) {
+        List<ShoppingListItem> localItems =  getUpdatedItems();
+        List<ShoppingListItem> toUpdateItems = new ArrayList<>();
+        for(ShoppingListItem i:localItems) {
+
+            boolean isNew = true;
+
+            for (ShoppingListItem j:items) {
+
+                if(j.getCode() == i.getCode()){
+                    isNew = false;
+                }
+                if(i.getTimestamp() > j.getTimestamp()){
+                    toUpdateItems.add(i);
+                }
+            }
+            if(isNew){
+                toUpdateItems.add(i);
+            }
+
+        }
+        return toUpdateItems;
+    }
+
 }
