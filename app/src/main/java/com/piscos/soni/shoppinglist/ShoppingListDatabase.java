@@ -31,13 +31,20 @@ public class ShoppingListDatabase extends DatabaseInfo {
         versions.add(new SQLVersionExecutor() {
             @Override
             public void Exec(SQLiteDatabase db) {
-                db.execSQL("CREATE TABLE ShoppingLists (Id integer primary key autoincrement,Name text collate nocase,UUID text collate nocase)");
+                db.execSQL("CREATE TABLE ShoppingLists (Id integer primary key autoincrement,Name text collate nocase,UUID text collate nocase,LastLocalUpdateTimeStamp TIMESTAMP, LastSyncTimeStamp TIMESTAMP)");
             }
         });
         versions.add(new SQLVersionExecutor() {
             @Override
             public void Exec(SQLiteDatabase db) {
                 db.execSQL("CREATE TABLE ShoppingListItems (Id integer primary key autoincrement,Code text collate nocase, Name text collate nocase, ThumbnailPath text,Quantity integer, ShoppingListId text collate nocase,WasModified integer,TimeStamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)");
+            }
+        });
+
+        versions.add(new SQLVersionExecutor() {
+            @Override
+            public void Exec(SQLiteDatabase db) {
+                db.execSQL("CREATE TABLE MyShoppingLists (Id integer primary key autoincrement,LastLocalUpdateTimeStamp TIMESTAMP, LastSyncTimeStamp TIMESTAMP)");
             }
         });
 

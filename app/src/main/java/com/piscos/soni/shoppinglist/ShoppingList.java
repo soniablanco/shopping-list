@@ -11,10 +11,32 @@ import java.util.UUID;
 public class ShoppingList {
     private UUID mId;
     private String mName;
+
+    public long getLastUpdateTS() {
+        return mLastUpdateTS;
+    }
+
+    public long getLastSyncTS() {
+        return mLastSyncTS;
+    }
+
+    private void setLastUpdateTS(long lastUpdateTS) {
+        mLastUpdateTS = lastUpdateTS;
+        ShoppingListManager.UpdateShoppingList(this);
+    }
+
+    private long mLastUpdateTS;
+    private long mLastSyncTS;
     public List<ShoppingListItem> Items;
 
     public ShoppingList(){
 
+    }
+    public ShoppingList(UUID id, String name,long lastUpdateTS,long lastSyncTS){
+        mId = id;
+        mName = name;
+        mLastUpdateTS = lastUpdateTS;
+        mLastSyncTS = lastSyncTS;
     }
 
     public static ShoppingList GetNewShoppingList(){
@@ -28,9 +50,7 @@ public class ShoppingList {
     }
 
     public static ShoppingList GetShoppingListById(UUID id){
-        ShoppingList sl = new ShoppingList();
-        sl.mName = ShoppingListManager.GetShoppingListName(id);
-        sl.mId = id;
+        ShoppingList sl = ShoppingListManager.GetShoppingList(id);
         sl.Items = ShoppingListManager.GetShoppingListProducts(id);
         return sl;
     }
@@ -62,6 +82,7 @@ public class ShoppingList {
         else{
             ShoppingListManager.AddShoppingListProduct(this.mId,item);
         }
+        this.setLastUpdateTS(System.currentTimeMillis()/1000);
     }
 
     public void synchronizeList(){
