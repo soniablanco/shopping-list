@@ -28,11 +28,11 @@ public class ShoppingListManager {
         return  products;
     }
 
-    public static void CreateShoppingList(final String name,final UUID uuid)  {
+    public static void CreateShoppingList(final String name,final UUID uuid, final Long lastLocalUpdateTS,final Long lastSyncTS)  {
         DB.RunTransaction(new DBTransaction() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                db.execSQL("insert into ShoppingLists (Name,UUID) values (?,?)",new Object[]{name, uuid});
+                db.execSQL("insert into ShoppingLists (Name,UUID,LastLocalUpdateTimeStamp,LastSyncTimeStamp) values (?,?,?,?)",new Object[]{name, uuid,lastLocalUpdateTS,lastSyncTS});
             }
         });
     }
@@ -95,7 +95,7 @@ public class ShoppingListManager {
         DB.RunTransaction(new DBTransaction() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                    db.execSQL("Update ShoppingList Set Name=?,LastLocalUpdateTimeStamp=?, LastSyncTimeStamp=? where ShoppingListId = ?",new Object[]{shoppingList.getName(),shoppingList.getLastUpdateTS(),shoppingList.getLastSyncTS(),shoppingList.getId()});
+                    db.execSQL("Update ShoppingLists Set Name=?,LastLocalUpdateTimeStamp=?, LastSyncTimeStamp=? where UUID = ?",new Object[]{shoppingList.getName(),shoppingList.getLastUpdateTS(),shoppingList.getLastSyncTS(),shoppingList.getId()});
             }
         });
     }
@@ -124,7 +124,7 @@ public class ShoppingListManager {
                         "on Products.Code = ShoppingListItems.Code " +
                         "and ShoppingListItems.ShoppingListId = ?",new String[]{String.valueOf(shoppingListId)});
                 while(c.moveToNext()) {
-                    products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2),c.getInt(3),c.getLong(4),c.getInt(5)!=0));
+                    products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2),c.getInt(3),c.isNull(4)? null:c.getLong(4),c.getInt(5)!=0));
                 }
             }
         });
@@ -139,7 +139,7 @@ public class ShoppingListManager {
                 Cursor c=db.rawQuery("select ShoppingListItems.Name,ShoppingListItems.Code,ShoppingListItems.ThumbnailPath, ShoppingListItems.Quantity,ShoppingListItems.TimeStamp,ShoppingListItems.WasModified from ShoppingListItems " +
                         "where ShoppingListItems.ShoppingListId = ? AND ShoppingListItems.Quantity > ?",new String[]{String.valueOf(shoppingListId),"0"});
                 while(c.moveToNext()) {
-                    products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2),c.getInt(3),c.getLong(4),c.getInt(5)!=0));
+                    products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2),c.getInt(3),c.isNull(4)? null:c.getLong(4),c.getInt(5)!=0));
                 }
             }
         });
@@ -188,6 +188,22 @@ public class ShoppingListManager {
                 if (c.moveToNext()){
                     db.execSQL("Update ShoppingListItems Set Quantity = ?, WasModified =?,TimeStamp =? where ShoppingListId = ? and Code = ?",new Object[]{product.getQuantity(),product.mUpdated,product.getTimestamp(),shoppingListId,product.getCode()});
                 }
+            }
+        });
+    }
+
+    public static void UpdateMyShoppingLists(final Long lastLocalUpdateTS,final Long lastSyncTS ){
+        DB.RunTransaction(new DBTransaction() {
+            @Override
+            public void Operate(SQLiteDatabase db) {
+                Cursor c = db.rawQuery("select Id from MyShoppingLists limit 1",new String[]{});
+                if (c.moveToNext()){
+                    db.execSQL("Update MyShoppingLists Set LastLocalUpdateTimeStamp = ifnull(?,LastLocalUpdateTimeStamp), LastSyncTimeStamp =ifnull(?,LastSyncTimeStamp)",new Object[]{lastLocalUpdateTS,lastSyncTS});
+                }
+                else {
+                    db.execSQL("insert into MyShoppingLists (LastLocalUpdateTimeStamp, LastSyncTimeStamp) values (?,?)", new Object[]{lastLocalUpdateTS,lastSyncTS});
+                }
+                //db.execSQL("Update ShoppingList Set Quantity = ?, WasModified =?,TimeStamp =? where ShoppingListId = ? and Code = ?",new Object[]{product.getQuantity(),product.mUpdated,product.getTimestamp(),shoppingListId,product.getCode()});
             }
         });
     }

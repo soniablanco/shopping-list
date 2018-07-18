@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.UUID;
@@ -58,10 +57,10 @@ public class ShoppingListActivity extends AppCompatActivity {
 
         String shoppingListId = getIntent().getStringExtra(EXTRA_SHOPPING_LIST_ID);
         if (shoppingListId == null) {
-            mShoppingList = ShoppingList.GetNewShoppingList();//ShoppingList.GetShoppingListById(7);
+            mShoppingList = ShoppingList.NewShoppingList();//ShoppingList.GetShoppingListById(7);
         }
         else if (shoppingListId.isEmpty()) {
-            mShoppingList = ShoppingList.GetNewShoppingList();
+            mShoppingList = ShoppingList.NewShoppingList();
         }
         else{
             mShoppingList = ShoppingList.GetShoppingListById(UUID.fromString(shoppingListId));

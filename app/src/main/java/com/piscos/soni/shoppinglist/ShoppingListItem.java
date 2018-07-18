@@ -37,7 +37,7 @@ public class ShoppingListItem extends ProductListItem{
         return mTimestamp;
     }
 
-    private long mTimestamp;
+    private Long mTimestamp;
 
     public ShoppingListItem(String name, String code, String photoUrl){
         super.setName(name);
@@ -47,7 +47,7 @@ public class ShoppingListItem extends ProductListItem{
         mUpdated = false;
     }
 
-    public ShoppingListItem(String name, String code, String photoUrl, int quantity,long timestamp,boolean updated){
+    public ShoppingListItem(String name, String code, String photoUrl, int quantity,Long timestamp,boolean updated){
         super.setName(name);
         super.setCode(code);
         super.mPhotoUrl = photoUrl;

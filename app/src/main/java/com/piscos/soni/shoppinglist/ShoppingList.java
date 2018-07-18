@@ -12,42 +12,51 @@ public class ShoppingList {
     private UUID mId;
     private String mName;
 
-    public long getLastUpdateTS() {
+    public Long getLastUpdateTS() {
         return mLastUpdateTS;
     }
 
-    public long getLastSyncTS() {
+    public Long getLastSyncTS() {
         return mLastSyncTS;
     }
 
-    private void setLastUpdateTS(long lastUpdateTS) {
+    private void setLastUpdateTS(Long lastUpdateTS) {
         mLastUpdateTS = lastUpdateTS;
         ShoppingListManager.UpdateShoppingList(this);
     }
 
-    private long mLastUpdateTS;
-    private long mLastSyncTS;
+    private Long mLastUpdateTS;
+    private Long mLastSyncTS;
     public List<ShoppingListItem> Items;
 
     public ShoppingList(){
 
     }
-    public ShoppingList(UUID id, String name,long lastUpdateTS,long lastSyncTS){
+    public ShoppingList(UUID id, String name,Long lastUpdateTS,Long lastSyncTS){
         mId = id;
         mName = name;
         mLastUpdateTS = lastUpdateTS;
         mLastSyncTS = lastSyncTS;
     }
 
-    public static ShoppingList GetNewShoppingList(){
+    public static ShoppingList NewShoppingList(){
         ShoppingList sl = new ShoppingList();
         DateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH:mm:ss.SSS");
         sl.mName = df.format(Calendar.getInstance().getTime());
         sl.mId = UUID.randomUUID();
-        ShoppingListManager.CreateShoppingList(sl.mName,sl.mId);
+        sl.mLastUpdateTS = System.currentTimeMillis()/1000;
+        ShoppingListManager.CreateShoppingList(sl.mName,sl.mId,sl.getLastUpdateTS(),sl.getLastSyncTS());
+        ShoppingListManager.UpdateMyShoppingLists(sl.getLastUpdateTS(),sl.getLastSyncTS());
         sl.Items = ShoppingListManager.GetAllProducts();
         return sl;
     }
+
+    /*public static ShoppingList NewShoppingList(UUID id, String name,Long lastUpdateTS,Long lastSyncTS){
+        ShoppingList sl = new ShoppingList(id,name,lastUpdateTS,lastSyncTS);
+        ShoppingListManager.CreateShoppingList(sl.mName,sl.mId,sl.getLastUpdateTS(),sl.getLastSyncTS());
+        sl.Items = ShoppingListManager.GetAllProducts();
+        return sl;
+    }*/
 
     public static ShoppingList GetShoppingListById(UUID id){
         ShoppingList sl = ShoppingListManager.GetShoppingList(id);
@@ -82,7 +91,9 @@ public class ShoppingList {
         else{
             ShoppingListManager.AddShoppingListProduct(this.mId,item);
         }
+
         this.setLastUpdateTS(System.currentTimeMillis()/1000);
+        ShoppingListManager.UpdateMyShoppingLists(this.getLastUpdateTS(),this.getLastSyncTS());
     }
 
     public void synchronizeList(){
