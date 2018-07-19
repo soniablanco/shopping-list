@@ -26,11 +26,14 @@ public class FBShoppingListsRepository {
         shoppingListItemsDBRef = shoppingListItemsDBRef.child(SHOPPING_LISTS_ITEMS);
     }
 
-    public void updloadList(ShoppingList sl){
+    public void uploadList(ShoppingList sl){
         DatabaseReference shoppingList = shoppingListsDBRef.child(sl.getId().toString());
 
         DatabaseReference shoppingListName = shoppingList.child("name");
         shoppingListName.setValue(sl.getName());
+
+        DatabaseReference shoppingListTS = shoppingList.child("lastUpdateTimestamp");
+        shoppingListTS.setValue(sl.getLastUpdateTS());
 
         //uploadListItems(sl.getId(),sl.Items);
     }
@@ -48,11 +51,13 @@ public class FBShoppingListsRepository {
         itemProperty = shoppingListItem.child("quantity");
         itemProperty.setValue(sli.getQuantity());
 
-        itemProperty = shoppingListItem.child("timestamp");
-        itemProperty.setValue(sli.getTimestamp());
+        /*itemProperty = shoppingListItem.child("timestamp");
+        itemProperty.setValue(sli.getTimestamp());*/
     }
 
     public void uploadListItems (UUID slUUID,List<ShoppingListItem> slItems){
+        DatabaseReference shoppingListItem = shoppingListItemsDBRef.child(slUUID.toString());
+        shoppingListItem.removeValue();
         for(ShoppingListItem i: slItems){
             uploadListItem(slUUID,i);
         }

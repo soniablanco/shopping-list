@@ -2,7 +2,6 @@ package com.piscos.soni.shoppinglist;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
@@ -14,6 +13,11 @@ public class ShoppingList {
 
     public Long getLastUpdateTS() {
         return mLastUpdateTS;
+    }
+
+    public void setLastSyncTS(Long lastSyncTS) {
+        mLastSyncTS = lastSyncTS;
+        ShoppingListManager.UpdateShoppingList(this);
     }
 
     public Long getLastSyncTS() {
@@ -46,7 +50,7 @@ public class ShoppingList {
         sl.mId = UUID.randomUUID();
         sl.mLastUpdateTS = System.currentTimeMillis()/1000;
         ShoppingListManager.CreateShoppingList(sl.mName,sl.mId,sl.getLastUpdateTS(),sl.getLastSyncTS());
-        ShoppingListManager.UpdateMyShoppingLists(sl.getLastUpdateTS(),sl.getLastSyncTS());
+        ShoppingListManager.UpdateMyShoppingListsInfo(sl.getLastUpdateTS(),sl.getLastSyncTS());
         sl.Items = ShoppingListManager.GetAllProducts();
         return sl;
     }
@@ -93,10 +97,22 @@ public class ShoppingList {
         }
 
         this.setLastUpdateTS(System.currentTimeMillis()/1000);
-        ShoppingListManager.UpdateMyShoppingLists(this.getLastUpdateTS(),this.getLastSyncTS());
+        ShoppingListManager.UpdateMyShoppingListsInfo(this.getLastUpdateTS(),this.getLastSyncTS());
     }
 
     public void synchronizeList(){
+        if(this.getLastUpdateTS() > this.getLastSyncTS()) {
+            final ShoppingList toUpload = new ShoppingList(this.getId(), this.mName, this.getLastUpdateTS(), this.getLastSyncTS());
+            toUpload.Items = ShoppingListManager.GetShoppingListItems(this.getId());
+
+            final FBShoppingListsRepository repo = new FBShoppingListsRepository();
+            repo.uploadList(toUpload);
+            repo.uploadListItems(toUpload.getId(),toUpload.Items);
+
+        }
+    }
+
+    /*public void synchronizeList(){
         final ShoppingList toUpload = new ShoppingList();
         toUpload.mName = this.mName;
         toUpload.mId = this.getId();
@@ -151,6 +167,6 @@ public class ShoppingList {
 
         }
         return toUpdateItems;
-    }
+    }*/
 
 }

@@ -192,7 +192,7 @@ public class ShoppingListManager {
         });
     }
 
-    public static void UpdateMyShoppingLists(final Long lastLocalUpdateTS,final Long lastSyncTS ){
+    public static void UpdateMyShoppingListsInfo(final Long lastLocalUpdateTS, final Long lastSyncTS ){
         DB.RunTransaction(new DBTransaction() {
             @Override
             public void Operate(SQLiteDatabase db) {
@@ -206,6 +206,20 @@ public class ShoppingListManager {
                 //db.execSQL("Update ShoppingList Set Quantity = ?, WasModified =?,TimeStamp =? where ShoppingListId = ? and Code = ?",new Object[]{product.getQuantity(),product.mUpdated,product.getTimestamp(),shoppingListId,product.getCode()});
             }
         });
+    }
+
+    public static MyShoppingListsCtrlInfo GetMyShoppingListsInfo(){
+        final List<MyShoppingListsCtrlInfo> shoppingListsInfo =  new ArrayList<>();
+        DB.Operate(new DBOperation() {
+            @Override
+            public void Operate(SQLiteDatabase db) {
+                Cursor c=db.rawQuery("select LastLocalUpdateTimeStamp, LastSyncTimeStamp from MyShoppingLists",new String[]{});
+                while(c.moveToFirst()) {
+                    shoppingListsInfo.add(new MyShoppingListsCtrlInfo(c.isNull(0)? null:c.getLong(0),c.isNull(1)? null:c.getLong(1)));
+                }
+            }
+        });
+        return shoppingListsInfo.size() >0 ? shoppingListsInfo.get(0):null;
     }
 
 
