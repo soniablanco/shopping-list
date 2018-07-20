@@ -26,6 +26,62 @@ public class FBShoppingListsRepository {
         shoppingListItemsDBRef = shoppingListItemsDBRef.child(SHOPPING_LISTS_ITEMS);
     }
 
+    public void getShoppingListLastUpdateTimeStamp(final SyncShoppingList sl,final SyncShoppingListLastUpdateTSListener listener){
+        final Long[] ts = new Long[1];
+        DatabaseReference dr = shoppingListsDBRef.child(sl.mId.toString());
+        //dr = dr.child("lastUpdateTimestamp");
+        dr.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ts[0] = dataSnapshot.child("lastUpdateTimestamp").getValue(Long.class);
+                listener.onReady(ts[0]);//(Long.getLong("123456"));
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void pushShoppingList(SyncShoppingList sl){
+        DatabaseReference shoppingList = shoppingListsDBRef.child(sl.mId.toString());
+
+        DatabaseReference shoppingListName = shoppingList.child("name");
+        shoppingListName.setValue(sl.mName);
+
+        DatabaseReference shoppingListTS = shoppingList.child("lastUpdateTimestamp");
+        shoppingListTS.setValue(sl.mLastUpdateTS);
+
+        pushShoppingListProductsItems (sl.mId,sl.Items);
+    }
+
+    public void pushShoppingListProductsItems (UUID shoppingListId,List<SyncShoppingListProduct> products){
+        DatabaseReference shoppingListItem = shoppingListItemsDBRef.child(shoppingListId.toString());
+        shoppingListItem.removeValue();
+        for(SyncShoppingListProduct i: products){
+            pushShoppingListProduct(shoppingListId,i);
+        }
+    }
+
+    public void pushShoppingListProduct(UUID shoppingListId,SyncShoppingListProduct product){
+        DatabaseReference shoppingListItem = shoppingListItemsDBRef.child(shoppingListId.toString());
+        shoppingListItem = shoppingListItem.child(product.mCode);
+
+        DatabaseReference itemProperty =  shoppingListItem.child("code");
+        itemProperty.setValue(product.mCode);
+
+        itemProperty = shoppingListItem.child("name");
+        itemProperty.setValue(product.mName);
+
+        itemProperty = shoppingListItem.child("quantity");
+        itemProperty.setValue(product.mQuantity);
+
+    }
+
+
+
+
+
     public void uploadList(ShoppingList sl){
         DatabaseReference shoppingList = shoppingListsDBRef.child(sl.getId().toString());
 
@@ -65,7 +121,7 @@ public class FBShoppingListsRepository {
 
    public  void  fetchListItems(final ShoppingListItemsDownloadedListener listener){
         final List<ShoppingListItem> productList = new ArrayList<>();
-       shoppingListItemsDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        shoppingListItemsDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){

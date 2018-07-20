@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.UUID;
@@ -180,6 +181,14 @@ public class ShoppingListActivity extends AppCompatActivity {
     }
 
     public void syncShoppingList(){
-        mShoppingList.synchronizeList();
+        //mShoppingList.synchronizeList();
+        Synchronization sync = new Synchronization();
+        sync.PushLocalData(new SyncShoppingListsPushListener() {
+            @Override
+            public void onReady() {
+                Toast toast = Toast.makeText(getApplicationContext(), R.string.sync_confirmation, Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
     }
 }
