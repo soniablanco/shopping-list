@@ -6,6 +6,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -15,8 +16,10 @@ import java.util.UUID;
 public class FBShoppingListsRepository {
     private DatabaseReference shoppingListsDBRef;
     private DatabaseReference shoppingListItemsDBRef;
+    private DatabaseReference myShoppingListsDBRef;
     private static final String SHOPPING_LISTS_NODE = "shoppinglists";
     private static final String SHOPPING_LISTS_ITEMS = "shoppinglistproducts";
+    private static final String MY_SHOPPING_LISTS = "myshoppinglists";
 
     public FBShoppingListsRepository(){
         shoppingListsDBRef = FirebaseDatabase.getInstance().getReference();
@@ -24,6 +27,9 @@ public class FBShoppingListsRepository {
 
         shoppingListItemsDBRef = FirebaseDatabase.getInstance().getReference();
         shoppingListItemsDBRef = shoppingListItemsDBRef.child(SHOPPING_LISTS_ITEMS);
+
+        myShoppingListsDBRef = FirebaseDatabase.getInstance().getReference();
+        myShoppingListsDBRef = myShoppingListsDBRef.child(MY_SHOPPING_LISTS);
     }
 
     public void getShoppingListLastUpdateTimeStamp(final SyncShoppingList sl,final SyncShoppingListLastUpdateTSListener listener){
@@ -78,6 +84,66 @@ public class FBShoppingListsRepository {
 
     }
 
+
+    public void getShoppingListsUpdated(final Long lastSyncTS, final SyncFetchUpdatedShoppingListsListener listener){
+        final List<SyncShoppingList> ts = new ArrayList<>();
+        Query query = shoppingListsDBRef.orderByChild("lastUpdateTimestamp").startAt(lastSyncTS);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    FBShoppingList list = ds.getValue(FBShoppingList.class);
+                    list.code = UUID.fromString(ds.getKey());
+                    ts.add(new SyncShoppingList(list.code,list.name,null,list.lastUpdateTimestamp));
+                }
+                listener.onReady(ts);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getUpdatedShoppingListProducts(UUID shoppingListId, final SyncFetchUpdatedShoppingListProductsListener listener){
+        final List<SyncShoppingListProduct> ts = new ArrayList<>();
+        Query query = shoppingListItemsDBRef.child(shoppingListId.toString());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    FBShoppingListItem item = ds.getValue(FBShoppingListItem.class);
+                    ts.add(new SyncShoppingListProduct(item.name,item.code,item.quantity));
+                }
+                listener.onReady(ts);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getMyShoppingListsLastUpdateTimeStamp(final SyncGetMyShoppingListsLastTSListener listener){
+        final Long[] ts = new Long[1];
+        //DatabaseReference dr = myShoppingListsDBRef.child("lastUpdateTimestamp");
+        myShoppingListsDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ts[0] = dataSnapshot.child("lastUpdateTimestamp").getValue(Long.class);
+               listener.onReady(ts[0]);//(Long.getLong("123456"));
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void updateMyShoppingListsLastUpdateTimestamp(Long newLastUpdateTimestamp){//has to be a FBfunction
+        DatabaseReference lastTS = myShoppingListsDBRef.child("lastUpdateTimestamp");
+        lastTS.setValue(newLastUpdateTimestamp);
+    }
 
 
 

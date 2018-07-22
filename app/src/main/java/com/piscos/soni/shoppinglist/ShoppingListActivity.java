@@ -170,9 +170,8 @@ public class ShoppingListActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_item_sync_shopping_list:
-                syncShoppingList();
-                /*Toast toast = Toast.makeText(getApplicationContext(), "Synchronization OK", Toast.LENGTH_LONG);
-                toast.show();*/
+                //syncShoppingList();
+                testQuery();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -190,5 +189,10 @@ public class ShoppingListActivity extends AppCompatActivity {
                 toast.show();
             }
         });
+    }
+
+    public void testQuery(){
+        FBShoppingListsRepository repo = new FBShoppingListsRepository();
+        repo.getShoppingListsExample();
     }
 }

@@ -41,6 +41,7 @@ public class FBProductsRepository {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    String ff=ds.getKey();
                     FBProduct product = ds.getValue(FBProduct.class);
                     productList.add(new ProductListItem(product.name, product.code, product.thumbnailUrl));
                 }
