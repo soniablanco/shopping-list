@@ -75,7 +75,9 @@ public class AllShoppingListsActivity extends AppCompatActivity {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = ShoppingListActivity.newIntent(AllShoppingListsActivity.this,mModel.mUUID);
+                    /*Intent i = ShoppingListActivity.newIntent(AllShoppingListsActivity.this,mModel.mUUID);
+                    startActivity(i);*/
+                    Intent i = BuyerShoppingListActivity.newIntent(AllShoppingListsActivity.this,mModel.mUUID);
                     startActivity(i);
                 }
             });
