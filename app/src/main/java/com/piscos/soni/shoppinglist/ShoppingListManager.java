@@ -28,11 +28,11 @@ public class ShoppingListManager {
         return  products;
     }
 
-    public static void CreateShoppingList(final String name,final UUID uuid, final Long lastLocalUpdateTS,final Long lastSyncTS)  {
+    public static void CreateShoppingList(final ShoppingList shoppingList)  {
         DB.RunTransaction(new DBTransaction() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                db.execSQL("insert into ShoppingLists (Name,UUID,LastLocalUpdateTimeStamp,LastSyncTimeStamp) values (?,?,?,?)",new Object[]{name, uuid,lastLocalUpdateTS,lastSyncTS});
+                db.execSQL("insert into ShoppingLists (Name,UUID,LastLocalUpdateTimeStamp,LastSyncTimeStamp) values (?,?,?,?)",new Object[]{shoppingList.getName(), shoppingList.getId(),shoppingList.getLastUpdateTS(),shoppingList.getLastSyncTS()});
             }
         });
     }
@@ -43,7 +43,7 @@ public class ShoppingListManager {
             public void Operate(SQLiteDatabase db) {
                 db.execSQL("delete from ShoppingListItems where ShoppingListId = ?",new Object[]{shoppingListId});
                 for(ShoppingListItem fb:products) {
-                    db.execSQL("insert into ShoppingListItems (Name, Code, ThumbnailPath,Quantity,ShoppingListId) values (?,?,?,?,?)", new Object[]{fb.getName(),fb.getCode(),fb.getThumbnailPath(),fb.getQuantity(),shoppingListId});
+                    db.execSQL("insert into ShoppingListItems (Name, Code, Quantity,ShoppingListId) values (?,?,?,?)", new Object[]{fb.getName(),fb.getCode(),fb.getQuantity(),shoppingListId});
                 }
             }
         });
@@ -59,7 +59,7 @@ public class ShoppingListManager {
                     db.execSQL("Update ShoppingListItems Set Quantity = ?, WasModified =?,TimeStamp =? where ShoppingListId = ? and Code = ?",new Object[]{product.getQuantity(),1,product.getTimestamp(),shoppingListId,product.getCode()});
                 }
                 else {
-                    db.execSQL("insert into ShoppingListItems (Name, Code, ThumbnailPath,Quantity,ShoppingListId,WasModified,TimeStamp) values (?,?,?,?,?,?,?)", new Object[]{product.getName(),product.getCode(),product.getThumbnailPath(),product.getQuantity(),shoppingListId,1,product.getTimestamp()});
+                    db.execSQL("insert into ShoppingListItems (Name, Code, Quantity,ShoppingListId,WasModified,TimeStamp) values (?,?,?,?,?,?)", new Object[]{product.getName(),product.getCode(),product.getQuantity(),shoppingListId,1,product.getTimestamp()});
                 }
                 //db.execSQL("Update ShoppingList Set Quantity = ?, WasModified =?,TimeStamp =? where ShoppingListId = ? and Code = ?",new Object[]{product.getQuantity(),product.mUpdated,product.getTimestamp(),shoppingListId,product.getCode()});
             }
@@ -136,7 +136,8 @@ public class ShoppingListManager {
         DB.Operate(new DBOperation() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                Cursor c=db.rawQuery("select ShoppingListItems.Name,ShoppingListItems.Code,ShoppingListItems.ThumbnailPath, ShoppingListItems.Quantity,ShoppingListItems.TimeStamp,ShoppingListItems.WasModified from ShoppingListItems " +
+                Cursor c=db.rawQuery("select ShoppingListItems.Name,ShoppingListItems.Code,Products.ThumbnailPath, ShoppingListItems.Quantity,ShoppingListItems.TimeStamp,ShoppingListItems.WasModified from ShoppingListItems " +
+                        "join Products on  Products.Code = ShoppingListItems.Code " +
                         "where ShoppingListItems.ShoppingListId = ? AND ShoppingListItems.Quantity > ?",new String[]{String.valueOf(shoppingListId),"0"});
                 while(c.moveToNext()) {
                     products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2),c.getInt(3),c.isNull(4)? null:c.getLong(4),c.getInt(5)!=0));
@@ -151,7 +152,7 @@ public class ShoppingListManager {
         DB.Operate(new DBOperation() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                Cursor c=db.rawQuery("select Id,Name, 2,UUID from ShoppingLists",new String[]{});
+                Cursor c=db.rawQuery("select Id,Name, 2,UUID from ShoppingLists order by Name",new String[]{});
                 while(c.moveToNext()) {
                     shoppingLists.add(new ShoppingListElement(c.getInt(0),c.getString(1),c.getInt(2),UUID.fromString(c.getString(3))));
                 }
@@ -165,7 +166,7 @@ public class ShoppingListManager {
             @Override
             public void Operate(SQLiteDatabase db) {
                 db.execSQL("delete from ShoppingListItems where ShoppingListId = ?",new Object[]{shoppingListId});
-                db.execSQL("delete from ShoppingList where UUID = ?",new Object[]{shoppingListId});
+                db.execSQL("delete from ShoppingLists where UUID = ?",new Object[]{shoppingListId});
             }
         });
     }
@@ -209,17 +210,17 @@ public class ShoppingListManager {
     }
 
     public static MyShoppingListsCtrlInfo GetMyShoppingListsInfo(){
-        final List<MyShoppingListsCtrlInfo> shoppingListsInfo =  new ArrayList<>();
+        final MyShoppingListsCtrlInfo shoppingListsInfo[] =  new MyShoppingListsCtrlInfo[1];
         DB.Operate(new DBOperation() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                Cursor c=db.rawQuery("select LastLocalUpdateTimeStamp, LastSyncTimeStamp from MyShoppingLists",new String[]{});
-                while(c.moveToFirst()) {
-                    shoppingListsInfo.add(new MyShoppingListsCtrlInfo(c.isNull(0)? null:c.getLong(0),c.isNull(1)? null:c.getLong(1)));
+                Cursor c=db.rawQuery("select LastLocalUpdateTimeStamp, LastSyncTimeStamp from MyShoppingLists limit 1",new String[]{});
+                if(c.moveToFirst()) {
+                    shoppingListsInfo[0] =new MyShoppingListsCtrlInfo(c.isNull(0)? null:c.getLong(0),c.isNull(1)? null:c.getLong(1));
                 }
             }
         });
-        return shoppingListsInfo.size() >0 ? shoppingListsInfo.get(0):null;
+        return shoppingListsInfo[0] == null ? new MyShoppingListsCtrlInfo():shoppingListsInfo[0];
     }
 
 

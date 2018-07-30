@@ -7,44 +7,77 @@ public class Synchronization {
 
     FBShoppingListsRepository repo = new FBShoppingListsRepository();
 
-    public void PushLocalData(final SyncShoppingListsPushListener listener){
-        List<SyncShoppingList> toUpload = SynchronizationManager.GetShoppingListsToUpload();
-        for(final SyncShoppingList sl:toUpload){
-            if(sl.mLastSyncTS != null){
-                if(sl.mLastSyncTS >0){
+    public void SyncData(final SyncShoppingListsSyncListener listener){
+        PushLocalData(new SyncShoppingListsPushListener() {
+            @Override
+            public void onReady() {
+                listener.onPushReady();
+                PullServerData(new SyncShoppingListsPullListener() {
+                    @Override
+                    public void onReady() {
+                        listener.onPullReady();
+                    }
+                });
+            }
+        });
+    }
 
-                    repo.getShoppingListLastUpdateTimeStamp(sl, new SyncShoppingListLastUpdateTSListener() {
-                        @Override
-                        public void onReady(Long serverTS) {
-                            if(serverTS < sl.mLastUpdateTS){
-                                repo.pushShoppingList(sl);
-                                listener.onReady();
+    public void PushLocalData(final SyncShoppingListsPushListener listener){
+        final MyShoppingListsCtrlInfo localCtrlInfo = ShoppingListManager.GetMyShoppingListsInfo();
+        repo.getMyShoppingListsLastUpdateTimeStamp(new SyncGetMyShoppingListsLastTSListener() {
+            @Override
+            public void onReady(final Long lastTimeStamp) {
+                List<SyncShoppingList> toUpload = SynchronizationManager.GetShoppingListsToUpload();
+                for (final SyncShoppingList sl : toUpload) {
+                    if (sl.mLastSyncTS != null) {
+                        if (sl.mLastSyncTS > 0) {
+
+                            repo.getShoppingListLastUpdateTimeStamp(sl, new SyncShoppingListLastUpdateTSListener() {
+                                @Override
+                                public void onReady(Long serverTS) {
+                                    if (serverTS < sl.mLastUpdateTS) {
+                                        repo.pushShoppingList(sl);
+                                       /* if(localCtrlInfo.mLastLocalUpdateTS > lastTimeStamp){
+                                            repo.updateMyShoppingListsLastUpdateTimestamp(localCtrlInfo.mLastLocalUpdateTS);
+                                        }*/
+                                        listener.onReady();
+                                    }
+                                }
+                            });
+                        } else {
+                            repo.pushShoppingList(sl);
+                           if((localCtrlInfo.mLastLocalUpdateTS ==null?0:localCtrlInfo.mLastLocalUpdateTS) > lastTimeStamp){
+                                repo.updateMyShoppingListsLastUpdateTimestamp(localCtrlInfo.mLastLocalUpdateTS);
                             }
+                            listener.onReady();
                         }
-                    });
+                    } else {
+                        repo.pushShoppingList(sl);
+                        if((localCtrlInfo.mLastLocalUpdateTS ==null?0:localCtrlInfo.mLastLocalUpdateTS) > lastTimeStamp){
+                            repo.updateMyShoppingListsLastUpdateTimestamp(localCtrlInfo.mLastLocalUpdateTS);
+                        }
+                        listener.onReady();
+                    }
                 }
-                else{
-                    repo.pushShoppingList(sl);
+                if(toUpload.size() == 0){
                     listener.onReady();
                 }
             }
-            else {
-                repo.pushShoppingList(sl);
-                listener.onReady();
-            }
-        }
+        });
     }
 
     public void PullServerData(final SyncShoppingListsPullListener listener){
         final MyShoppingListsCtrlInfo localCtrlInfo = ShoppingListManager.GetMyShoppingListsInfo();
         repo.getMyShoppingListsLastUpdateTimeStamp(new SyncGetMyShoppingListsLastTSListener() {
             @Override
-            public void onReady(Long lastTimeStamp) {
+            public void onReady(final Long lastTimeStamp) {
                 PullShoppingLists(localCtrlInfo.mLastSyncTS, new SyncGetUpdatedShoppingListsListener() {
                     @Override
                     public void onReady(List<SyncShoppingList> shoppingLists) {
                         //process list
-                        //update local last sync and local last update
+                        UpdateDownloadedShoppingLists(shoppingLists);
+                        //update local last sync
+                        ShoppingListManager.UpdateMyShoppingListsInfo(null,lastTimeStamp);
                         listener.onReady();
                     }
                 });
@@ -53,7 +86,7 @@ public class Synchronization {
     }
 
     private void PullShoppingLists(Long lastSyncTS, final SyncGetUpdatedShoppingListsListener listener){
-        repo.getShoppingListsUpdated(lastSyncTS, new SyncFetchUpdatedShoppingListsListener() {
+        repo.getShoppingListsUpdated(lastSyncTS == null?0:lastSyncTS, new SyncFetchUpdatedShoppingListsListener() {
             @Override
             public void onReady(final List<SyncShoppingList> shoppingLists) {
                 final int[] listsCount = new int[1];
@@ -64,7 +97,7 @@ public class Synchronization {
                         public void onReady(List<SyncShoppingListProduct> products) {
                             sl.Items = products;
                             listsCount[0] = listsCount[0]+1;
-                            if(listsCount[0] == listsCount[0]){
+                            if(listsCount[0] == shoppingLists.size()){
                                 listener.onReady(shoppingLists);
                             }
                          }
@@ -76,6 +109,12 @@ public class Synchronization {
 
     private void UpdateDownloadedShoppingLists(List<SyncShoppingList> shoppingLists){
         List<ShoppingList> sl = ConvertToShoppingList(shoppingLists);
+        for (ShoppingList s:sl
+             ) {
+            ShoppingListManager.DeleteShoppingList(s.getId());
+            ShoppingListManager.CreateShoppingList(s);
+            ShoppingListManager.AddShoppingListProducts(s.getId(),s.Items);
+        }
     }
     private List<ShoppingList> ConvertToShoppingList(List<SyncShoppingList> shoppingLists){
         List<ShoppingList> sl = new ArrayList<>();
@@ -90,7 +129,7 @@ public class Synchronization {
     private List<ShoppingListItem> ConvertToShoppingListItems(List<SyncShoppingListProduct> products){
         List<ShoppingListItem> list = new ArrayList<>();
         for(SyncShoppingListProduct p:products){
-            list.add(new ShoppingListItem());
+            list.add(new ShoppingListItem(p.mName, p.mCode, null, p.mQuantity,null,false));
         }
         return list;
     }

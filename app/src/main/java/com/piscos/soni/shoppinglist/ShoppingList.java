@@ -49,7 +49,7 @@ public class ShoppingList {
         sl.mName = df.format(Calendar.getInstance().getTime());
         sl.mId = UUID.randomUUID();
         sl.mLastUpdateTS = System.currentTimeMillis()/1000;
-        ShoppingListManager.CreateShoppingList(sl.mName,sl.mId,sl.getLastUpdateTS(),sl.getLastSyncTS());
+        ShoppingListManager.CreateShoppingList(sl);
         ShoppingListManager.UpdateMyShoppingListsInfo(sl.getLastUpdateTS(),sl.getLastSyncTS());
         sl.Items = ShoppingListManager.GetAllProducts();
         return sl;

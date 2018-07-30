@@ -87,7 +87,7 @@ public class FBShoppingListsRepository {
 
     public void getShoppingListsUpdated(final Long lastSyncTS, final SyncFetchUpdatedShoppingListsListener listener){
         final List<SyncShoppingList> ts = new ArrayList<>();
-        Query query = shoppingListsDBRef.orderByChild("lastUpdateTimestamp").startAt(lastSyncTS);
+        Query query = shoppingListsDBRef.orderByChild("lastUpdateTimestamp").startAt(lastSyncTS==null?0:lastSyncTS);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

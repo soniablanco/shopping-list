@@ -158,41 +158,4 @@ public class ShoppingListActivity extends AppCompatActivity {
         }
     }
 
-   @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.new_shopping_list, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.menu_item_sync_shopping_list:
-                //syncShoppingList();
-                testQuery();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
-
-    public void syncShoppingList(){
-        //mShoppingList.synchronizeList();
-        Synchronization sync = new Synchronization();
-        sync.PushLocalData(new SyncShoppingListsPushListener() {
-            @Override
-            public void onReady() {
-                Toast toast = Toast.makeText(getApplicationContext(), R.string.sync_confirmation, Toast.LENGTH_LONG);
-                toast.show();
-            }
-        });
-    }
-
-    public void testQuery(){
-        FBShoppingListsRepository repo = new FBShoppingListsRepository();
-        repo.getShoppingListsExample();
-    }
 }

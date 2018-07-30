@@ -6,4 +6,5 @@
     <string name="shopping_lists_history">History</string>
     <string name="sync_confirmation">Synchronization OK</string>
     <string name="sync_list">Sync</string>
+    <string name="sync_lists">Synchronize lists</string>
     </resources>

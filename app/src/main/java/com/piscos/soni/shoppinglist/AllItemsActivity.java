@@ -242,6 +242,7 @@ public class AllItemsActivity extends AppCompatActivity {
                 SyncData(new DataSynchronizationListener() {
                     @Override
                     public void onReady() {
+                        updateUI();
                         Toast toast = Toast.makeText(getApplicationContext(), R.string.sync_confirmation, Toast.LENGTH_LONG);
                         toast.show();
                     }

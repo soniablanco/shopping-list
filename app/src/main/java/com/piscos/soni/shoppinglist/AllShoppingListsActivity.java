@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.List;
 
 public class AllShoppingListsActivity extends AppCompatActivity {
@@ -149,10 +151,30 @@ public class AllShoppingListsActivity extends AppCompatActivity {
                 Intent i = new Intent(AllShoppingListsActivity.this,AllItemsActivity.class);
                 startActivity(i);
                 return true;
+            case R.id.menu_item_sync_shopping_lists:
+                syncShoppingList();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    public void syncShoppingList(){
+        Synchronization sync = new Synchronization();
+        sync.SyncData(new SyncShoppingListsSyncListener() {
+            @Override
+            public void onPushReady() {
+                Toast toast = Toast.makeText(getApplicationContext(), "Push OK", Toast.LENGTH_LONG);
+                toast.show();
+            }
+            @Override
+            public void onPullReady() {
+                updateUI();
+                Toast toast = Toast.makeText(getApplicationContext(), "Pull OK", Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
     }
 
 }
