@@ -47,6 +47,12 @@ public class ShoppingListDatabase extends DatabaseInfo {
                 db.execSQL("CREATE TABLE MyShoppingLists (Id integer primary key autoincrement,LastLocalUpdateTimeStamp TIMESTAMP, LastSyncTimeStamp TIMESTAMP)");
             }
         });
+        versions.add(new SQLVersionExecutor() {
+            @Override
+            public void Exec(SQLiteDatabase db) {
+                db.execSQL("ALTER TABLE ShoppingListItems add column WasCollected integer DEFAULT 0 NOT NULL");
+            }
+        });
 
         return  versions;
     }

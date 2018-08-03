@@ -32,10 +32,10 @@ public class SynchronizationManager {
         DB.Operate(new DBOperation() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                Cursor c=db.rawQuery("select ShoppingListItems.Name,ShoppingListItems.Code,ShoppingListItems.Quantity from ShoppingListItems " +
+                Cursor c=db.rawQuery("select ShoppingListItems.Name,ShoppingListItems.Code,ShoppingListItems.Quantity,ShoppingListItems.WasCollected from ShoppingListItems " +
                         "where ShoppingListItems.ShoppingListId = ? and ShoppingListItems.Quantity > ?",new String[]{String.valueOf(shoppingListId),"0"});
                 while(c.moveToNext()) {
-                    products.add(new SyncShoppingListProduct(c.getString(0),c.getString(1),c.getInt(2)));
+                    products.add(new SyncShoppingListProduct(c.getString(0),c.getString(1),c.getInt(2),c.getInt(3)!=0));
                 }
             }
         });

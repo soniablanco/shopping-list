@@ -37,9 +37,9 @@ public class Synchronization {
                                 public void onReady(Long serverTS) {
                                     if (serverTS < sl.mLastUpdateTS) {
                                         repo.pushShoppingList(sl);
-                                       /* if(localCtrlInfo.mLastLocalUpdateTS > lastTimeStamp){
+                                       if((localCtrlInfo.mLastLocalUpdateTS ==null?0:localCtrlInfo.mLastLocalUpdateTS) > lastTimeStamp){
                                             repo.updateMyShoppingListsLastUpdateTimestamp(localCtrlInfo.mLastLocalUpdateTS);
-                                        }*/
+                                        }
                                         listener.onReady();
                                     }
                                 }
@@ -129,7 +129,7 @@ public class Synchronization {
     private List<ShoppingListItem> ConvertToShoppingListItems(List<SyncShoppingListProduct> products){
         List<ShoppingListItem> list = new ArrayList<>();
         for(SyncShoppingListProduct p:products){
-            list.add(new ShoppingListItem(p.mName, p.mCode, null, p.mQuantity,null,false));
+            list.add(new ShoppingListItem(p.mName, p.mCode, null, p.mQuantity,null,false,p.mWasCollected));
         }
         return list;
     }

@@ -45,15 +45,17 @@ public class ShoppingListItem extends ProductListItem{
         super.mPhotoUrl = photoUrl;
         setQuantity(0);
         mUpdated = false;
+        mWasCollected = false;
     }
 
-    public ShoppingListItem(String name, String code, String photoUrl, int quantity,Long timestamp,boolean updated){
+    public ShoppingListItem(String name, String code, String photoUrl, int quantity,Long timestamp,boolean updated,boolean wasCollected){
         super.setName(name);
         super.setCode(code);
         super.mPhotoUrl = photoUrl;
         setQuantity(quantity);
         mTimestamp = timestamp;
         mUpdated = updated;
+        mWasCollected = wasCollected;
     }
 
     /*public boolean isUpdated() {
@@ -61,5 +63,5 @@ public class ShoppingListItem extends ProductListItem{
     }*/
 
     public boolean mUpdated;
-
+    public boolean mWasCollected;
 }

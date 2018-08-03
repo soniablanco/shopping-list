@@ -24,7 +24,7 @@ public class ShoppingList {
         return mLastSyncTS;
     }
 
-    private void setLastUpdateTS(Long lastUpdateTS) {
+    public void setLastUpdateTS(Long lastUpdateTS) {
         mLastUpdateTS = lastUpdateTS;
         ShoppingListManager.UpdateShoppingList(this);
     }

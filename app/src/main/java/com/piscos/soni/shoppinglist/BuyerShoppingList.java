@@ -32,8 +32,33 @@ public class BuyerShoppingList {
             bi.mQuantity = i.getQuantity();
             bi.setCode(i.getCode());
             bi.mPhotoUrl = i.mPhotoUrl;
+            bi.setWasCollected(i.mWasCollected);
             list.add(bi);
         }
         return list;
     }
-}
+
+    private ShoppingList convertToShoppingList(BuyerShoppingList shoppingList){
+        ShoppingList sl = new ShoppingList( shoppingList.mId, shoppingList.mName,null,null);
+        return sl;
+    }
+
+    private  ShoppingListItem convertToShoppingListItem(BuyerShoppingListItem item){
+        ShoppingListItem si =  new ShoppingListItem();
+        si.setName(item.getName());
+        si.setQuantity(item.mQuantity);
+        si.setCode(item.getCode());
+        si.mPhotoUrl = item.mPhotoUrl;
+        si.mWasCollected = item.wasCollected();
+        return si;
+    }
+
+     public void UpdateItem(BuyerShoppingListItem item){
+         ShoppingListItem si =  convertToShoppingListItem(item);
+         ShoppingListManager.AddShoppingListProduct(this.mId,si);
+         ShoppingList s = convertToShoppingList(this);
+         Long ts = System.currentTimeMillis()/1000;
+         s.setLastUpdateTS(ts);
+         ShoppingListManager.UpdateMyShoppingListsInfo(ts,null);
+    }
+ }

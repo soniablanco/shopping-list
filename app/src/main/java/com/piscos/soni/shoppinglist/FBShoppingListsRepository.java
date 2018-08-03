@@ -82,6 +82,9 @@ public class FBShoppingListsRepository {
         itemProperty = shoppingListItem.child("quantity");
         itemProperty.setValue(product.mQuantity);
 
+        itemProperty = shoppingListItem.child("wasCollected");
+        itemProperty.setValue(product.mWasCollected);
+
     }
 
 
@@ -113,7 +116,7 @@ public class FBShoppingListsRepository {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     FBShoppingListItem item = ds.getValue(FBShoppingListItem.class);
-                    ts.add(new SyncShoppingListProduct(item.name,item.code,item.quantity));
+                    ts.add(new SyncShoppingListProduct(item.name,item.code,item.quantity,item.wasCollected));
                 }
                 listener.onReady(ts);
             }
@@ -192,7 +195,7 @@ public class FBShoppingListsRepository {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     FBShoppingListItem product = ds.getValue(FBShoppingListItem.class);
-                    productList.add(new ShoppingListItem(product.name, product.code, "",product.quantity,product.timestamp,true));
+                    productList.add(new ShoppingListItem(product.name, product.code, "",product.quantity,product.timestamp,true,product.wasCollected ));
                 }
                 listener.onReady(productList);
             }

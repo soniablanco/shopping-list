@@ -14,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -69,6 +71,7 @@ public class BuyerShoppingListActivity extends AppCompatActivity {
         public TextView mNameTextView;
         public ImageView mPhotoView;
         public TextView mQuantity;
+        public CheckBox mWasCollected;
 
         private BuyerShoppingListItem mModel;
 
@@ -77,6 +80,16 @@ public class BuyerShoppingListActivity extends AppCompatActivity {
             mNameTextView = (TextView)itemView.findViewById(R.id.tvBSLProductName);
             mPhotoView = (ImageView)itemView.findViewById(R.id.imBSLPhotoView);
             mQuantity = (TextView)itemView.findViewById(R.id.tvBSLQuantity);
+            mWasCollected = (CheckBox)itemView.findViewById(R.id.cbWasCollected);
+
+            mWasCollected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    mModel.setWasCollected(isChecked);
+                    itemView.setBackgroundColor(Color.parseColor(mModel.getColour()));
+                    mShoppingList.UpdateItem(mModel);
+                }
+            });
         }
     }
 
@@ -104,7 +117,8 @@ public class BuyerShoppingListActivity extends AppCompatActivity {
             holder.mModel = item;
             holder.mNameTextView.setText(item.getName());
             holder.mQuantity.setText(Integer.toString(item.mQuantity));
-
+            holder.mWasCollected.setChecked(item.wasCollected());
+            holder.itemView.setBackgroundColor(Color.parseColor(item.getColour()));
 
             if (item.mPhoto!=null){
                 holder.mPhotoView.setImageBitmap(item.mPhoto);

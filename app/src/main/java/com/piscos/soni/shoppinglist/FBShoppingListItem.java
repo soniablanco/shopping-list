@@ -9,4 +9,5 @@ public class FBShoppingListItem {
     public int quantity;
     public long timestamp;
     public UUID shoppingListId;
+    public boolean wasCollected;
 }

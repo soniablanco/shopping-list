@@ -6,8 +6,8 @@ android {
         applicationId "com.piscos.soni.shoppinglist"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 19
-        versionName "19.0"
+        versionCode 20
+        versionName "20"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [HOCKEYAPP_APP_ID: "d191dcb438714d0c91d43e2adaf01da6"]
     }
