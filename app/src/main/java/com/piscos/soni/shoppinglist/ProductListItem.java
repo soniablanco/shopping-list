@@ -36,7 +36,12 @@ public class ProductListItem {
     public ProductListItem(String name, String code, String photoUrl){
         this.mName = name;
         this.setCode(code);
+        if(photoUrl != null && !photoUrl.isEmpty()) {
         this.mPhotoUrl = photoUrl;
+        }
+        else{
+            this.mPhotoUrl =null;
+        }
     }
 
     public Bitmap mPhoto;
