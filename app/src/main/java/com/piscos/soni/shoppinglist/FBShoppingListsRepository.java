@@ -134,7 +134,7 @@ public class FBShoppingListsRepository {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ts[0] = dataSnapshot.child("lastUpdateTimestamp").getValue(Long.class);
-               listener.onReady(ts[0]);//(Long.getLong("123456"));
+               listener.onReady(ts[0]==null?0:ts[0]);//(Long.getLong("123456"));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

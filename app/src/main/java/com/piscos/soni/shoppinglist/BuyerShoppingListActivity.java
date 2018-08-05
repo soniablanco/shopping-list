@@ -19,6 +19,9 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.UpdateManager;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -55,6 +58,39 @@ public class BuyerShoppingListActivity extends AppCompatActivity {
         mShoppingListId = getIntent().getStringExtra(EXTRA_SHOPPING_LIST_ID);
 
         updateUI();
+        //HockeyApp
+        checkForUpdates();
+    }
+
+    private void checkForCrashes() {
+        CrashManager.register(this);
+    }
+
+    private void checkForUpdates() {
+        // Remove this for store builds!
+        UpdateManager.register(this);
+    }
+
+    private void unregisterManagers() {
+        UpdateManager.unregister();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkForCrashes();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterManagers();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterManagers();
     }
 
 
@@ -85,9 +121,11 @@ public class BuyerShoppingListActivity extends AppCompatActivity {
             mWasCollected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    mModel.setWasCollected(isChecked);
-                    itemView.setBackgroundColor(Color.parseColor(mModel.getColour()));
-                    mShoppingList.UpdateItem(mModel);
+                    if(isChecked != mModel.wasCollected()) {
+                        mModel.setWasCollected(isChecked);
+                        itemView.setBackgroundColor(Color.parseColor(mModel.getColour()));
+                        mShoppingList.UpdateItem(mModel);
+                    }
                 }
             });
         }

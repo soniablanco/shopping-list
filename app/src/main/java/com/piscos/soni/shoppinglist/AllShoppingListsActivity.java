@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.UpdateManager;
+
 import java.util.List;
 
 public class AllShoppingListsActivity extends AppCompatActivity {
@@ -47,12 +50,44 @@ public class AllShoppingListsActivity extends AppCompatActivity {
 
         //updateUI();
 
+        //HockeyApp
+        checkForUpdates();
+    }
+    private void checkForCrashes() {
+        CrashManager.register(this);
+    }
+
+    private void checkForUpdates() {
+        // Remove this for store builds!
+        UpdateManager.register(this);
+    }
+
+    private void unregisterManagers() {
+        UpdateManager.unregister();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         updateUI();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkForCrashes();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterManagers();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterManagers();
     }
 
     public void updateUI() {
