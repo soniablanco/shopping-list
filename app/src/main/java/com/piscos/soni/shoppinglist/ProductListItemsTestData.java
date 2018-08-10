@@ -2,6 +2,8 @@ package com.piscos.soni.shoppinglist;
 
 import android.content.Context;
 
+import com.piscos.soni.shoppinglist.products.ProductListItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
