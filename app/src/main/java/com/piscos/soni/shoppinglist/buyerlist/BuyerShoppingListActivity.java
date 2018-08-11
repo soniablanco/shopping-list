@@ -82,6 +82,7 @@ public class BuyerShoppingListActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        updateUI();
         checkForCrashes();
     }
 
