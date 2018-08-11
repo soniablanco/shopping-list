@@ -133,7 +133,7 @@ public class Synchronization {
     private List<ShoppingListItem> convertToShoppingListItems(List<SyncShoppingListProduct> products){
         List<ShoppingListItem> list = new ArrayList<>();
         for(SyncShoppingListProduct p:products){
-            list.add(new ShoppingListItem(p.mName, p.mCode, null, p.mQuantity,null,false,p.mWasCollected));
+            list.add(new ShoppingListItem(p.mName, p.mCode,null, p.mQuantity,null,false,p.mWasCollected));
         }
         return list;
     }

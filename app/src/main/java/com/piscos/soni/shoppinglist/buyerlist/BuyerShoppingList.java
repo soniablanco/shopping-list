@@ -35,7 +35,7 @@ public class BuyerShoppingList {
             bi.setName(i.getName());
             bi.mQuantity = i.getQuantity();
             bi.setCode(i.getCode());
-            bi.mPhotoUrl = i.mPhotoUrl;
+            //bi.mPhotoUrl = i.mPhotoUrl;
             bi.setWasCollected(i.mWasCollected);
             list.add(bi);
         }
@@ -52,7 +52,7 @@ public class BuyerShoppingList {
         si.setName(item.getName());
         si.setQuantity(item.mQuantity);
         si.setCode(item.getCode());
-        si.mPhotoUrl = item.mPhotoUrl;
+        //si.mPhotoUrl = item.mPhotoUrl;
         si.mWasCollected = item.wasCollected();
         return si;
     }

@@ -21,7 +21,7 @@ public class ShoppingListManager {
         DB.Operate(new DBOperation() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                Cursor c=db.rawQuery("select Name,Code,ThumbnailPath from Products",new String[]{});
+                Cursor c=db.rawQuery("select Name,Code,ThumbnailPath from Products order by Name",new String[]{});
                 while(c.moveToNext()) {
                     products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2)));
                 }
@@ -124,7 +124,7 @@ public class ShoppingListManager {
                 Cursor c=db.rawQuery("select Products.Name,Products.Code,Products.ThumbnailPath, ifnull(ShoppingListItems.Quantity,0),ShoppingListItems.TimeStamp,ShoppingListItems.WasModified,ShoppingListItems.WasCollected from Products " +
                         "left join ShoppingListItems " +
                         "on Products.Code = ShoppingListItems.Code " +
-                        "and ShoppingListItems.ShoppingListId = ?",new String[]{String.valueOf(shoppingListId)});
+                        "and ShoppingListItems.ShoppingListId = ? order by Products.Name",new String[]{String.valueOf(shoppingListId)});
                 while(c.moveToNext()) {
                     products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2),c.getInt(3),c.isNull(4)? null:c.getLong(4),c.getInt(5)!=0,c.getInt(6)!=0));
                 }
@@ -140,7 +140,7 @@ public class ShoppingListManager {
             public void Operate(SQLiteDatabase db) {
                 Cursor c=db.rawQuery("select ShoppingListItems.Name,ShoppingListItems.Code,Products.ThumbnailPath, ShoppingListItems.Quantity,ShoppingListItems.TimeStamp,ShoppingListItems.WasModified,ShoppingListItems.WasCollected from ShoppingListItems " +
                         "join Products on  Products.Code = ShoppingListItems.Code " +
-                        "where ShoppingListItems.ShoppingListId = ? AND ShoppingListItems.Quantity > ?",new String[]{String.valueOf(shoppingListId),"0"});
+                        "where ShoppingListItems.ShoppingListId = ? AND ShoppingListItems.Quantity > ? order by ShoppingListItems.Name",new String[]{String.valueOf(shoppingListId),"0"});
                 while(c.moveToNext()) {
                     products.add(new ShoppingListItem(c.getString(0),c.getString(1),c.getString(2),c.getInt(3),c.isNull(4)? null:c.getLong(4),c.getInt(5)!=0,c.getInt(6)!=0));
                 }

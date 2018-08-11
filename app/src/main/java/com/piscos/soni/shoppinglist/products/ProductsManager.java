@@ -29,7 +29,7 @@ public class ProductsManager {
         DB.Operate(new DBOperation() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                Cursor c=db.rawQuery("select Name,Code,ThumbnailUrl from Products",new String[]{});
+                Cursor c=db.rawQuery("select Name,Code,ThumbnailUrl from Products order by Name",new String[]{});
                 while(c.moveToNext()) {
                     products.add(new ProductListItem(c.getString(0),c.getString(1),c.getString(2)));
                 }

@@ -1,11 +1,39 @@
 package com.piscos.soni.shoppinglist.shoppinglist;
 
-import com.piscos.soni.shoppinglist.products.ProductListItem;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import com.piscos.soni.shoppinglist.products.PhotoDownloadListener;
+import java.io.File;
 
-public class ShoppingListItem extends ProductListItem {
+
+public class ShoppingListItem {
 
     public static final String SELECTED_COLOUR = "#7986CB";
     public static final String UNSELECTED_COLOUR = "#FFFFFF";
+
+    private String mName;
+
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String mName) {
+        this.mName = mName;
+    }
+
+    private String mCode;
+
+    public String getCode() {
+        return mCode;
+    }
+
+    public void setCode(String mCode) {
+        this.mCode = mCode;
+        //this.setThumbnailPath();
+    }
+
+    private int mQuantity;
 
     public void setQuantity(int quantity) {
         mQuantity = quantity;
@@ -23,47 +51,86 @@ public class ShoppingListItem extends ProductListItem {
         return mQuantity;
     }
 
-    private int mQuantity;
+    private String mItemColor;
 
     public String getItemColor() {
         return mItemColor;
     }
 
-    private String mItemColor;
-    public ShoppingListItem(){
-        setQuantity(0);
-
-    }
+    private Long mTimestamp;
 
     public Long getTimestamp() {
         return mTimestamp;
     }
 
-    private Long mTimestamp;
+    public ShoppingListItem(){
+        setQuantity(0);
 
-    public ShoppingListItem(String name, String code, String photoUrl){
-        super.setName(name);
-        super.setCode(code);
-        super.mPhotoUrl = photoUrl;
+    }
+
+    public boolean mUpdated;
+
+    public boolean mWasCollected;
+
+    public Bitmap mPhoto;
+
+    private String mThumbnailPath;
+
+
+    public ShoppingListItem(String name, String code,String thumbnailPath){
+        setName(name);
+        setCode(code);
         setQuantity(0);
         mUpdated = false;
         mWasCollected = false;
+        mThumbnailPath = thumbnailPath;
     }
 
-    public ShoppingListItem(String name, String code, String photoUrl, int quantity,Long timestamp,boolean updated,boolean wasCollected){
-        super.setName(name);
-        super.setCode(code);
-        super.mPhotoUrl = photoUrl;
+    public ShoppingListItem(String name, String code,String thumbnailPath, int quantity,Long timestamp,boolean updated,boolean wasCollected){
+        setName(name);
+        setCode(code);
         setQuantity(quantity);
         mTimestamp = timestamp;
         mUpdated = updated;
         mWasCollected = wasCollected;
+        mThumbnailPath = thumbnailPath;
     }
 
-    /*public boolean isUpdated() {
-        return mUpdated;
-    }*/
 
-    public boolean mUpdated;
-    public boolean mWasCollected;
+    private String getThumbnailAbsPath(Context context){
+        return context.getFilesDir()+"/"+this.mThumbnailPath;
+    }
+
+    private synchronized void fetchfoto(final Context context, final PhotoDownloadListener listener){
+        if (ShoppingListItem.this.mPhoto!=null) {
+            listener.onSuccess(ShoppingListItem.this.getCode(), ShoppingListItem.this.mPhoto);
+            return;
+        }
+        String imagePath = ShoppingListItem.this.getThumbnailAbsPath(context);
+        File imgFile = new  File(imagePath);
+        if(imgFile.exists()) {
+            Bitmap myBitmap = BitmapFactory.decodeFile(imagePath);
+            ShoppingListItem.this.mPhoto = myBitmap;
+            listener.onSuccess(ShoppingListItem.this.getCode(), ShoppingListItem.this.mPhoto);
+        }
+        else{
+            ShoppingListItem.this.mPhoto = null;
+        }
+
+    }
+
+    public void fetchPhoto(final Context context,final PhotoDownloadListener listener){
+
+
+        new Thread() {
+            public void run() {
+
+                fetchfoto(context,listener);
+            }
+        }
+                .start();
+
+
+
+    }
 }
