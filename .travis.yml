@@ -1,15 +1,8 @@
 language: android
-addons:
-  apt:
-    packages:
-      - xmlstarlet
 env:
   global:
   - ANDROID_API=27
   - ANDROID_BUILD_TOOLS=27.0.3
-  - secure: KINNgdATYUbkNOo3nBULj1T6BHhrHvoALQmqrVip6tx4fiixduNknEFS7/HuFCrmrm1FLZgYY6Vj20Vo1H5jntoTTTSKYSMYpbGtMUCcUQsORHBOWHHkPGmAh18xL9K/mRlo9GVJ1ibWTl/OOpU0gFAwGM1X6xqCbZi1FdjsB8/PPz1yhm00vnBPa4wDRnkoXVpGgqjse8Ka1LUx74Y/1AoU/g4tON2BA1gV2edL8VIF5hFTB599yDQeoCeStT3Q/jsqsIQusSjVPtMi1saiGxbXqirZc+l9vHz0WGpqAUVQE+ETaabFLdbF3NKTknSGtPSq8p52p1kEXOIcP4PlQc/zdYtFzjaCK9kImY+wZ1V5XguGgrLp9ofF+Qb1YQliExeLIHavVjk1eL2iFSJGVUjlaW5Mi2mQMAHkyDOATbXEmCs4kfsQZxhyulaz1Zp1db1k7+DpQ0yQbcv0W4xyn1AzUiFo/n9SiVFO7atzWRSnckvhsB0TZE1CRZ1CPdSWIvoJkHslVoZcmqsjBToJFK3GIbyxH+jRI6bQenpSmgNPvLpvYr9uSDPJ4k+LZ8r9y1sp1H98Ycc1NoV3PKnddI3FwBTJlaZhnxadeJaEOFFt5BRFPNF9xgtPgVdofx/zzaz6dvUdu0VIwjjfqTpdRSk2uCYIVH59WDtDi91XqIg=
-  - secure: kaqZ8czR2IMvCTEHLjuXQoB0KrirYL3SNf/xfNhMHuz2g0QJO5MdiP2+9IB34PcsNXDCOxDyl7AKqfvnZIm6U4HmugBPuYxOTKxOBFNgTLP81SymqvE01uRxFWyQEkdkY1kqq68GVsFalQJaF/cZzHUc7UALxoCUgfwsHmiqt9yq+7WegqT5WenvIbEs5Vlf/L0d+OSgaPeimE8iz0sMKrOKUgtiY99HL9+ECjBIyOyXalQe7sErrPAomf+1JY1tsOyRzY7Eq2Nlp2r8/C3PtmL6s/WxJbe++ucmXxOc2TGUtr/aRORxbcCD8tEvTTZb1Xj9dTQyRCqL+WmsS69BUixdIZM//lKZ2FicyCQU26j03/lpTv0bh5lf+uM3Zdz6uF3/42ZQCQWmAo9+Gb6/uxD++RTMmIi0GqAWQdd+k/AQroUMWvLXtpSH5rePHD8jEhCLLQ/pB0xHvBT8mZ58wcvle54iG4dsHBLKfxPpy4z+14NO8WSE/zWUljZb2E0pzfzvat2hzWapN73QbSav37Njy5ox1RJh5XuFwqaVw+FhPIxQnyVV1/IL1nXDq2D3ubnY0p/n3wYxnTuyps/+K/ir92EXMPvXctKNm/Ks3NJPsvt/vsrPIEDSrIpFMDkTLlTUB4UjKagTqi9ZN3dz7SUeSMqVglhLQBpuLohh5uM=
-  - secure: c89Z2WXzQZBBrOn5vdBBwtf/k82RemMdElkNZZYiZZRxLOlXaLMKo9eL82dg71Dg+Xlvr5QhE0gO5eufpVvdJ6YvqWbkd2D+r32ou7V+QR+HGzJtMSwKzO8xXtSqE5RnY9bKDad+y+GuahX8yBaaAP1Knmk2XaEKwEwuV0r5KxG5NXY3xny4t7iOkJFMYYttZKHa4b5pBHXbsMueOuCHLaI5zZLhS8csWEmxdU9xQA32JaVVPor/q3EhyoC9Qd0sl6Ey8iq/6HvSE1bMobV3kLEI32AG52+KJ99D9ram0ub8SrQsNbhP3W/VvjaWHR+rg/3PNs/IketYnB3tJ0zNaFDq3+DQMS76BA5dg+laNr6OxEE2z0jyE4TQoLCojFp4Eeq1ViPu29NYP+9GTIjTaJFJxJxLN7TDkiB6aHOXaW+KuEWLgBSzfmier5x/jUv7iOnqAzYyCkCahq9WMm9al4j+ovi+qfH2thJI40PSB1D9BPE5ijRezhK1mw8U0ReXhLF3K683rm/lzO64Gol4jXePtdCJ1Oit0cCSCCe1fq8GabfDLXVuqKwwMzbUbLiv5uQtWJclTKbPsEPT7S/bTMCJ5xpma/lVgiDe52Q/tCPRzspoBJ6DpgE/qV6bd94lwwaa6suxxR5XVhoy5jS9HRByQeySaXZbdHkyw0oU5wM=
 
 android:
   components:
@@ -20,16 +13,11 @@ android:
   - build-tools-${ANDROID_BUILD_TOOLS}
   - extra
 before_install:
-- openssl aes-256-cbc -K $encrypted_d775bed59f7f_key -iv $encrypted_d775bed59f7f_iv
-  -in keystore.jks.enc -out keystore.jks -d
 - yes | sdkmanager "platforms;android-27"
 script:
-- bash onbranch.sh || travis_terminate 1
 - "./gradlew clean build"
-- cd app/build/outputs/apk/release
+- cd app/build/outputs/apk/release 
 - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ${TRAVIS_BUILD_DIR}/keystore.jks
   -storepass $storepass -keypass $keypass app-release-unsigned.apk zwave
 - jarsigner -verify app-release-unsigned.apk
 - "${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS}/zipalign -v 4 app-release-unsigned.apk app.apk"
-- 'curl -F "status=2" -F "notify=1" -F "notes=Some new features and fixed bugs." -F
-  "notes_type=0" -F "ipa=@app.apk" -H "X-HockeyAppToken: $HOCKEYAPP_TOKEN" https://rink.hockeyapp.net/api/2/apps/upload'
