@@ -175,8 +175,8 @@ public class BuyerShoppingListActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 item.mPhoto = productPhoto;
-                                if (productCode == holder.mModel.getCode())
-                                {
+                                //if (productCode == holder.mModel.getCode())
+                                if (item.getCode() == holder.mModel.getCode()){
                                     holder.mPhotoView.setImageBitmap(productPhoto);
                                 }
                             }

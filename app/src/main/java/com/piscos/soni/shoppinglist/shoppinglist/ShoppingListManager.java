@@ -102,20 +102,6 @@ public class ShoppingListManager {
         });
     }
 
-    public static String getShoppingListName(final UUID shoppingListId){
-        final String[] name= new String [1];
-        DB.Operate(new DBOperation() {
-            @Override
-            public void Operate(SQLiteDatabase db) {
-                Cursor c=db.rawQuery("select Name from ShoppingLists where UUID = ?",new String[]{String.valueOf(shoppingListId)});
-                if(c.moveToFirst()) {
-                    name[0] = c.getString(0);
-                }
-            }
-        });
-        return name[0];
-    }
-
     public static List<ShoppingListItem> getShoppingListProducts(final UUID shoppingListId){
         final List<ShoppingListItem> products =  new ArrayList<>();
         DB.Operate(new DBOperation() {
@@ -154,7 +140,7 @@ public class ShoppingListManager {
         DB.Operate(new DBOperation() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                Cursor c=db.rawQuery("select Id,Name, 2,UUID from ShoppingLists order by Name",new String[]{});
+                Cursor c=db.rawQuery("Select ShoppingLists.Id,ShoppingLists.Name,(Select Count(ShoppingListId) from ShoppingListItems where ShoppingListId =ShoppingLists.UUID),ShoppingLists.UUID from ShoppingLists order by ShoppingLists.Name",new String[]{});
                 while(c.moveToNext()) {
                     shoppingLists.add(new ShoppingListElement(c.getInt(0),c.getString(1),c.getInt(2),UUID.fromString(c.getString(3))));
                 }
@@ -173,17 +159,7 @@ public class ShoppingListManager {
         });
     }
 
-   /* public static void updateShoppingList(final ShoppingList shoppingList){
-        DB.RunTransaction(new DBTransaction() {
-            @Override
-            public void Operate(SQLiteDatabase db) {
-                db.execSQL("delete from ShoppingListItems where ShoppingListId = ?",new Object[]{shoppingListId});
-                db.execSQL("delete from ShoppingList where UUID = ?",new Object[]{shoppingListId});
-            }
-        });
-    }*/
-
-    public static void updateShoppingListProduct(final UUID shoppingListId, final ShoppingListItem product){
+     public static void updateShoppingListProduct(final UUID shoppingListId, final ShoppingListItem product){
         DB.RunTransaction(new DBTransaction() {
             @Override
             public void Operate(SQLiteDatabase db) {

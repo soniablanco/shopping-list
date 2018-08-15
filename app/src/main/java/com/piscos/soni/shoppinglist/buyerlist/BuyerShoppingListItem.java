@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.piscos.soni.shoppinglist.Utilities;
 import com.piscos.soni.shoppinglist.products.PhotoDownloadListener;
 
 import java.io.File;
@@ -72,7 +73,7 @@ public class BuyerShoppingListItem{
     private String getThumbnailAbsPath(Context context){
         return context.getFilesDir()+"/"+this.mThumbnailPath;
     }
-    private synchronized void fetchfoto(final Context context, final PhotoDownloadListener listener){
+    /*private synchronized void fetchfoto(final Context context, final PhotoDownloadListener listener){
         if (BuyerShoppingListItem.this.mPhoto!=null) {
             listener.onSuccess(BuyerShoppingListItem.this.getCode(), BuyerShoppingListItem.this.mPhoto);
             return;
@@ -98,5 +99,15 @@ public class BuyerShoppingListItem{
             }
         }
                 .start();
+    }*/
+
+    public void fetchPhoto(final Context context,final PhotoDownloadListener listener){
+        if (BuyerShoppingListItem.this.mPhoto!=null) {
+            listener.onSuccess(BuyerShoppingListItem.this.mCode, BuyerShoppingListItem.this.mPhoto);
+            return;
+        }
+        Utilities util = new Utilities();
+        String imagePath = BuyerShoppingListItem.this.getThumbnailAbsPath(context);
+        util.loadProductPhoto(imagePath,BuyerShoppingListItem.this.mCode, listener);
     }
 }
