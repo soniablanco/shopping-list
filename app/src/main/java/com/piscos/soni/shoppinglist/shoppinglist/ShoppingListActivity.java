@@ -2,7 +2,6 @@ package com.piscos.soni.shoppinglist.shoppinglist;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.piscos.soni.shoppinglist.R;
-import com.piscos.soni.shoppinglist.products.PhotoDownloadListener;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
@@ -68,6 +66,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         else{
             mShoppingList = ShoppingList.getShoppingListById(UUID.fromString(shoppingListId));
         }
+
         updateUI();
 
         //HockeyApp
@@ -170,21 +169,21 @@ public class ShoppingListActivity extends AppCompatActivity {
             }
             else{
                 holder.mPhotoView.setImageBitmap(null);
-                item.fetchPhoto(ShoppingListActivity.this, new PhotoDownloadListener() {
+                item.loadPhoto(ShoppingListActivity.this,new ShoppingListItemPhotoReadyListener(){
                     @Override
-                    public void onSuccess(final String productCode, final Bitmap productPhoto) {
+                    public void onReady(final ShoppingListItem itemReady){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                item.mPhoto = productPhoto;
-                                if (productCode == holder.mModel.getCode())
+                                itemReady.getCode();
+                                if (item.getCode() == holder.mModel.getCode())
                                 {
-                                    holder.mPhotoView.setImageBitmap(productPhoto);
+                                    holder.mPhotoView.setImageBitmap(item.mPhoto);
                                 }
                             }
                         });
                     }
-                });
+               });
             }
         }
         @Override

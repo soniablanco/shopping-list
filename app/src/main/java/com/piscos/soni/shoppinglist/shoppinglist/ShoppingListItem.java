@@ -2,9 +2,9 @@ package com.piscos.soni.shoppinglist.shoppinglist;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import com.piscos.soni.shoppinglist.products.PhotoDownloadListener;
-import java.io.File;
+
+import com.piscos.soni.shoppinglist.FetchProductPhotoListener;
+import com.piscos.soni.shoppinglist.Utilities;
 
 
 public class ShoppingListItem {
@@ -101,7 +101,24 @@ public class ShoppingListItem {
         return context.getFilesDir()+"/"+this.mThumbnailPath;
     }
 
-    private synchronized void fetchfoto(final Context context, final PhotoDownloadListener listener){
+    public void loadPhoto(Context context, final ShoppingListItemPhotoReadyListener viewListener){
+        FetchProductPhotoListener listener = new FetchProductPhotoListener() {
+            @Override
+            public void onReady(Bitmap photo) {
+                mPhoto = photo;
+                viewListener.onReady(ShoppingListItem.this);
+            }
+        };
+        if (ShoppingListItem.this.mPhoto!=null) {
+            listener.onReady(ShoppingListItem.this.mPhoto);
+            return;
+        }
+        Utilities util = new Utilities();
+        String imagePath = ShoppingListItem.this.getThumbnailAbsPath(context);
+        util.loadProductPhoto(imagePath, listener);
+    }
+
+    /*private synchronized void fetchfoto(final Context context, final PhotoDownloadListener listener){
         if (ShoppingListItem.this.mPhoto!=null) {
             listener.onSuccess(ShoppingListItem.this.getCode(), ShoppingListItem.this.mPhoto);
             return;
@@ -116,12 +133,9 @@ public class ShoppingListItem {
         else{
             ShoppingListItem.this.mPhoto = null;
         }
-
     }
 
     public void fetchPhoto(final Context context,final PhotoDownloadListener listener){
-
-
         new Thread() {
             public void run() {
 
@@ -129,8 +143,15 @@ public class ShoppingListItem {
             }
         }
                 .start();
+    }*/
 
-
-
-    }
+    /*public void fetchPhoto(final Context context,final PhotoDownloadListener listener){
+        if (ShoppingListItem.this.mPhoto!=null) {
+            listener.onSuccess(ShoppingListItem.this.getCode(), ShoppingListItem.this.mPhoto);
+            return;
+        }
+        Utilities util = new Utilities();
+        String imagePath = ShoppingListItem.this.getThumbnailAbsPath(context);
+        util.loadProductPhoto(imagePath,ShoppingListItem.this.getCode(), listener);
+    }*/
 }

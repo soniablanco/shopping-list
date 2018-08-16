@@ -168,7 +168,7 @@ public class BuyerShoppingListActivity extends AppCompatActivity {
             }
             else{
                 holder.mPhotoView.setImageBitmap(null);
-                item.fetchPhoto(BuyerShoppingListActivity.this, new PhotoDownloadListener() {
+                /*item.fetchPhoto(BuyerShoppingListActivity.this, new PhotoDownloadListener() {
                     @Override
                     public void onSuccess(final String productCode, final Bitmap productPhoto) {
                         runOnUiThread(new Runnable() {
@@ -178,6 +178,21 @@ public class BuyerShoppingListActivity extends AppCompatActivity {
                                 //if (productCode == holder.mModel.getCode())
                                 if (item.getCode() == holder.mModel.getCode()){
                                     holder.mPhotoView.setImageBitmap(productPhoto);
+                                }
+                            }
+                        });
+                    }
+                });*/
+                item.loadPhoto(BuyerShoppingListActivity.this,new BuyerShoppingListItemPhotoReadyListener(){
+                    @Override
+                    public void onReady(final BuyerShoppingListItem itemReady){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                itemReady.getCode();
+                                if (item.getCode() == holder.mModel.getCode())
+                                {
+                                    holder.mPhotoView.setImageBitmap(item.mPhoto);
                                 }
                             }
                         });

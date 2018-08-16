@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.piscos.soni.shoppinglist.FetchProductPhotoListener;
 import com.piscos.soni.shoppinglist.Utilities;
 
 import java.io.File;
@@ -94,6 +95,23 @@ public class ProductListItem {
         return context.getFilesDir()+"/"+this.mThumbnailPath;
 
     }
+
+    public void loadPhoto(Context context, final ProductListItemPhotoReadyListener viewListener){
+        FetchProductPhotoListener listener = new FetchProductPhotoListener() {
+            @Override
+            public void onReady(Bitmap photo) {
+                mPhoto = photo;
+                viewListener.onReady(ProductListItem.this);
+            }
+        };
+        if (ProductListItem.this.mPhoto!=null) {
+            listener.onReady(ProductListItem.this.mPhoto);
+            return;
+        }
+        Utilities util = new Utilities();
+        String imagePath = ProductListItem.this.getThumbnailAbsPath(context);
+        util.loadProductPhoto(imagePath, listener);
+    }
     /*private synchronized void fetchfoto(final Context context, final PhotoDownloadListener listener){
         if (ProductListItem.this.mPhoto!=null) {
             listener.onSuccess(ProductListItem.this.getCode(), ProductListItem.this.mPhoto);
@@ -134,6 +152,6 @@ public class ProductListItem {
         }
         Utilities util = new Utilities();
         String imagePath = ProductListItem.this.getThumbnailAbsPath(context);
-        util.loadProductPhoto(imagePath,ProductListItem.this.getCode(), listener);
+        //util.loadProductPhoto(imagePath,ProductListItem.this.getCode(), listener);
     }
 }

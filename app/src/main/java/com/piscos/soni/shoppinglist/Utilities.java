@@ -8,23 +8,23 @@ import com.piscos.soni.shoppinglist.products.PhotoDownloadListener;
 import java.io.File;
 
 public class Utilities {
-    private synchronized void fetchProductPhoto(final String path, final String productCode,final PhotoDownloadListener listener){
+    private synchronized void fetchProductPhoto(final String path, final FetchProductPhotoListener listener){
          File imgFile = new  File(path);
         if(imgFile.exists()) {
             Bitmap myBitmap = BitmapFactory.decodeFile(path);
-            listener.onSuccess(productCode, myBitmap);
+            listener.onReady(myBitmap);
         }
         else{
-            listener.onSuccess(productCode, null);
+            listener.onReady(null);
         }
 
     }
 
-    public void loadProductPhoto(final String path, final String productCode,final PhotoDownloadListener listener){
+    public void loadProductPhoto(final String path,final FetchProductPhotoListener listener){
         new Thread() {
             public void run() {
 
-                fetchProductPhoto(path,productCode,listener);
+                fetchProductPhoto(path,listener);
             }
         }
                 .start();

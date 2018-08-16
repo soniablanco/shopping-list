@@ -140,7 +140,7 @@ public class ShoppingListManager {
         DB.Operate(new DBOperation() {
             @Override
             public void Operate(SQLiteDatabase db) {
-                Cursor c=db.rawQuery("Select ShoppingLists.Id,ShoppingLists.Name,(Select Count(ShoppingListId) from ShoppingListItems where ShoppingListId =ShoppingLists.UUID),ShoppingLists.UUID from ShoppingLists order by ShoppingLists.Name",new String[]{});
+                Cursor c=db.rawQuery("Select ShoppingLists.Id,ShoppingLists.Name,(Select Count(ShoppingListId) from ShoppingListItems where ShoppingListId =ShoppingLists.UUID),ShoppingLists.UUID from ShoppingLists order by ShoppingLists.Name desc",new String[]{});
                 while(c.moveToNext()) {
                     shoppingLists.add(new ShoppingListElement(c.getInt(0),c.getString(1),c.getInt(2),UUID.fromString(c.getString(3))));
                 }

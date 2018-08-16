@@ -6,8 +6,8 @@ android {
         applicationId "com.piscos.soni.shoppinglist"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 22
-        versionName "22"
+        versionCode 23
+        versionName "23"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [HOCKEYAPP_APP_ID: "d191dcb438714d0c91d43e2adaf01da6"]
     }
@@ -16,6 +16,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    lintOptions {
+        warning 'InvalidPackage'
     }
 }
 
