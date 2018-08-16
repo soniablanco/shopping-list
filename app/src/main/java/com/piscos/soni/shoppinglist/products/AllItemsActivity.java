@@ -2,7 +2,6 @@ package com.piscos.soni.shoppinglist.products;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.piscos.soni.shoppinglist.ProductPhotoReadyListener;
 import com.piscos.soni.shoppinglist.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -202,13 +202,12 @@ public class AllItemsActivity extends AppCompatActivity {
                         });
                     }
                 });*/
-                item.loadPhoto(AllItemsActivity.this,new ProductListItemPhotoReadyListener(){
+                item.loadPhoto(AllItemsActivity.this,new ProductPhotoReadyListener(){
                     @Override
-                    public void onReady(final ProductListItem itemReady){
+                    public void onReady(){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                itemReady.getCode();
                                 if (item.getCode() == holder.mModel.getCode())
                                 {
                                     holder.mPhotoView.setImageBitmap(item.mPhoto);

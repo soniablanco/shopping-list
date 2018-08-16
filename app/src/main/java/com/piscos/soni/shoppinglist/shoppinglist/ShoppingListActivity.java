@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.piscos.soni.shoppinglist.ProductPhotoReadyListener;
 import com.piscos.soni.shoppinglist.R;
 
 import net.hockeyapp.android.CrashManager;
@@ -169,13 +170,12 @@ public class ShoppingListActivity extends AppCompatActivity {
             }
             else{
                 holder.mPhotoView.setImageBitmap(null);
-                item.loadPhoto(ShoppingListActivity.this,new ShoppingListItemPhotoReadyListener(){
+                item.loadPhoto(ShoppingListActivity.this,new ProductPhotoReadyListener(){
                     @Override
-                    public void onReady(final ShoppingListItem itemReady){
+                    public void onReady(){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                itemReady.getCode();
                                 if (item.getCode() == holder.mModel.getCode())
                                 {
                                     holder.mPhotoView.setImageBitmap(item.mPhoto);

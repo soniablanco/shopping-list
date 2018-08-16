@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.piscos.soni.shoppinglist.FetchProductPhotoListener;
+import com.piscos.soni.shoppinglist.ProductPhotoReadyListener;
 import com.piscos.soni.shoppinglist.Utilities;
 import com.piscos.soni.shoppinglist.products.PhotoDownloadListener;
 
@@ -75,12 +76,12 @@ public class BuyerShoppingListItem{
         return context.getFilesDir()+"/"+this.mThumbnailPath;
     }
 
-    public void loadPhoto(Context context, final BuyerShoppingListItemPhotoReadyListener viewListener){
+    public void loadPhoto(Context context, final ProductPhotoReadyListener viewListener){
         FetchProductPhotoListener listener = new FetchProductPhotoListener() {
             @Override
             public void onReady(Bitmap photo) {
                 mPhoto = photo;
-                viewListener.onReady(BuyerShoppingListItem.this);
+                viewListener.onReady();
             }
         };
         if (BuyerShoppingListItem.this.mPhoto!=null) {

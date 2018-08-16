@@ -2,7 +2,6 @@ package com.piscos.soni.shoppinglist.buyerlist;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,9 +18,9 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.piscos.soni.shoppinglist.ProductPhotoReadyListener;
 import com.piscos.soni.shoppinglist.R;
 import com.piscos.soni.shoppinglist.shoppinglist.ShoppingListActivity;
-import com.piscos.soni.shoppinglist.products.PhotoDownloadListener;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
@@ -183,13 +182,12 @@ public class BuyerShoppingListActivity extends AppCompatActivity {
                         });
                     }
                 });*/
-                item.loadPhoto(BuyerShoppingListActivity.this,new BuyerShoppingListItemPhotoReadyListener(){
+                item.loadPhoto(BuyerShoppingListActivity.this,new ProductPhotoReadyListener(){
                     @Override
-                    public void onReady(final BuyerShoppingListItem itemReady){
+                    public void onReady(){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                itemReady.getCode();
                                 if (item.getCode() == holder.mModel.getCode())
                                 {
                                     holder.mPhotoView.setImageBitmap(item.mPhoto);
