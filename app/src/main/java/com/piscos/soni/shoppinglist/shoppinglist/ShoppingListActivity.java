@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,11 @@ public class ShoppingListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_shopping_list);
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        //getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+
         mProductsRecyclerView = (RecyclerView) findViewById(R.id.rv_new_shopping_list);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -60,12 +66,15 @@ public class ShoppingListActivity extends AppCompatActivity {
         String shoppingListId = getIntent().getStringExtra(EXTRA_SHOPPING_LIST_ID);
         if (shoppingListId == null) {
             mShoppingList = ShoppingList.newShoppingList();//ShoppingList.getShoppingListById(7);
+            getSupportActionBar().setTitle(R.string.new_list_activity_title);
         }
         else if (shoppingListId.isEmpty()) {
+            getSupportActionBar().setTitle(R.string.new_list_activity_title);
             mShoppingList = ShoppingList.newShoppingList();
         }
         else{
             mShoppingList = ShoppingList.getShoppingListById(UUID.fromString(shoppingListId));
+            getSupportActionBar().setTitle((String)mShoppingList.getName());
         }
 
         updateUI();

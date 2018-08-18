@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,6 +51,11 @@ public class BuyerShoppingListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer_shopping_list);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        //getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
 
         mProductsRecyclerView = (RecyclerView) findViewById(R.id.rv_shopping_list);
         // use this setting to improve performance if you know that changes
@@ -101,6 +107,7 @@ public class BuyerShoppingListActivity extends AppCompatActivity {
     public void updateUI() {
         if (mShoppingListId != null) {
             mShoppingList = BuyerShoppingList.getShoppingListById(UUID.fromString(mShoppingListId));
+            getSupportActionBar().setTitle(mShoppingList.mName);
         }
         mAdapter = new BuyerShoppingListActivity.ShoppingListAdapter(mShoppingList.Items);
         mProductsRecyclerView.setAdapter(mAdapter);

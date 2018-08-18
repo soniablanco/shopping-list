@@ -3,9 +3,11 @@ package com.piscos.soni.shoppinglist.lists;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,12 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+//import android.widget.Toolbar;
 
 import com.piscos.soni.shoppinglist.buyerlist.BuyerShoppingListActivity;
 import com.piscos.soni.shoppinglist.R;
+import com.piscos.soni.shoppinglist.products.AllItemsActivity;
 import com.piscos.soni.shoppinglist.shoppinglist.ShoppingListActivity;
 import com.piscos.soni.shoppinglist.shoppinglist.ShoppingListManager;
-import com.piscos.soni.shoppinglist.products.AllItemsActivity;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
@@ -47,7 +50,12 @@ public class AllShoppingListsActivity extends AppCompatActivity {
             }
         });
 
-        mProductsRecyclerView = (RecyclerView) findViewById(R.id.rv_all_shopping_lists);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        //getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setTitle(R.string.all_lists_activity_title);
+
+       mProductsRecyclerView = (RecyclerView) findViewById(R.id.rv_all_shopping_lists);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mProductsRecyclerView.setHasFixedSize(true);
@@ -150,28 +158,6 @@ public class AllShoppingListsActivity extends AppCompatActivity {
             holder.mNameTextView.setText(item.mName);
             holder.mTotalItemsView.setText(String.valueOf(item.mTotalItems));
 
-            /*if (item.mPhoto!=null){
-                holder.mPhotoView.setImageBitmap(item.mPhoto);
-            }
-            else{
-                holder.mPhotoView.setImageBitmap(null);
-                //productsData.downloadPhoto(item.mPhotoUrl,item.getCode(), new PhotoDownloadListener() {
-                item.fetchPhoto(AllShoppingListsActivity.this, new PhotoDownloadListener() {
-                    @Override
-                    public void onSuccess(final String productCode, final Bitmap productPhoto) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                item.mPhoto = productPhoto;
-                                if (productCode == holder.mModel.getCode())
-                                {
-                                    holder.mPhotoView.setImageBitmap(productPhoto);
-                                }
-                            }
-                        });
-                    }
-                });
-            }*/
         }
         @Override
         public int getItemCount(){
@@ -179,7 +165,7 @@ public class AllShoppingListsActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
