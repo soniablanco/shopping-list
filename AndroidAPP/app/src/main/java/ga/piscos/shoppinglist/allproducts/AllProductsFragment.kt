@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ga.piscos.shoppinglist.R
 import kotlinx.android.synthetic.main.allproducts_all_products_fragment.*
-import kotlinx.android.synthetic.main.allproducts_product_item.*
+import kotlinx.android.synthetic.main.allproducts_product_item.view.*
 
 class AllProductsFragment: Fragment() {
 
@@ -37,6 +37,10 @@ class AllProductsFragment: Fragment() {
         rv_products_list.layoutManager = LinearLayoutManager(activity)
         rv_products_list.addItemDecoration(DividerItemDecoration(rv_products_list.context, DividerItemDecoration.VERTICAL))
         rv_products_list.setHasFixedSize(true)
+        val adapter = ProductsListItemAdapter{
+        }
+        rv_products_list.adapter = adapter
+        adapter.updateProducts(listOf(ProductItem("coco"), ProductItem("suares")))
     }
 
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
