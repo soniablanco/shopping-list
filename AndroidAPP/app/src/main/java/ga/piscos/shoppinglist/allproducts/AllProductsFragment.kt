@@ -1,7 +1,6 @@
 package ga.piscos.shoppinglist.allproducts
 
-import android.app.Activity
-import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,15 +11,24 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.bumptech.glide.request.transition.DrawableCrossFadeTransition
+import com.bumptech.glide.request.transition.Transition
+import com.bumptech.glide.request.transition.TransitionFactory
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.R
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import kotlinx.android.synthetic.main.allproducts_all_products_fragment.*
 import kotlinx.android.synthetic.main.allproducts_product_item.view.*
-import com.google.firebase.ktx.Firebase
+import java.util.concurrent.TimeUnit
+
 
 class AllProductsFragment: Fragment() {
 
@@ -66,16 +74,30 @@ class AllProductsFragment: Fragment() {
         }
         Firebase.database.reference.child("allproducts").addValueEventListener(postListener)
     }
-
+    class DrawableAlwaysCrossFadeFactory : TransitionFactory<Drawable> {
+        private val resourceTransition: DrawableCrossFadeTransition = DrawableCrossFadeTransition(300, true) //customize to your own needs or apply a builder pattern
+        override fun build(dataSource: DataSource?, isFirstResource: Boolean): Transition<Drawable> {
+            return resourceTransition
+        }
+    }
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(product: ProductItem, onclickListener: (ProductItem) -> Unit)= with(itemView){
-
             tvProductName.text = product.name.replace("++","").replace("**","")
-            Glide.with(this)
-                .load(product.aldiPhotoURL)
-                .centerCrop()
-                .placeholder(R.drawable.common_google_signin_btn_text_disabled)
-                .into(imPhotoView)
+            val images = listOf(product.aldiPhotoURL,product.lidPhotoURL).filter {  it!=null }.toList()
+            Observable.interval(2,TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                val value = it % images.count()
+                val imageUrl = images[value.toInt()]
+
+                Glide.with(this)
+                    .load(imageUrl)
+                    .transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
+                    .into(imPhotoView)
+                    Log.d(product.name,value.toString())
+                Log.d(product.name,imageUrl)
+            }
+
 
             setOnClickListener { onclickListener(product) }
         }

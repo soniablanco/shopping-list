@@ -1,24 +1,24 @@
 {
-    "milk2377": {
-      "name": "Full Fat Milk",
-      "stores": {
-        "aldi": {
-          "photoURL": "aldimilk.jpg"
-        },
-        "lidl": {
-          "photoUrl": "lidlmilk.jpg"
-        }
+  "eggs342": {
+    "name": "Eggs",
+    "stores": {
+      "aldi": {
+        "photoURL": "https://cdn.agriland.ie/uploads/2017/06/meat-free-mince.jpg"
+      },
+      "lidl": {
+        "photoURL": "https://img2.thejournal.ie/article/4873863/river?version=4873904&width=1340"
       }
-    },
-    "eggs342": {
-        "name": "Eggs",
-        "stores": {
-          "aldi": {
-            "photoURL": "eggsAldi.jpg"
-          },
-          "lidl": {
-            "photoUrl": "eggsLidl.jpg"
-          }
-        }
+    }
+  },
+  "milk33434": {
+    "name": "Milk",
+    "stores": {
+      "aldi": {
+        "photoURL": "https://www.retailnews.ie/contentFiles/components/gdNews/22/large/Aldiremovesover43tonnesofplasticfrom3ltrmilkbottlerange2.jpg"
+      },
+      "lidl": {
+        "photoURL": "https://pbs.twimg.com/media/DsI4u6fWoAAr6PU.jpg"
       }
+    }
   }
+}
