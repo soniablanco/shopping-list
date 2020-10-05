@@ -3,6 +3,7 @@ package ga.piscos.shoppinglist.allproducts
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
 import ga.piscos.shoppinglist.R
 import kotlinx.android.synthetic.main.allproducts_all_products_fragment.*
 import kotlinx.android.synthetic.main.allproducts_product_item.view.*
+import com.google.firebase.ktx.Firebase
 
 class AllProductsFragment: Fragment() {
 
@@ -31,7 +38,7 @@ class AllProductsFragment: Fragment() {
     }
 
 
-
+    private lateinit var database: DatabaseReference
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_products_list.layoutManager = LinearLayoutManager(activity)
@@ -41,6 +48,22 @@ class AllProductsFragment: Fragment() {
         }
         rv_products_list.adapter = adapter
         adapter.updateProducts(listOf(ProductItem("coco"), ProductItem("suares")))
+
+        database = Firebase.database.reference
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Get Post object and use the values to update the UI
+                Log.d("","")
+                // ...
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.d("","")
+                // ...
+            }
+        }
+        database.addValueEventListener(postListener)
     }
 
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

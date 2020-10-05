@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "759305180662",
+    "firebase_url": "https://shopping-ire.firebaseio.com",
+    "project_id": "shopping-ire",
+    "storage_bucket": "shopping-ire.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:759305180662:android:d60b716bbc7cc6bcfda3d7",
+        "android_client_info": {
+          "package_name": "ga.piscos.shoppinglist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "759305180662-sth81j51qr5g1ijg0i5equ7320fc4877.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ0KMF5qft1c6W1ufL_L2ifAmGIuOaGAw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "759305180662-sth81j51qr5g1ijg0i5equ7320fc4877.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
