@@ -20,5 +20,50 @@
         "photoURL": "https://pbs.twimg.com/media/DsI4u6fWoAAr6PU.jpg"
       }
     }
+  },
+  "bread333": {
+    "name": "Bread",
+    "stores": {
+      "aldi": {
+        "photoURL": "https://i2-prod.irishmirror.ie/incoming/article12036352.ece/ALTERNATES/s615b/Aldi-Ballymore-Crust-White-Bloomer-recall-notice-160218.jpg"
+      },
+      "lidl": {
+        "photoURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTmoc9LdKPEZe-IIPV45LWoY7IC-hZ-GgytOg&usqp=CAU"
+      }
+    }
+  },
+  "chickbreas3433": {
+    "name": "Chicken Breast",
+    "stores": {
+      "aldi": {
+        "photoURL": "https://static.openfoodfacts.org/images/products/25312799/front_en.4.400.jpg"
+      },
+      "lidl": {
+        "photoURL": "https://static.openfoodfacts.org/images/products/405/648/922/7137/front_en.3.full.jpg"
+      }
+    }
+  },
+  "mince3434": {
+    "name": "Mince Beef",
+    "stores": {
+      "aldi": {
+        "photoURL": "https://dmrqkbkq8el9i.cloudfront.net/Pictures/2000x2000fit/6/3/2/182632_aldiirishbeef_708282.jpg"
+      },
+      "lidl": {
+        "photoURL": "https://ie.cat-ret.assets.lidl/catalog4media/ie/article/211765beef/gallery/zoom/211765beef.jpg"
+      }
+    }
+  },
+  "gouda343": {
+    "name": "Gouda Cheese",
+    "stores": {
+      "aldi": {
+        "photoURL": "https://cdn.aldi-digital.co.uk//072597290267401-A.jpg?o=mqpmsGYGgn9eUvDYq8MSLiEuCaQj&V=8ILW&w=1200&h=630&r=4"
+      },
+      "lidl": {
+        "photoURL": "https://static.openfoodfacts.org/images/products/20707866/front_en.12.full.jpg"
+      }
+    }
   }
+
 }

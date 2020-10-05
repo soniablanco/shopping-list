@@ -1,5 +1,6 @@
 package ga.piscos.shoppinglist.allproducts
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,8 @@ import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.R
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.allproducts_all_products_fragment.*
 import kotlinx.android.synthetic.main.allproducts_product_item.view.*
 import java.util.concurrent.TimeUnit
@@ -46,7 +49,7 @@ class AllProductsFragment: Fragment() {
         return inflater.inflate(R.layout.allproducts_all_products_fragment, container, false)
     }
 
-
+    var disposables = CompositeDisposable()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_products_list.layoutManager = LinearLayoutManager(activity)
@@ -56,24 +59,36 @@ class AllProductsFragment: Fragment() {
         }
         rv_products_list.adapter = adapter
 
-        val postListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val products = dataSnapshot.children.map {
-                    ProductItem(
-                        code = it.key!!,
-                        name = it.child("name").value.toString(),
-                        aldiPhotoURL = it.child("stores/aldi/photoURL").value?.toString(),
-                        lidPhotoURL = it.child("stores/lidl/photoURL").value?.toString()
-                    )
-                }
-                adapter.updateProducts(products)
-            }
 
-            override fun onCancelled(databaseError: DatabaseError) {
+    }
+    private val postListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val products = dataSnapshot.children.map {
+                ProductItem(
+                    code = it.key!!,
+                    name = it.child("name").value.toString(),
+                    aldiPhotoURL = it.child("stores/aldi/photoURL").value?.toString(),
+                    lidPhotoURL = it.child("stores/lidl/photoURL").value?.toString()
+                )
             }
+            val adapter = rv_products_list.adapter as ProductsListItemAdapter
+            adapter.updateProducts(products)
         }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+        }
+    }
+    override fun onResume() {
+        super.onResume()
         Firebase.database.reference.child("allproducts").addValueEventListener(postListener)
     }
+
+    override fun onPause() {
+        super.onPause()
+        disposables.clear()
+        Firebase.database.reference.child("allproducts").removeEventListener(postListener)
+    }
+
     class DrawableAlwaysCrossFadeFactory : TransitionFactory<Drawable> {
         private val resourceTransition: DrawableCrossFadeTransition = DrawableCrossFadeTransition(300, true) //customize to your own needs or apply a builder pattern
         override fun build(dataSource: DataSource?, isFirstResource: Boolean): Transition<Drawable> {
@@ -84,7 +99,7 @@ class AllProductsFragment: Fragment() {
         fun bind(product: ProductItem, onclickListener: (ProductItem) -> Unit)= with(itemView){
             tvProductName.text = product.name.replace("++","").replace("**","")
             val images = listOf(product.aldiPhotoURL,product.lidPhotoURL).filter {  it!=null }.toList()
-            Observable.interval(2,TimeUnit.SECONDS)
+            disposables += Observable.interval(3,TimeUnit.SECONDS).startWithItem(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                 val value = it % images.count()
@@ -94,7 +109,6 @@ class AllProductsFragment: Fragment() {
                     .load(imageUrl)
                     .transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
                     .into(imPhotoView)
-                    Log.d(product.name,value.toString())
                 Log.d(product.name,imageUrl)
             }
 
@@ -110,6 +124,7 @@ class AllProductsFragment: Fragment() {
 
 
         fun updateProducts(stockList:List<ProductItem>){
+            disposables.clear()
             elements.clear()
             elements.addAll(stockList)
             notifyDataSetChanged()
@@ -125,4 +140,9 @@ class AllProductsFragment: Fragment() {
     }
 
 
+}
+
+private operator fun CompositeDisposable.plus(disposable: Disposable) : CompositeDisposable {
+    add(disposable)
+    return this
 }
