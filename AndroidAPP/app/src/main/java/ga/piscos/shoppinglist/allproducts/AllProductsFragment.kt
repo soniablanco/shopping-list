@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -70,7 +71,11 @@ class AllProductsFragment: Fragment() {
         fun bind(product: ProductItem, onclickListener: (ProductItem) -> Unit)= with(itemView){
 
             tvProductName.text = product.name.replace("++","").replace("**","")
-
+            Glide.with(this)
+                .load(product.aldiPhotoURL)
+                .centerCrop()
+                .placeholder(R.drawable.common_google_signin_btn_text_disabled)
+                .into(imPhotoView)
 
             setOnClickListener { onclickListener(product) }
         }
