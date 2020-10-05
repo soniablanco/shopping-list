@@ -49,24 +49,18 @@ class AllProductsFragment: Fragment() {
 
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val children = dataSnapshot.children
-                val products = children.map {
+                val products = dataSnapshot.children.map {
                     ProductItem(
                         code = it.key!!,
                         name = it.child("name").value.toString(),
-                        aldiPhotoURL = it.child("stores/aldi/photURL").value?.toString(),
-                        lidPhotoURL = it.child("stores/lidl/photURL").value?.toString()
+                        aldiPhotoURL = it.child("stores/aldi/photoURL").value?.toString(),
+                        lidPhotoURL = it.child("stores/lidl/photoURL").value?.toString()
                     )
                 }
                 adapter.updateProducts(products)
-                Log.d("","")
-                // ...
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
-                Log.d("","")
-                // ...
             }
         }
         Firebase.database.reference.child("allproducts").addValueEventListener(postListener)

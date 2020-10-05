@@ -1,0 +1,24 @@
+{
+    "milk2377": {
+      "name": "Full Fat Milk",
+      "stores": {
+        "aldi": {
+          "photoURL": "aldimilk.jpg"
+        },
+        "lidl": {
+          "photoUrl": "lidlmilk.jpg"
+        }
+      }
+    },
+    "eggs342": {
+        "name": "Eggs",
+        "stores": {
+          "aldi": {
+            "photoURL": "eggsAldi.jpg"
+          },
+          "lidl": {
+            "photoUrl": "eggsLidl.jpg"
+          }
+        }
+      }
+  }
