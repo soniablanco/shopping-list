@@ -12,11 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ga.piscos.shoppinglist.R
 import kotlinx.android.synthetic.main.allproducts_all_products_fragment.*
+import kotlinx.android.synthetic.main.allproducts_product_item.*
 
 class AllProductsFragment: Fragment() {
 
 
     companion object {
+        fun newInstance(): AllProductsFragment? {
+            return  AllProductsFragment()
+        }
 
 
     }
@@ -38,8 +42,7 @@ class AllProductsFragment: Fragment() {
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(product: ProductItem, onclickListener: (ProductItem) -> Unit)= with(itemView){
 
-            tvProductNameTextView.text = product.name.replace("++","").replace("**","")
-            qtyText.text= if (product.filled) "✓" else "✖"
+            tvProductName.text = product.name.replace("++","").replace("**","")
 
 
             setOnClickListener { onclickListener(product) }
@@ -59,7 +62,7 @@ class AllProductsFragment: Fragment() {
         }
 
         override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ProductsListItemHolder {
-            return ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.action_stock_summary_list_item, viewGroup, false))
+            return ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.allproducts_product_item, viewGroup, false))
         }
 
         override fun onBindViewHolder(holder: ProductsListItemHolder, position: Int) = holder.bind(elements[position], onclickListener)

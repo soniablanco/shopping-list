@@ -1,3 +1,3 @@
 package ga.piscos.shoppinglist.allproducts
 
-class ProductItem
+class ProductItem(val name: String)
