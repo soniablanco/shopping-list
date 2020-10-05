@@ -38,7 +38,6 @@ class AllProductsFragment: Fragment() {
     }
 
 
-    private lateinit var database: DatabaseReference
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_products_list.layoutManager = LinearLayoutManager(activity)
@@ -47,12 +46,19 @@ class AllProductsFragment: Fragment() {
         val adapter = ProductsListItemAdapter{
         }
         rv_products_list.adapter = adapter
-        adapter.updateProducts(listOf(ProductItem("coco"), ProductItem("suares")))
 
-        database = Firebase.database.reference
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get Post object and use the values to update the UI
+                val children = dataSnapshot.children
+                val products = children.map {
+                    ProductItem(
+                        code = it.key!!,
+                        name = it.child("name").value.toString(),
+                        aldiPhotoURL = it.child("stores/aldi/photURL").value?.toString(),
+                        lidPhotoURL = it.child("stores/lidl/photURL").value?.toString()
+                    )
+                }
+                adapter.updateProducts(products)
                 Log.d("","")
                 // ...
             }
@@ -63,7 +69,7 @@ class AllProductsFragment: Fragment() {
                 // ...
             }
         }
-        database.addValueEventListener(postListener)
+        Firebase.database.reference.child("allproducts").addValueEventListener(postListener)
     }
 
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
