@@ -1,8 +1,9 @@
-package ga.piscos.shoppinglist.allproducts
+package ga.piscos.shoppinglist.product
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import ga.piscos.shoppinglist.R
+import ga.piscos.shoppinglist.product.ProductFragment
 
 class ProductActivity  : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
