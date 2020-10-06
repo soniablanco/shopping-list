@@ -8,8 +8,6 @@
 
     <ImageView
         android:id="@+id/imPhotoView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
@@ -21,8 +19,21 @@
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_height="120dp"
-        tools:layout_width="120dp" />
+        android:layout_height="120dp"
+        android:layout_width="120dp" />
+
+
+    <ImageView
+        android:id="@+id/imPhotoViewLogo"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+
+        app:layout_constraintEnd_toEndOf="@id/imPhotoView"
+
+        app:layout_constraintTop_toTopOf="@id/imPhotoView"
+         />
 
     <Spinner
         android:id="@+id/spinner"

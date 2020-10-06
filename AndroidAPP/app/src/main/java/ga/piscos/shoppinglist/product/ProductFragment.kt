@@ -90,16 +90,21 @@ class ProductFragment : Fragment() {
             spinner.adapter = adapter
 
             if (product.photoBMP==null) {
+                imPhotoViewLogo.visibility = View.GONE
                 imPhotoView.alpha=0.4F
                 Glide.with(itemView)
                     .load(product.photoURL)
                     .into(imPhotoView)
             }
             else{
+                imPhotoViewLogo.visibility = View.VISIBLE
                 imPhotoView.alpha=1F
                 Glide.with(itemView)
                     .load(product.photoBMP!!)
                     .into(imPhotoView)
+                Glide.with(itemView)
+                    .load(product.photoURL)
+                    .into(imPhotoViewLogo)
             }
 
             imPhotoView.setOnClickListener {
