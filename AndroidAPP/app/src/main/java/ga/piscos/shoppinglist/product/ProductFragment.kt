@@ -1,11 +1,15 @@
 package ga.piscos.shoppinglist.product
 
+import android.R.attr
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,6 +48,8 @@ class ProductFragment : Fragment() {
         val adapter = ProductsListItemAdapter{
         }
         rv_stores_list.adapter = adapter
+
+        Firebase.database.reference.child("stores").addValueEventListener(postListener)
     }
 
     private val postListener = object : ValueEventListener {
@@ -65,7 +71,6 @@ class ProductFragment : Fragment() {
     }
     override fun onResume() {
         super.onResume()
-        Firebase.database.reference.child("stores").addValueEventListener(postListener)
     }
 
     override fun onPause() {
@@ -84,13 +89,42 @@ class ProductFragment : Fragment() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
 
+            if (product.photoBMP==null) {
+                imPhotoView.alpha=0.4F
+                Glide.with(itemView)
+                    .load(product.photoURL)
+                    .into(imPhotoView)
+            }
+            else{
+                imPhotoView.alpha=1F
+                Glide.with(itemView)
+                    .load(product.photoBMP!!)
+                    .into(imPhotoView)
+            }
 
-            Glide.with(this)
-                .load(product.photoURL)
-                .into(imPhotoView)
+            imPhotoView.setOnClickListener {
+                val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                if (takePictureIntent.resolveActivity(activity!!.packageManager) != null) {
+                    startActivityForResult(takePictureIntent, 45)
+                    selectedStore = product
+                }
+            }
+
             setOnClickListener { onclickListener(product) }
         }
     }
+    private var selectedStore:ProductStoreItem? = null
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 45 && resultCode == Activity.RESULT_OK) {
+            val extras: Bundle = data!!.extras!!
+            val imageBitmap = extras["data"] as Bitmap?
+            selectedStore!!.photoBMP = imageBitmap
+            val adapter = rv_stores_list.adapter as ProductFragment.ProductsListItemAdapter
+            adapter.notifyDataSetChanged()
+        }
+    }
+
     private inner class ProductsListItemAdapter(private var elements:MutableList<ProductStoreItem> = arrayListOf(), val onclickListener: (ProductStoreItem) -> Unit
     ) : RecyclerView.Adapter<ProductsListItemHolder>() {
 
