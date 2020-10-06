@@ -4,21 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.R
-import ga.piscos.shoppinglist.allproducts.AllProductsFragment
-import kotlinx.android.synthetic.main.allproducts_product_item.view.*
 import kotlinx.android.synthetic.main.product_product_layout.*
+import kotlinx.android.synthetic.main.product_product_store_item.view.*
+
 
 class ProductFragment : Fragment() {
 
@@ -72,6 +73,22 @@ class ProductFragment : Fragment() {
     }
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(product: ProductStoreItem, onclickListener: (ProductStoreItem) -> Unit)= with(itemView){
+
+
+            val users = arrayOf(
+                "Select Section:",
+                "Suresh Dasari",
+                "Trishika Dasari",
+                "Rohini Alavala",
+                "Praveen Kumar",
+                "Madhav Sai"
+            )
+
+            val adapter: ArrayAdapter<String> =
+                ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, users)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+
 
             Glide.with(this)
                 .load(product.photoURL)
