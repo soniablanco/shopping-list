@@ -8,14 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.R
-import ga.piscos.shoppinglist.allproducts.ProductItem
-import kotlinx.android.synthetic.main.allproducts_all_products_fragment.*
+import ga.piscos.shoppinglist.allproducts.AllProductsFragment
+import kotlinx.android.synthetic.main.allproducts_product_item.view.*
 import kotlinx.android.synthetic.main.product_product_layout.*
 
 class ProductFragment : Fragment() {
@@ -46,14 +48,13 @@ class ProductFragment : Fragment() {
     private val postListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val products = dataSnapshot.children.map {
-                ProductItem(
+                ProductStoreItem(
                     code = it.key!!,
                     name = it.child("name").value.toString(),
-                    aldiPhotoURL = it.child("stores/aldi/photoURL").value?.toString(),
-                    lidPhotoURL = it.child("stores/lidl/photoURL").value?.toString()
+                    photoURL = it.child("photoURL").value.toString()
                 )
             }
-            val adapter = rv_products_list.adapter as ProductFragment.ProductsListItemAdapter
+            val adapter = rv_stores_list.adapter as ProductFragment.ProductsListItemAdapter
             adapter.updateProducts(products)
         }
 
@@ -62,30 +63,34 @@ class ProductFragment : Fragment() {
     }
     override fun onResume() {
         super.onResume()
-        Firebase.database.reference.child("allproducts").addValueEventListener(postListener)
+        Firebase.database.reference.child("stores").addValueEventListener(postListener)
     }
 
     override fun onPause() {
         super.onPause()
-        Firebase.database.reference.child("allproducts").removeEventListener(postListener)
+        Firebase.database.reference.child("stores").removeEventListener(postListener)
     }
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(product: ProductItem, onclickListener: (ProductItem) -> Unit)= with(itemView){
+        fun bind(product: ProductStoreItem, onclickListener: (ProductStoreItem) -> Unit)= with(itemView){
+
+            Glide.with(this)
+                .load(product.photoURL)
+                .into(imPhotoView)
             setOnClickListener { onclickListener(product) }
         }
     }
-    private inner class ProductsListItemAdapter(private var elements:MutableList<ProductItem> = arrayListOf(), val onclickListener: (ProductItem) -> Unit
+    private inner class ProductsListItemAdapter(private var elements:MutableList<ProductStoreItem> = arrayListOf(), val onclickListener: (ProductStoreItem) -> Unit
     ) : RecyclerView.Adapter<ProductsListItemHolder>() {
 
 
-        fun updateProducts(stockList:List<ProductItem>){
+        fun updateProducts(stockList:List<ProductStoreItem>){
             elements.clear()
             elements.addAll(stockList)
             notifyDataSetChanged()
         }
 
         override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ProductsListItemHolder {
-            return ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.allproducts_product_item, viewGroup, false))
+            return ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.product_product_store_item, viewGroup, false))
         }
 
         override fun onBindViewHolder(holder: ProductsListItemHolder, position: Int) = holder.bind(elements[position], onclickListener)
