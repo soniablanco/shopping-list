@@ -52,7 +52,8 @@ class ProductFragment : Fragment() {
                 ProductStoreItem(
                     code = it.key!!,
                     name = it.child("name").value.toString(),
-                    photoURL = it.child("photoURL").value.toString()
+                    photoURL = it.child("photoURL").value.toString(),
+                    sections = it.child("sections").children.map {sec-> ProductStoreSection(code = sec.key!!,name = sec.child("name").value.toString()) }
                 )
             }
             val adapter = rv_stores_list.adapter as ProductFragment.ProductsListItemAdapter
@@ -75,17 +76,11 @@ class ProductFragment : Fragment() {
         fun bind(product: ProductStoreItem, onclickListener: (ProductStoreItem) -> Unit)= with(itemView){
 
 
-            val users = arrayOf(
-                "Select Section:",
-                "Suresh Dasari",
-                "Trishika Dasari",
-                "Rohini Alavala",
-                "Praveen Kumar",
-                "Madhav Sai"
-            )
 
-            val adapter: ArrayAdapter<String> =
-                ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, users)
+            val sections = mutableListOf(ProductStoreSection("noselect","Select Section:"))
+            sections.addAll(product.sections)
+            val adapter: ArrayAdapter<ProductStoreSection> =
+                ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, sections)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
 
