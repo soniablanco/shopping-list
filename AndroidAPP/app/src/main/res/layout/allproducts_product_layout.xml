@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D4D4D4"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <EditText
+        android:id="@+id/dialogTextEdit"
+        android:hint="Product Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:gravity="start"
+        android:padding="15dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtVw"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/dialogTextEdit"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="House Section: "/>
+    <Spinner
+        android:id="@+id/spinner"
+        app:layout_constraintStart_toEndOf="@id/txtVw"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/txtVw"
+        app:layout_constraintBottom_toBottomOf="@id/txtVw"
+        android:layout_centerHorizontal="true"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

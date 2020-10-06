@@ -1,69 +1,178 @@
 {
-  "eggs342": {
-    "name": "Eggs",
-    "stores": {
-      "aldi": {
-        "photoURL": "https://cdn.agriland.ie/uploads/2017/06/meat-free-mince.jpg"
-      },
-      "lidl": {
-        "photoURL": "https://img2.thejournal.ie/article/4873863/river?version=4873904&width=1340"
+  "allproducts" : {
+    "bread333" : {
+      "houseSection" : "kitchen",
+      "name" : "Bread",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://i2-prod.irishmirror.ie/incoming/article12036352.ece/ALTERNATES/s615b/Aldi-Ballymore-Crust-White-Bloomer-recall-notice-160218.jpg",
+          "storeSection" : "bread"
+        },
+        "lidl" : {
+          "photoURL" : "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTmoc9LdKPEZe-IIPV45LWoY7IC-hZ-GgytOg&usqp=CAU"
+        }
+      }
+    },
+    "chickbreas3433" : {
+      "name" : "Chicken Breast",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://static.openfoodfacts.org/images/products/25312799/front_en.4.400.jpg"
+        },
+        "lidl" : {
+          "photoURL" : "https://static.openfoodfacts.org/images/products/405/648/922/7137/front_en.3.full.jpg"
+        }
+      }
+    },
+    "eggs342" : {
+      "name" : "Eggs",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://cdn.aldi-digital.co.uk//061997249390400-A.jpg?o=wbzzsgp7IO%24AKv1piX96nzxyK8Qj&V=%24uqg"
+        },
+        "lidl" : {
+          "photoURL" : "https://ie.cat-ret.assets.lidl/catalog4media/ie/article/209496/gallery/zoom/209496.jpg"
+        }
+      }
+    },
+    "gouda343" : {
+      "name" : "Gouda Cheese",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://cdn.aldi-digital.co.uk//072597290267401-A.jpg?o=mqpmsGYGgn9eUvDYq8MSLiEuCaQj&V=8ILW&w=1200&h=630&r=4"
+        },
+        "lidl" : {
+          "photoURL" : "https://static.openfoodfacts.org/images/products/20707866/front_en.12.full.jpg"
+        }
+      }
+    },
+    "greek343" : {
+      "name" : "Greek Yogurt",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://www.aldi.com.au/fileadmin/fm-dam/Products/Groceries/Award_Winning_Products/Dairy/2020/Q2/ALN2745_Q2_WEB_AUDIT__DAIRY__PD_388x314_2.jpg"
+        },
+        "lidl" : {
+          "photoURL" : "https://www.gestationaldiabetes.co.uk/wp-content/uploads/2019/06/Lidl-Greek-Style-Yogurt-1-300x209.png"
+        }
+      }
+    },
+    "ham33" : {
+      "name" : "Ham",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://cdn.aldi-digital.co.uk//German-Baked-Ham-A.jpg?o=UvFtL%404%40kZZ01ov4MiWOfk1qn84j&V=yaBZ"
+        },
+        "lidl" : {
+          "photoURL" : "https://pbs.twimg.com/media/BtfW_ghCAAAoRVn.jpg"
+        }
+      }
+    },
+    "milk33434" : {
+      "name" : "Milk",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://www.retailnews.ie/contentFiles/components/gdNews/22/large/Aldiremovesover43tonnesofplasticfrom3ltrmilkbottlerange2.jpg"
+        },
+        "lidl" : {
+          "photoURL" : "https://pbs.twimg.com/media/DsI4u6fWoAAr6PU.jpg"
+        }
+      }
+    },
+    "mince3434" : {
+      "name" : "Mince Beef",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://dmrqkbkq8el9i.cloudfront.net/Pictures/2000x2000fit/6/3/2/182632_aldiirishbeef_708282.jpg"
+        },
+        "lidl" : {
+          "photoURL" : "https://ie.cat-ret.assets.lidl/catalog4media/ie/article/211765beef/gallery/zoom/211765beef.jpg"
+        }
+      }
+    },
+    "oatmeal343" : {
+      "name" : "Oatmeal",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://cdn.extra.ie/wp-content/uploads/2017/10/02154412/Kavanaghs-Organic-Porridge-Oats.jpg"
+        },
+        "lidl" : {
+          "photoURL" : "https://pbs.twimg.com/media/BLV7DxuCUAAdsNN.jpg"
+        }
+      }
+    },
+    "orangeJuice" : {
+      "name" : "Orange Juice",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://cdn.aldi-digital.co.uk//Smooth-Orange-Juice-A.jpg?o=7s9%24LE593JHyzF4zIHcrFrFRIZ0j&V=cL1x"
+        },
+        "lidl" : {
+          "photoURL" : "https://static.openfoodfacts.org/images/products/20590260/front_fr.4.full.jpg"
+        }
+      }
+    },
+    "salmon434" : {
+      "name" : "Salmon",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://i.dailymail.co.uk/1s/2019/10/14/05/19677110-7569803-image-m-33_1571028789833.jpg"
+        },
+        "lidl" : {
+          "photoURL" : "https://ie.cat-ret.assets.lidl/catalog4media/ie/article/209349/gallery/zoom/209349.png"
+        }
+      }
+    },
+    "toiletPa33" : {
+      "name" : "Toilet Paper",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQwGOG_wdBbqvOJqGGv_YACqFgFyWqshTiTNw&usqp=CAU"
+        },
+        "lidl" : {
+          "photoURL" : "https://pbs.twimg.com/media/DRpC6JdXUAIjtMt.jpg"
+        }
       }
     }
   },
-  "milk33434": {
-    "name": "Milk",
-    "stores": {
-      "aldi": {
-        "photoURL": "https://www.retailnews.ie/contentFiles/components/gdNews/22/large/Aldiremovesover43tonnesofplasticfrom3ltrmilkbottlerange2.jpg"
+  "house" : {
+    "sections" : {
+      "bathroom" : {
+        "name" : "Bathroom",
+        "photoURL" : "http"
       },
-      "lidl": {
-        "photoURL": "https://pbs.twimg.com/media/DsI4u6fWoAAr6PU.jpg"
+      "fridge" : {
+        "name" : "Fridge",
+        "photoURL" : "http"
       }
     }
   },
-  "bread333": {
-    "name": "Bread",
-    "stores": {
-      "aldi": {
-        "photoURL": "https://i2-prod.irishmirror.ie/incoming/article12036352.ece/ALTERNATES/s615b/Aldi-Ballymore-Crust-White-Bloomer-recall-notice-160218.jpg"
-      },
-      "lidl": {
-        "photoURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTmoc9LdKPEZe-IIPV45LWoY7IC-hZ-GgytOg&usqp=CAU"
+  "stores" : {
+    "aldi" : {
+      "photoURL" : "https://www.freefromheaven.com/wp-content/uploads/2020/08/Portrait-logo.jpg",
+      "name" : "Aldi",
+      "sections" : {
+        "bread" : {
+          "name" : "Bread",
+          "photoURL" : "httpbread"
+        },
+        "conserves" : {
+          "name" : "Conserves",
+          "photoURL" : "httpconserve"
+        }
       }
-    }
-  },
-  "chickbreas3433": {
-    "name": "Chicken Breast",
-    "stores": {
-      "aldi": {
-        "photoURL": "https://static.openfoodfacts.org/images/products/25312799/front_en.4.400.jpg"
-      },
-      "lidl": {
-        "photoURL": "https://static.openfoodfacts.org/images/products/405/648/922/7137/front_en.3.full.jpg"
-      }
-    }
-  },
-  "mince3434": {
-    "name": "Mince Beef",
-    "stores": {
-      "aldi": {
-        "photoURL": "https://dmrqkbkq8el9i.cloudfront.net/Pictures/2000x2000fit/6/3/2/182632_aldiirishbeef_708282.jpg"
-      },
-      "lidl": {
-        "photoURL": "https://ie.cat-ret.assets.lidl/catalog4media/ie/article/211765beef/gallery/zoom/211765beef.jpg"
-      }
-    }
-  },
-  "gouda343": {
-    "name": "Gouda Cheese",
-    "stores": {
-      "aldi": {
-        "photoURL": "https://cdn.aldi-digital.co.uk//072597290267401-A.jpg?o=mqpmsGYGgn9eUvDYq8MSLiEuCaQj&V=8ILW&w=1200&h=630&r=4"
-      },
-      "lidl": {
-        "photoURL": "https://static.openfoodfacts.org/images/products/20707866/front_en.12.full.jpg"
-      }
+    },
+    "dunnes" : {
+      "photoURL" : "https://lh3.googleusercontent.com/proxy/orAVZaul_3hcoBne3l02G-T46qQjDLsqN-c6JT1YLOOgiOk-9eNCT1vUm9qgXEbLgFjBCsVYhfPQqtyoKa_ieLhx_yTzTvsUoE6LMOWJjOQgT5sLj0pj8pgVQynCihmw0JxEgJ6SBti4pOgg3g",
+      "name" : "Dunnes"
+    },
+    "lidl" : {
+      "photoURL" : "https://www.irishtimes.com/polopoly_fs/1.2926751.1483636039!/image/image.jpg_gen/derivatives/ratio_1x1_w1200/image.jpg",
+      "name" : "Lidl"
+    },
+    "tesco" : {
+      "photoURL" : "https://pbs.twimg.com/profile_images/643648185882152960/UGSEW4mc.jpg",
+      "name" : "Tesco"
     }
   }
-
 }

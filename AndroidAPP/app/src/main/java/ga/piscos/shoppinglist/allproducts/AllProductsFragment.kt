@@ -1,6 +1,7 @@
 package ga.piscos.shoppinglist.allproducts
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -49,6 +50,7 @@ class AllProductsFragment: Fragment() {
         return inflater.inflate(R.layout.allproducts_all_products_fragment, container, false)
     }
 
+
     var disposables = CompositeDisposable()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,7 +61,10 @@ class AllProductsFragment: Fragment() {
         }
         rv_products_list.adapter = adapter
 
-
+        fabAddProduct.setOnClickListener {
+            val intent = Intent(context, ProductActivity::class.java)
+            startActivityForResult(intent,323)
+        }
     }
     private val postListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -86,6 +91,7 @@ class AllProductsFragment: Fragment() {
     override fun onPause() {
         super.onPause()
         disposables.clear()
+        diciton.clear()
         Firebase.database.reference.child("allproducts").removeEventListener(postListener)
     }
 
@@ -95,11 +101,17 @@ class AllProductsFragment: Fragment() {
             return resourceTransition
         }
     }
+    private val diciton = hashMapOf<View,Disposable>()
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(product: ProductItem, onclickListener: (ProductItem) -> Unit)= with(itemView){
             tvProductName.text = product.name.replace("++","").replace("**","")
-            val images = listOf(product.aldiPhotoURL,product.lidPhotoURL).filter {  it!=null }.toList()
-            disposables += Observable.interval(3,TimeUnit.SECONDS).startWithItem(1)
+            val images = listOfNotNull(product.aldiPhotoURL, product.lidPhotoURL)
+            val prevObservable = diciton[itemView]
+            if (prevObservable!=null) {
+                prevObservable.dispose()
+                diciton.remove(itemView)
+            }
+            val disposable = Observable.interval(3,TimeUnit.SECONDS).startWithItem(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                 val value = it % images.count()
@@ -109,11 +121,11 @@ class AllProductsFragment: Fragment() {
                     .load(imageUrl)
                     .transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
                     .into(imPhotoView)
-                Log.d(product.name,imageUrl)
             }
+            disposables +=disposable
+            diciton[itemView] = disposable
 
-
-            setOnClickListener { onclickListener(product) }
+                setOnClickListener { onclickListener(product) }
         }
     }
 
@@ -125,6 +137,7 @@ class AllProductsFragment: Fragment() {
 
         fun updateProducts(stockList:List<ProductItem>){
             disposables.clear()
+            diciton.clear()
             elements.clear()
             elements.addAll(stockList)
             notifyDataSetChanged()
