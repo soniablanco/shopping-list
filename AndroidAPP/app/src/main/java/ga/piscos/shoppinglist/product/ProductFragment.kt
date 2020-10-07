@@ -21,6 +21,9 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.R
+import ga.piscos.shoppinglist.observable
+import ga.piscos.shoppinglist.plus
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.product_product_layout.*
 import kotlinx.android.synthetic.main.product_product_store_item.view.*
 
@@ -49,11 +52,7 @@ class ProductFragment : Fragment() {
         }
         rv_stores_list.adapter = adapter
 
-        Firebase.database.reference.child("stores").addValueEventListener(postListener)
-    }
-
-    private val postListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
+        disposables += Firebase.database.reference.child("stores").observable().subscribe { dataSnapshot->
             val products = dataSnapshot.children.map {
                 ProductStoreItem(
                     code = it.key!!,
@@ -62,20 +61,16 @@ class ProductFragment : Fragment() {
                     sections = it.child("sections").children.map {sec-> ProductStoreSection(code = sec.key!!,name = sec.child("name").value.toString()) }
                 )
             }
-            val adapter = rv_stores_list.adapter as ProductFragment.ProductsListItemAdapter
             adapter.updateProducts(products)
         }
+    }
 
-        override fun onCancelled(databaseError: DatabaseError) {
-        }
-    }
-    override fun onResume() {
-        super.onResume()
-    }
+    var disposables = CompositeDisposable()
+
 
     override fun onPause() {
         super.onPause()
-        Firebase.database.reference.child("stores").removeEventListener(postListener)
+         disposables.clear()
     }
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(product: ProductStoreItem, onclickListener: (ProductStoreItem) -> Unit)= with(itemView){

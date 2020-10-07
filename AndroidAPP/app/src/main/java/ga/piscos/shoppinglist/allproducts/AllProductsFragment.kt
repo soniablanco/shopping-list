@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.R
+import ga.piscos.shoppinglist.plus
 import ga.piscos.shoppinglist.product.ProductActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -153,7 +154,6 @@ class AllProductsFragment: Fragment() {
 
 }
 
-private operator fun CompositeDisposable.plus(disposable: Disposable) : CompositeDisposable {
-    add(disposable)
-    return this
-}
+
+
+
