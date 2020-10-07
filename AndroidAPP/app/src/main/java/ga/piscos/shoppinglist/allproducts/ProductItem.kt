@@ -19,7 +19,6 @@ class ProductItem(
         val observable2 =  Observable.just(2).delay(index.toLong()*150,TimeUnit.MILLISECONDS).map { it.toInt() }
         val observable3 =  Observable.interval(3, TimeUnit.SECONDS).map{it+3}.map { it.toInt() }
         return Observable.concat(observable1,observable2,observable3)
-                .doOnEach { Log.d(code,it.toString()) }
                 .map { images[it % images.count()]}
                 .observeOn(AndroidSchedulers.mainThread())
     }

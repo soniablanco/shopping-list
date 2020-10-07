@@ -8,6 +8,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     compileSdkVersion 29
     buildToolsVersion "30.0.0"
 
@@ -45,6 +48,9 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.0.3'
     implementation "com.github.akarnokd:rxjava3-extensions:3.0.0"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.2.0'
+    implementation 'androidx.fragment:fragment-ktx:1.2.5'
 
 
 }

@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +25,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.R
 import ga.piscos.shoppinglist.observable
+import ga.piscos.shoppinglist.observe
 import ga.piscos.shoppinglist.plus
 import ga.piscos.shoppinglist.product.ProductActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -51,8 +54,9 @@ class AllProductsFragment: Fragment() {
     }
 
 
-    var disposables = CompositeDisposable()
     var itemDisposables = CompositeDisposable()
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_products_list.layoutManager = LinearLayoutManager(activity)
@@ -66,26 +70,15 @@ class AllProductsFragment: Fragment() {
             val intent = Intent(context, ProductActivity::class.java)
             startActivityForResult(intent,323)
         }
-    }
-    override fun onResume() {
-        super.onResume()
-        disposables += Firebase.database.reference.child("allproducts").observable().subscribe {dataSnapshot->
-            val products = dataSnapshot.children.map {
-                ProductItem(
-                    code = it.key!!,
-                    name = it.child("name").value.toString(),
-                    aldiPhotoURL = it.child("stores/aldi/photoURL").value?.toString(),
-                    lidPhotoURL = it.child("stores/lidl/photoURL").value?.toString()
-                )
-            }
-            val adapter = rv_products_list.adapter as ProductsListItemAdapter
-            adapter.updateProducts(products)
+        val model by viewModels<AllProductsViewModel>()
+        observe(model.data){
+            adapter.updateProducts(it)
         }
-    }
+        model.loadData()
 
+    }
     override fun onPause() {
         super.onPause()
-        disposables.clear()
         itemDisposables.clear()
         viewsObservable.clear()
     }
