@@ -87,7 +87,7 @@ class AllProductsFragment: Fragment() {
         super.onPause()
         disposables.clear()
         itemDisposables.clear()
-        diciton.clear()
+        viewsObservable.clear()
     }
 
     class DrawableAlwaysCrossFadeFactory : TransitionFactory<Drawable> {
@@ -96,31 +96,26 @@ class AllProductsFragment: Fragment() {
             return resourceTransition
         }
     }
-    private val diciton = hashMapOf<View,Disposable>()
+
+    private val viewsObservable = hashMapOf<View,Disposable>()
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(product: ProductItem, onclickListener: (ProductItem) -> Unit)= with(itemView){
-            tvProductName.text = product.name.replace("++","").replace("**","")
-            val images = listOfNotNull(product.aldiPhotoURL, product.lidPhotoURL)
-            val prevObservable = diciton[itemView]
+        fun bind(index:Int, product: ProductItem, onclickListener: (ProductItem) -> Unit)= with(itemView){
+            tvProductName.text = product.name
+            val prevObservable = viewsObservable[itemView]
             if (prevObservable!=null) {
-                prevObservable.dispose()
-                diciton.remove(itemView)
+                itemDisposables.remove(prevObservable)
+                viewsObservable.remove(itemView)
             }
-            val disposable = Observable.interval(3,TimeUnit.SECONDS).startWithItem(1)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                val value = it % images.count()
-                val imageUrl = images[value.toInt()]
+            val disposable = product.getPhotoChangeObservable(index).subscribe {
 
                 Glide.with(this)
-                    .load(imageUrl)
+                    .load(it)
                     .transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
                     .into(imPhotoView)
             }
             itemDisposables +=disposable
-            diciton[itemView] = disposable
-
-                setOnClickListener { onclickListener(product) }
+            viewsObservable[itemView] = disposable
+            setOnClickListener { onclickListener(product) }
         }
     }
 
@@ -132,7 +127,7 @@ class AllProductsFragment: Fragment() {
 
         fun updateProducts(stockList:List<ProductItem>){
             itemDisposables.clear()
-            diciton.clear()
+            viewsObservable.clear()
             elements.clear()
             elements.addAll(stockList)
             notifyDataSetChanged()
@@ -142,7 +137,7 @@ class AllProductsFragment: Fragment() {
             return ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.allproducts_product_item, viewGroup, false))
         }
 
-        override fun onBindViewHolder(holder: ProductsListItemHolder, position: Int) = holder.bind(elements[position], onclickListener)
+        override fun onBindViewHolder(holder: ProductsListItemHolder, position: Int) = holder.bind(position,elements[position], onclickListener)
 
         override fun getItemCount(): Int {  return elements.size  }
     }
