@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,11 @@ import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.R
 import ga.piscos.shoppinglist.observable
 import ga.piscos.shoppinglist.plus
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.functions.BiFunction
+import io.reactivex.rxjava3.kotlin.Observables
+import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.android.synthetic.main.product_product_layout.*
 import kotlinx.android.synthetic.main.product_product_store_item.view.*
 
@@ -52,16 +57,45 @@ class ProductFragment : Fragment() {
         }
         rv_stores_list.adapter = adapter
 
-        disposables += Firebase.database.reference.child("stores").observable().subscribe { dataSnapshot->
-            val products = dataSnapshot.children.map {
-                ProductStoreItem(
-                    code = it.key!!,
-                    name = it.child("name").value.toString(),
-                    photoURL = it.child("photoURL").value.toString(),
-                    sections = it.child("sections").children.map {sec-> ProductStoreSection(code = sec.key!!,name = sec.child("name").value.toString()) }
-                )
+
+        val name = PublishSubject.create<String>()
+        val age = PublishSubject.create<Int>()
+
+// Can not omit Type parameters and BiFunction
+        Observable.combineLatest<String, Int, String>(
+            name, age, BiFunction { n, a -> "$n - age:${a}" })
+            .subscribe{
+                Log.d("combineLatest", "onNext - ${it}")
             }
-            adapter.updateProducts(products)
+
+        val storesObservable =   Firebase.database.reference.child("stores")
+            .observable()
+            .map {
+                it.children.map { storeSnapShot ->
+                    TemplateStore(
+                        code = storeSnapShot.key!!,
+                        logoURL = storeSnapShot.child("photoURL").value.toString(),
+                        sections = storeSnapShot.child("sections").children.map { sec ->
+                            TemplateStoreSection(
+                                code = sec.key!!,
+                                name = sec.child("name").value.toString()
+                            )
+                        }
+                    )
+                }
+            }
+
+        val houseSectionsObservable =  Firebase.database.reference.child("house/sections")
+            .observable()
+            .map { it.children.map {sec-> TemplateHouseSection(code = sec.key!!,name = sec.child("name").value.toString()) } }
+
+
+        val template = Observable.combineLatest(
+            storesObservable,
+            houseSectionsObservable) { stores, houseSections -> ProductTemplate(houseSections = houseSections,stores = stores) }
+
+        disposables +=template.subscribe {
+            adapter.updateProducts(it.stores)
         }
     }
 
@@ -73,63 +107,48 @@ class ProductFragment : Fragment() {
          disposables.clear()
     }
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(product: ProductStoreItem, onclickListener: (ProductStoreItem) -> Unit)= with(itemView){
+        fun bind(store: TemplateStore, onclickListener: (TemplateStoreSection) -> Unit)= with(itemView){
 
 
 
-            val sections = mutableListOf(ProductStoreSection("noselect","Select Section:"))
-            sections.addAll(product.sections)
-            val adapter: ArrayAdapter<ProductStoreSection> =
+            val sections = mutableListOf(TemplateStoreSection("noselect","Select Section:"))
+            sections.addAll(store.sections)
+            val adapter: ArrayAdapter<TemplateStoreSection> =
                 ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, sections)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
 
-            if (product.photoBMP==null) {
-                imPhotoViewLogo.visibility = View.GONE
-                imPhotoView.alpha=0.4F
-                Glide.with(itemView)
-                    .load(product.photoURL)
-                    .into(imPhotoView)
-            }
-            else{
-                imPhotoViewLogo.visibility = View.VISIBLE
-                imPhotoView.alpha=1F
-                Glide.with(itemView)
-                    .load(product.photoBMP!!)
-                    .into(imPhotoView)
-                Glide.with(itemView)
-                    .load(product.photoURL)
-                    .into(imPhotoViewLogo)
-            }
-
+            Glide.with(itemView)
+                .load(store.logoURL)
+                .into(imPhotoView)
             imPhotoView.setOnClickListener {
                 val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 if (takePictureIntent.resolveActivity(activity!!.packageManager) != null) {
                     startActivityForResult(takePictureIntent, 45)
-                    selectedStore = product
+                    //selectedStore = product
                 }
             }
 
-            setOnClickListener { onclickListener(product) }
+            setOnClickListener {  }
         }
     }
-    private var selectedStore:ProductStoreItem? = null
+    private var selectedStore:TemplateStoreSection? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 45 && resultCode == Activity.RESULT_OK) {
             val extras: Bundle = data!!.extras!!
             val imageBitmap = extras["data"] as Bitmap?
-            selectedStore!!.photoBMP = imageBitmap
+            //selectedStore!!.photoBMP = imageBitmap
             val adapter = rv_stores_list.adapter as ProductFragment.ProductsListItemAdapter
             adapter.notifyDataSetChanged()
         }
     }
 
-    private inner class ProductsListItemAdapter(private var elements:MutableList<ProductStoreItem> = arrayListOf(), val onclickListener: (ProductStoreItem) -> Unit
+    private inner class ProductsListItemAdapter(private var elements:MutableList<TemplateStore> = arrayListOf(), val onclickListener: (TemplateStoreSection) -> Unit
     ) : RecyclerView.Adapter<ProductsListItemHolder>() {
 
 
-        fun updateProducts(stockList:List<ProductStoreItem>){
+        fun updateProducts(stockList:List<TemplateStore>){
             elements.clear()
             elements.addAll(stockList)
             notifyDataSetChanged()

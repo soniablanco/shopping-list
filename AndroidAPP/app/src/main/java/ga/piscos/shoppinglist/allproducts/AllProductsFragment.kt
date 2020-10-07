@@ -74,9 +74,15 @@ class AllProductsFragment: Fragment() {
         observe(model.data){
             adapter.updateProducts(it)
         }
-        model.loadData()
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        val model by viewModels<AllProductsViewModel>()
+        model.loadData()
+    }
+
     override fun onPause() {
         super.onPause()
         itemDisposables.clear()

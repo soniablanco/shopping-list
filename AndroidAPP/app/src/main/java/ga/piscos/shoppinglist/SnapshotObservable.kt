@@ -4,9 +4,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import ga.piscos.shoppinglist.product.ProductFragment
-import ga.piscos.shoppinglist.product.ProductStoreItem
-import ga.piscos.shoppinglist.product.ProductStoreSection
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.product_product_layout.*
