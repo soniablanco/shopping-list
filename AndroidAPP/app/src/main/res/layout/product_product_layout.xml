@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="House Section: "/>
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/house_spinner"
         app:layout_constraintStart_toEndOf="@id/txtVw"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/txtVw"

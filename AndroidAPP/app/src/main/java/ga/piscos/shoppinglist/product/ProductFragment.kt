@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +23,9 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.R
+import ga.piscos.shoppinglist.allproducts.AllProductsViewModel
 import ga.piscos.shoppinglist.observable
+import ga.piscos.shoppinglist.observe
 import ga.piscos.shoppinglist.plus
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -58,53 +61,19 @@ class ProductFragment : Fragment() {
         rv_stores_list.adapter = adapter
 
 
-        val name = PublishSubject.create<String>()
-        val age = PublishSubject.create<Int>()
 
-// Can not omit Type parameters and BiFunction
-        Observable.combineLatest<String, Int, String>(
-            name, age, BiFunction { n, a -> "$n - age:${a}" })
-            .subscribe{
-                Log.d("combineLatest", "onNext - ${it}")
-            }
-
-        val storesObservable =   Firebase.database.reference.child("stores")
-            .observable()
-            .map {
-                it.children.map { storeSnapShot ->
-                    TemplateStore(
-                        code = storeSnapShot.key!!,
-                        logoURL = storeSnapShot.child("photoURL").value.toString(),
-                        sections = storeSnapShot.child("sections").children.map { sec ->
-                            TemplateStoreSection(
-                                code = sec.key!!,
-                                name = sec.child("name").value.toString()
-                            )
-                        }
-                    )
-                }
-            }
-
-        val houseSectionsObservable =  Firebase.database.reference.child("house/sections")
-            .observable()
-            .map { it.children.map {sec-> TemplateHouseSection(code = sec.key!!,name = sec.child("name").value.toString()) } }
-
-
-        val template = Observable.combineLatest(
-            storesObservable,
-            houseSectionsObservable) { stores, houseSections -> ProductTemplate(houseSections = houseSections,stores = stores) }
-
-        disposables +=template.subscribe {
+        val model by viewModels<ProductViewModel>()
+        observe(model.data){
             adapter.updateProducts(it.stores)
+            val sections = mutableListOf(TemplateHouseSection("noselect","Select Section:"))
+            sections.addAll(it.houseSections)
+            val sectionsAdapter: ArrayAdapter<TemplateHouseSection> =
+                ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, sections)
+            sectionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            house_spinner.adapter = sectionsAdapter
         }
-    }
+        model.loadData()
 
-    var disposables = CompositeDisposable()
-
-
-    override fun onPause() {
-        super.onPause()
-         disposables.clear()
     }
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(store: TemplateStore, onclickListener: (TemplateStoreSection) -> Unit)= with(itemView){
