@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.R
+import ga.piscos.shoppinglist.observable
 import ga.piscos.shoppinglist.plus
 import ga.piscos.shoppinglist.product.ProductActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -51,6 +52,7 @@ class AllProductsFragment: Fragment() {
 
 
     var disposables = CompositeDisposable()
+    var itemDisposables = CompositeDisposable()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_products_list.layoutManager = LinearLayoutManager(activity)
@@ -65,8 +67,9 @@ class AllProductsFragment: Fragment() {
             startActivityForResult(intent,323)
         }
     }
-    private val postListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
+    override fun onResume() {
+        super.onResume()
+        disposables += Firebase.database.reference.child("allproducts").observable().subscribe {dataSnapshot->
             val products = dataSnapshot.children.map {
                 ProductItem(
                     code = it.key!!,
@@ -78,20 +81,13 @@ class AllProductsFragment: Fragment() {
             val adapter = rv_products_list.adapter as ProductsListItemAdapter
             adapter.updateProducts(products)
         }
-
-        override fun onCancelled(databaseError: DatabaseError) {
-        }
-    }
-    override fun onResume() {
-        super.onResume()
-        Firebase.database.reference.child("allproducts").addValueEventListener(postListener)
     }
 
     override fun onPause() {
         super.onPause()
         disposables.clear()
+        itemDisposables.clear()
         diciton.clear()
-        Firebase.database.reference.child("allproducts").removeEventListener(postListener)
     }
 
     class DrawableAlwaysCrossFadeFactory : TransitionFactory<Drawable> {
@@ -121,7 +117,7 @@ class AllProductsFragment: Fragment() {
                     .transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
                     .into(imPhotoView)
             }
-            disposables +=disposable
+            itemDisposables +=disposable
             diciton[itemView] = disposable
 
                 setOnClickListener { onclickListener(product) }
@@ -135,7 +131,7 @@ class AllProductsFragment: Fragment() {
 
 
         fun updateProducts(stockList:List<ProductItem>){
-            disposables.clear()
+            itemDisposables.clear()
             diciton.clear()
             elements.clear()
             elements.addAll(stockList)
