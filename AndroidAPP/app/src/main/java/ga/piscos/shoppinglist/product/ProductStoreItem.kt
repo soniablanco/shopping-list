@@ -21,8 +21,8 @@ class TemplateStore(val code:String, val logoURL:String,val sections:List<Templa
 
 class ProductTemplate(val houseSections:List<TemplateHouseSection>, val stores: List<TemplateStore>)
 
-class EditingProductStore(val photoFile: String, val section: String)
-class EditingProduct(val productName:String?, val houseSection: String?, val  stores: List<EditingProductStore> = listOf())
+class EditingProductStore(val code:String, var photoFile: String?, var section: String?)
+class EditingProduct(var productName:String?, var houseSection: String?, val  stores: MutableList<EditingProductStore> = mutableListOf())
 
 class ProductModel(val productTemplate: ProductTemplate, val editingProduct: EditingProduct)
 

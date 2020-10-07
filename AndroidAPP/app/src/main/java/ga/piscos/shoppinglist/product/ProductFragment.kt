@@ -22,11 +22,15 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.jakewharton.rxbinding4.view.changeEvents
+import com.jakewharton.rxbinding4.widget.itemSelections
+import com.jakewharton.rxbinding4.widget.textChanges
 import ga.piscos.shoppinglist.R
 import ga.piscos.shoppinglist.allproducts.AllProductsViewModel
 import ga.piscos.shoppinglist.observable
 import ga.piscos.shoppinglist.observe
 import ga.piscos.shoppinglist.plus
+import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.functions.BiFunction
@@ -51,6 +55,7 @@ class ProductFragment : Fragment() {
         return inflater.inflate(R.layout.product_product_layout, container, false)
 
     }
+    private val model by viewModels<ProductViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_stores_list.layoutManager = LinearLayoutManager(activity)
@@ -62,7 +67,7 @@ class ProductFragment : Fragment() {
 
 
 
-        val model by viewModels<ProductViewModel>()
+
         observe(model.data){
             adapter.updateProducts(it.productTemplate.stores)
             val sections = mutableListOf(TemplateHouseSection("noselect","Select Section:"))
@@ -71,6 +76,14 @@ class ProductFragment : Fragment() {
                 ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, sections)
             sectionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             house_spinner.adapter = sectionsAdapter
+            dialogTextEdit.textChanges().subscribe { prodName ->
+                model.updateProductName(prodName.toString())
+            }
+            house_spinner.itemSelections().subscribe {index->
+                val code = if (index>0)  sections[index].code else null
+                model.updateHouseSectionCode(code)
+            }
+
         }
         model.loadData()
 
@@ -86,7 +99,10 @@ class ProductFragment : Fragment() {
                 ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, sections)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
-
+            spinner.itemSelections().subscribe {index->
+                val code = if (index>0)  sections[index].code else null
+                model.updateStoreSection(storeCode = store.code, sectionCode = code)
+            }
             Glide.with(itemView)
                 .load(store.logoURL)
                 .into(imPhotoView)

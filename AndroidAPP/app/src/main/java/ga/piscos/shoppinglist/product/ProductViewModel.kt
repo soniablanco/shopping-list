@@ -9,13 +9,35 @@ import ga.piscos.shoppinglist.observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.Observables
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.functions.BiFunction
 import java.util.*
 
 class ProductViewModel (application: Application) : AndroidViewModel(application) {
 
     var disposables = CompositeDisposable()
     val data = MutableLiveData<ProductModel>()
-
+    private  val editingModel = EditingProduct(productName = null,houseSection = null)
+    fun updateProductName(value:String){
+        editingModel.productName=value
+    }
+    fun updateHouseSectionCode(code: String?) {
+        editingModel.houseSection = code
+    }
+    fun updateStoreSection(storeCode: String, sectionCode: String?) {
+        val store = editingModel.stores.filter { it.code==storeCode }
+        if (store.any()){
+            store.first().section=sectionCode
+        }
+        else{
+            editingModel.stores.add(
+                EditingProductStore(
+                    code = storeCode,
+                    photoFile = null,
+                    section = sectionCode
+                )
+            )
+        }
+    }
     fun loadData() {
 
         val storesObservable = Firebase.database.reference.child("stores")
@@ -47,23 +69,19 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
             }
 
 
-        val templateObservable = Observables.combineLatest<List<TemplateStore>,List<TemplateHouseSection>,ProductTemplate>(
+        val templateObservable = Observable.combineLatest(
             storesObservable,
             houseSectionsObservable
-        ) { stores, houseSections->
+        , BiFunction { stores:List<TemplateStore>, houseSections:List<TemplateHouseSection>->
             ProductTemplate(
                 houseSections = houseSections,
                 stores = stores
             )
-        }
+        })
 
-        val editingProductObservable = Observable.just(EditingProduct(null,null))
 
-        val productModelObservable = Observables.combineLatest(templateObservable,editingProductObservable){ template,editingProduct ->
-            ProductModel(productTemplate=template,editingProduct = editingProduct)
-        }
-        productModelObservable.subscribe {
-            data.value = it
+        templateObservable.subscribe {
+            data.value = ProductModel(productTemplate = it,editingProduct = editingModel)
         }
     }
 
@@ -71,5 +89,8 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
         super.onCleared()
         disposables.clear()
     }
+
+
+
 
 }
