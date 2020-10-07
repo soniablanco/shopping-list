@@ -8,11 +8,13 @@ import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.Observables
+import io.reactivex.rxjava3.core.Observable
+import java.util.*
 
 class ProductViewModel (application: Application) : AndroidViewModel(application) {
 
     var disposables = CompositeDisposable()
-    val data = MutableLiveData<ProductTemplate>()
+    val data = MutableLiveData<ProductModel>()
 
     fun loadData() {
 
@@ -55,7 +57,12 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
             )
         }
 
-        templateObservable.subscribe {
+        val editingProductObservable = Observable.just(EditingProduct(null,null))
+
+        val productModelObservable = Observables.combineLatest(templateObservable,editingProductObservable){ template,editingProduct ->
+            ProductModel(productTemplate=template,editingProduct = editingProduct)
+        }
+        productModelObservable.subscribe {
             data.value = it
         }
     }

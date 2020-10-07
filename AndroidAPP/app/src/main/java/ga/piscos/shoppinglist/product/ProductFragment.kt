@@ -64,9 +64,9 @@ class ProductFragment : Fragment() {
 
         val model by viewModels<ProductViewModel>()
         observe(model.data){
-            adapter.updateProducts(it.stores)
+            adapter.updateProducts(it.productTemplate.stores)
             val sections = mutableListOf(TemplateHouseSection("noselect","Select Section:"))
-            sections.addAll(it.houseSections)
+            sections.addAll(it.productTemplate.houseSections)
             val sectionsAdapter: ArrayAdapter<TemplateHouseSection> =
                 ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, sections)
             sectionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
