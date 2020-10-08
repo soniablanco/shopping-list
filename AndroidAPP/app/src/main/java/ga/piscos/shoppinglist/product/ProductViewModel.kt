@@ -1,16 +1,21 @@
 package ga.piscos.shoppinglist.product
 
 import android.app.Application
+import android.content.Context
+import android.net.Uri
+import androidx.core.content.FileProvider
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import ga.piscos.shoppinglist.BuildConfig
 import ga.piscos.shoppinglist.observable
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.kotlin.Observables
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.functions.BiFunction
+import java.io.File
 import java.util.*
+
 
 class ProductViewModel (application: Application) : AndroidViewModel(application) {
 
@@ -23,6 +28,25 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
     fun updateHouseSectionCode(code: String?) {
         editingModel.houseSection = code
     }
+
+    fun createImageFile(): Uri {
+
+        val appFilesDir = (getApplication() as Context).filesDir
+        val filesRoot = File(appFilesDir, "attachments")
+        if (!filesRoot.exists()) {
+            filesRoot.mkdirs()
+        }
+        val file = File(filesRoot, UUID.randomUUID().toString()+".jpg")
+
+
+
+        return FileProvider.getUriForFile(
+            getApplication(),
+            BuildConfig.APPLICATION_ID +".fileprovider",
+            file
+        )
+    }
+
     fun updateStoreSection(storeCode: String, sectionCode: String?) {
         val store = editingModel.stores.filter { it.code==storeCode }
         if (store.any()){

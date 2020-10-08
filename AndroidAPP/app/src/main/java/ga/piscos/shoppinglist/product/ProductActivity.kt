@@ -6,6 +6,7 @@ import ga.piscos.shoppinglist.R
 import ga.piscos.shoppinglist.product.ProductFragment
 
 class ProductActivity  : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -14,5 +15,6 @@ class ProductActivity  : AppCompatActivity() {
             listFragment = ProductFragment.newInstance()
             supportFragmentManager.beginTransaction().add(R.id.fragment_container, listFragment).commit()
         }
+
     }
 }

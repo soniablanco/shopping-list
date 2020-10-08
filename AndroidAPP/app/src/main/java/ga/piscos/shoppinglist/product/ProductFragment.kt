@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -96,6 +97,10 @@ class ProductFragment : Fragment() {
         model.loadData()
 
     }
+    val getContent = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+
+    }
+
     private inner class StoresListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(store: ProductStoreModel, onclickListener: (ProductModel.Template.Store) -> Unit)= with(itemView){
 
@@ -117,26 +122,13 @@ class ProductFragment : Fragment() {
                 .load(store.template.logoURL)
                 .into(imPhotoView)
             imPhotoView.setOnClickListener {
-                val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                if (takePictureIntent.resolveActivity(activity!!.packageManager) != null) {
-                    startActivityForResult(takePictureIntent, 45)
-                    //selectedStore = product
-                }
+                getContent.launch(model.createImageFile())
             }
 
             setOnClickListener {  }
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 45 && resultCode == Activity.RESULT_OK) {
-            val extras: Bundle = data!!.extras!!
-            val imageBitmap = extras["data"] as Bitmap?
-            //selectedStore!!.photoBMP = imageBitmap
-            val adapter = rv_stores_list.adapter as ProductFragment.StoresListItemAdapter
-            adapter.notifyDataSetChanged()
-        }
-    }
 
     private inner class StoresListItemAdapter(private var elements:MutableList<ProductStoreModel> = arrayListOf(), val onclickListener: (ProductModel.Template.Store) -> Unit
     ) : RecyclerView.Adapter<StoresListItemHolder>() {
