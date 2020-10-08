@@ -3,18 +3,22 @@ package ga.piscos.shoppinglist.product
 import android.app.Application
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import androidx.core.content.FileProvider
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import ga.piscos.shoppinglist.BuildConfig
 import ga.piscos.shoppinglist.observable
+import ga.piscos.shoppinglist.uploadObservable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.functions.BiFunction
 import java.io.File
 import java.util.*
+import kotlin.math.log
 
 
 class ProductViewModel (application: Application) : AndroidViewModel(application) {
@@ -28,6 +32,30 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
     fun updateHouseSectionCode(code: String?) {
         editingModel.houseSection = code
     }
+
+    fun sync(){
+        val storageRef = Firebase.storage.reference
+        editingModel.code =  UUID.randomUUID().toString()
+        val filesToUpload = editingModel.stores.filter { it.photoURI!=null }
+        Observable.fromIterable(filesToUpload)
+            .map { Pair(first = it,second =  storageRef.child("allproducts/${editingModel.code}/stores/${it.code}/${it.photoURI!!.lastPathSegment}")) }
+            .flatMap {pair-> pair.second.uploadObservable(pair.first.photoURI!!)
+                .map { pair }
+            }
+            .flatMap {pair-> pair.second.downloadUrl.observable().map { Pair(first = pair.first,second = it)  } }
+            .doOnEach{
+               it.value.first.photoFirebaseUrl = it.value.second.toString()
+            }.subscribe {
+
+                Log.d("FB",it.first.toString())
+
+            }
+
+
+        }
+
+
+
 
     fun createImageFile(): Uri {
 

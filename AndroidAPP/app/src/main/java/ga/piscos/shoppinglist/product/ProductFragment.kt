@@ -69,7 +69,9 @@ class ProductFragment : Fragment() {
         rv_stores_list.adapter = storesAdapter
 
 
-
+        fabSyncProduct.setOnClickListener {
+            viewModel.sync()
+        }
 
         observe(viewModel.data){ productModel ->
 
