@@ -1,14 +1,16 @@
 package ga.piscos.shoppinglist.product
 
+import android.net.Uri
 
 
-class ProductStoreModel(val template: ProductModel.Template.Store, val editing: ProductModel.Editing.Store?, val saved: ProductModel.Saved.Store?){
+class ProductStoreModel(val template: ProductModel.Template.Store, var editing: ProductModel.Editing.Store?, val saved: ProductModel.Saved.Store?){
     fun getEditingSectionIndex():Int? {
         if (editing==null)
             return null
-        val houseSection = template.sections.firstOrNull { it.code == editing.code }
+        val houseSection = template.sections.firstOrNull { it.code == editing!!.code }
         return if (houseSection!=null) template.sections.indexOf(houseSection) else null
     }
+
 }
 
 class ProductModel(val template: Template, val editing: Editing, val saved:Saved?){
@@ -24,7 +26,7 @@ class ProductModel(val template: Template, val editing: Editing, val saved:Saved
 
     class Editing(val code:String?, var name:String?, var houseSection:String?, val stores: MutableList<Store> = mutableListOf()){
         val isNew get() = code==null
-        class Store(val code:String, var photoFile: String?, var section: String?)
+        class Store(val code:String, var photoURI: Uri? =null, var section: String? =null)
     }
 
 

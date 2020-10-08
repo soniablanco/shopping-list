@@ -4,6 +4,7 @@ import android.R.attr
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -57,7 +58,7 @@ class ProductFragment : Fragment() {
         return inflater.inflate(R.layout.product_product_layout, container, false)
 
     }
-    private val model by viewModels<ProductViewModel>()
+    private val viewModel by viewModels<ProductViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_stores_list.layoutManager = LinearLayoutManager(activity)
@@ -70,7 +71,7 @@ class ProductFragment : Fragment() {
 
 
 
-        observe(model.data){ productModel ->
+        observe(viewModel.data){ productModel ->
 
             val sections = mutableListOf(ProductModel.Template.HouseSection("noselect","Select Section:"))
             sections.addAll(productModel.template.houseSections)
@@ -83,24 +84,29 @@ class ProductFragment : Fragment() {
             house_spinner.setSelection( if (sectionIndex==null) 0 else sectionIndex+1)
             house_spinner.itemSelections().subscribe {index->
                 val code = if (index>0)  sections[index].code else null
-                model.updateHouseSectionCode(code)
+                viewModel.updateHouseSectionCode(code)
             }
 
             dialogTextEdit.setText(productModel.editing.name?:"")
             dialogTextEdit.textChanges().subscribe { prodName ->
-                model.updateProductName(prodName.toString())
+                viewModel.updateProductName(prodName.toString())
             }
 
             storesAdapter.updateElements(productModel.getStoresModel())
 
         }
-        model.loadData()
+        viewModel.loadData()
 
     }
+
+    private var storeCode:String? = null
+    private var storePhotoUri: Uri? = null
     val getContent = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-
+        viewModel.updateStorePhoto(storeCode!!,storePhotoUri!!)
+        storeCode = null
+        storePhotoUri = null
+        (rv_stores_list.adapter as StoresListItemAdapter).updateElements(viewModel.data.value!!.getStoresModel())
     }
-
     private inner class StoresListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(store: ProductStoreModel, onclickListener: (ProductModel.Template.Store) -> Unit)= with(itemView){
 
@@ -116,13 +122,24 @@ class ProductFragment : Fragment() {
             spinner.setSelection( if (sectionIndex==null) 0 else sectionIndex+1)
             spinner.itemSelections().subscribe {index->
                 val code = if (index>0)  sections[index].code else null
-                model.updateStoreSection(storeCode = store.template.code, sectionCode = code)
+                viewModel.updateStoreSection(storeCode = store.template.code, sectionCode = code)
             }
-            Glide.with(itemView)
-                .load(store.template.logoURL)
-                .into(imPhotoView)
+            if (store.editing?.photoURI!=null){
+                Glide.with(itemView)
+                    .load(store.editing!!.photoURI!!)
+                    .into(imPhotoView)
+            }
+            else {
+                Glide.with(itemView)
+                    .load(store.template.logoURL)
+                    .into(imPhotoView)
+            }
+
             imPhotoView.setOnClickListener {
-                getContent.launch(model.createImageFile())
+                val uri = viewModel.createImageFile()
+                storePhotoUri  = uri
+                storeCode = store.template.code
+                getContent.launch(uri)
             }
 
             setOnClickListener {  }

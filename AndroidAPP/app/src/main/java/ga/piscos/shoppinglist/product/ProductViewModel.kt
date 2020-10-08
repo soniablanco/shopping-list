@@ -56,12 +56,30 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
             editingModel.stores.add(
                 ProductModel.Editing.Store(
                     code = storeCode,
-                    photoFile = null,
+                    photoURI = null,
                     section = sectionCode
                 )
             )
         }
     }
+
+    fun updateStorePhoto(storeCode: String, photoUri: Uri?) {
+        val store = editingModel.stores.filter { it.code==storeCode }
+        if (store.any()){
+            store.first().photoURI=photoUri
+        }
+        else{
+            editingModel.stores.add(
+                ProductModel.Editing.Store(
+                    code = storeCode,
+                    photoURI = photoUri,
+                    section = null
+                )
+            )
+        }
+    }
+
+
     fun loadData() {
 
         val storesObservable = Firebase.database.reference.child("stores")
