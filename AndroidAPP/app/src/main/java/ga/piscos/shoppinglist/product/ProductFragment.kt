@@ -126,10 +126,10 @@ class ProductFragment : Fragment() {
                 val code = if (index>0)  sections[index].code else null
                 viewModel.updateStoreSection(storeCode = store.template.code, sectionCode = code)
             }
-            if (store.editing?.photoURI!=null){
+            if (store.editing?.photoTakenURI!=null){
                 imPhotoView.alpha = 1F
                 Glide.with(itemView)
-                    .load(store.editing!!.photoURI!!)
+                    .load(store.editing!!.photoTakenURI!!)
                     .into(imPhotoView)
                 imPhotoViewLogo.alpha = 0.7F
                 Glide.with(itemView)

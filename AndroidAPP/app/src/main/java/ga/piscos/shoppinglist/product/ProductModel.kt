@@ -26,7 +26,7 @@ class ProductModel(val template: Template, val editing: Editing, val saved:Saved
 
     class Editing(var code:String?, var name:String?, var houseSection:String?, val stores: MutableList<Store> = mutableListOf()){
         val isNew get() = code==null
-        class Store(val code:String, var photoURI: Uri? =null, var photoFirebaseUrl: String? =null, var section: String? =null)
+        class Store(val code:String, var photoTakenURI: Uri? =null, var photoFirebaseUrl: String? =null, var section: String? =null)
     }
 
 

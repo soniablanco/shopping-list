@@ -36,19 +36,19 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
     fun sync(){
         val storageRef = Firebase.storage.reference
         editingModel.code =  UUID.randomUUID().toString()
-        val filesToUpload = editingModel.stores.filter { it.photoURI!=null }
+        val filesToUpload = editingModel.stores.filter { it.photoTakenURI!=null }
         Observable.fromIterable(filesToUpload)
-            .map { Pair(first = it,second =  storageRef.child("allproducts/${editingModel.code}/stores/${it.code}/${it.photoURI!!.lastPathSegment}")) }
-            .flatMap {pair-> pair.second.uploadObservable(pair.first.photoURI!!)
+            .map { Pair(first = it,second =  storageRef.child("allproducts/${editingModel.code}/stores/${it.code}/${it.photoTakenURI!!.lastPathSegment}")) }
+            .flatMap {pair-> pair.second.uploadObservable(pair.first.photoTakenURI!!)
                 .map { pair }
             }
             .flatMap {pair-> pair.second.downloadUrl.observable().map { Pair(first = pair.first,second = it)  } }
             .doOnEach{
                it.value.first.photoFirebaseUrl = it.value.second.toString()
-            }.subscribe {
-
-                Log.d("FB",it.first.toString())
-
+            }
+            .map { it.first }
+            .subscribe {
+                Log.d("FB",it.toString())
             }
 
 
@@ -84,7 +84,7 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
             editingModel.stores.add(
                 ProductModel.Editing.Store(
                     code = storeCode,
-                    photoURI = null,
+                    photoTakenURI = null,
                     section = sectionCode
                 )
             )
@@ -94,13 +94,13 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
     fun updateStorePhoto(storeCode: String, photoUri: Uri?) {
         val store = editingModel.stores.filter { it.code==storeCode }
         if (store.any()){
-            store.first().photoURI=photoUri
+            store.first().photoTakenURI=photoUri
         }
         else{
             editingModel.stores.add(
                 ProductModel.Editing.Store(
                     code = storeCode,
-                    photoURI = photoUri,
+                    photoTakenURI = photoUri,
                     section = null
                 )
             )
