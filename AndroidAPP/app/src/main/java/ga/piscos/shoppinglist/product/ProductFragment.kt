@@ -62,50 +62,57 @@ class ProductFragment : Fragment() {
         rv_stores_list.layoutManager = LinearLayoutManager(activity)
         rv_stores_list.addItemDecoration(DividerItemDecoration(rv_stores_list.context, DividerItemDecoration.VERTICAL))
         rv_stores_list.setHasFixedSize(true)
-        val adapter = StoresListItemAdapter{
+        val storesAdapter = StoresListItemAdapter{
         }
-        rv_stores_list.adapter = adapter
+        rv_stores_list.adapter = storesAdapter
 
 
 
 
-        observe(model.data){
-            adapter.updateProducts(it.template.stores)
+        observe(model.data){ productModel ->
+
             val sections = mutableListOf(ProductModel.Template.HouseSection("noselect","Select Section:"))
-            sections.addAll(it.template.houseSections)
+            sections.addAll(productModel.template.houseSections)
             val sectionsAdapter: ArrayAdapter<ProductModel.Template.HouseSection> =
                 ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, sections)
             sectionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             house_spinner.adapter = sectionsAdapter
-            dialogTextEdit.textChanges().subscribe { prodName ->
-                model.updateProductName(prodName.toString())
-            }
+
+            val houseSection = productModel.template.houseSections.firstOrNull { it.code == productModel.editing.code }
+            house_spinner.setSelection( if (houseSection!=null) productModel.template.houseSections.indexOf(houseSection) else 0)
             house_spinner.itemSelections().subscribe {index->
                 val code = if (index>0)  sections[index].code else null
                 model.updateHouseSectionCode(code)
             }
+
+            dialogTextEdit.setText(productModel.editing.name?:"")
+            dialogTextEdit.textChanges().subscribe { prodName ->
+                model.updateProductName(prodName.toString())
+            }
+
+            storesAdapter.updateElements(productModel.getStoresModel())
 
         }
         model.loadData()
 
     }
     private inner class StoresListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(store: ProductModel.Template.Store, onclickListener: (ProductModel.Template.Store) -> Unit)= with(itemView){
+        fun bind(store: ProductStoreModel, onclickListener: (ProductModel.Template.Store) -> Unit)= with(itemView){
 
 
 
             val sections = mutableListOf(ProductModel.Template.Store.Section("noselect","Select Section:"))
-            sections.addAll(store.sections)
+            sections.addAll(store.template.sections)
             val adapter: ArrayAdapter<ProductModel.Template.Store.Section> =
                 ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, sections)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
             spinner.itemSelections().subscribe {index->
                 val code = if (index>0)  sections[index].code else null
-                model.updateStoreSection(storeCode = store.code, sectionCode = code)
+                model.updateStoreSection(storeCode = store.template.code, sectionCode = code)
             }
             Glide.with(itemView)
-                .load(store.logoURL)
+                .load(store.template.logoURL)
                 .into(imPhotoView)
             imPhotoView.setOnClickListener {
                 val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -129,13 +136,13 @@ class ProductFragment : Fragment() {
         }
     }
 
-    private inner class StoresListItemAdapter(private var elements:MutableList<ProductModel.Template.Store> = arrayListOf(), val onclickListener: (ProductModel.Template.Store) -> Unit
+    private inner class StoresListItemAdapter(private var elements:MutableList<ProductStoreModel> = arrayListOf(), val onclickListener: (ProductModel.Template.Store) -> Unit
     ) : RecyclerView.Adapter<StoresListItemHolder>() {
 
 
-        fun updateProducts(stockList:List<ProductModel.Template.Store>){
+        fun updateElements(stores:List<ProductStoreModel>){
             elements.clear()
-            elements.addAll(stockList)
+            elements.addAll(stores)
             notifyDataSetChanged()
         }
 

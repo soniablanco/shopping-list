@@ -16,7 +16,7 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
 
     var disposables = CompositeDisposable()
     val data = MutableLiveData<ProductModel>()
-    private  val editingModel = ProductModel.Editing(name = null,houseSection = null)
+    private  val editingModel = ProductModel.Editing(name = null,houseSection = null,code = null)
     fun updateProductName(value:String){
         editingModel.name=value
     }
