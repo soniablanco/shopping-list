@@ -78,8 +78,8 @@ class ProductFragment : Fragment() {
             sectionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             house_spinner.adapter = sectionsAdapter
 
-            val houseSection = productModel.template.houseSections.firstOrNull { it.code == productModel.editing.code }
-            house_spinner.setSelection( if (houseSection!=null) productModel.template.houseSections.indexOf(houseSection) else 0)
+            val sectionIndex = productModel.getEditingHouseSectionIndex()
+            house_spinner.setSelection( if (sectionIndex==null) 0 else sectionIndex+1)
             house_spinner.itemSelections().subscribe {index->
                 val code = if (index>0)  sections[index].code else null
                 model.updateHouseSectionCode(code)
@@ -107,6 +107,8 @@ class ProductFragment : Fragment() {
                 ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, sections)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
+            val sectionIndex = store.getEditingSectionIndex()
+            spinner.setSelection( if (sectionIndex==null) 0 else sectionIndex+1)
             spinner.itemSelections().subscribe {index->
                 val code = if (index>0)  sections[index].code else null
                 model.updateStoreSection(storeCode = store.template.code, sectionCode = code)

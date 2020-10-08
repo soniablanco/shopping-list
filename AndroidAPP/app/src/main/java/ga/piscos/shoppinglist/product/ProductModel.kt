@@ -2,7 +2,14 @@ package ga.piscos.shoppinglist.product
 
 
 
-class ProductStoreModel(val template: ProductModel.Template.Store, val editing: ProductModel.Editing.Store?, val saved: ProductModel.Saved.Store?)
+class ProductStoreModel(val template: ProductModel.Template.Store, val editing: ProductModel.Editing.Store?, val saved: ProductModel.Saved.Store?){
+    fun getEditingSectionIndex():Int? {
+        if (editing==null)
+            return null
+        val houseSection = template.sections.firstOrNull { it.code == editing.code }
+        return if (houseSection!=null) template.sections.indexOf(houseSection) else null
+    }
+}
 
 class ProductModel(val template: Template, val editing: Editing, val saved:Saved?){
 
@@ -10,6 +17,10 @@ class ProductModel(val template: Template, val editing: Editing, val saved:Saved
         ProductStoreModel(template = storeTemplate,editing = editing.stores.firstOrNull { it.code == storeTemplate.code },saved = null)
             }
 
+    fun getEditingHouseSectionIndex():Int? {
+        val houseSection = template.houseSections.firstOrNull { it.code == editing.code }
+        return if (houseSection!=null) template.houseSections.indexOf(houseSection) else null
+    }
 
     class Editing(val code:String?, var name:String?, var houseSection:String?, val stores: MutableList<Store> = mutableListOf()){
         val isNew get() = code==null
