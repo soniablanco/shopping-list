@@ -34,6 +34,9 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
     }
 
     fun sync(){
+
+
+
         val storageRef = Firebase.storage.reference
         editingModel.code =  UUID.randomUUID().toString()
         val filesToUpload = editingModel.stores.filter { it.photoTakenURI!=null }
@@ -49,6 +52,34 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
             .map { it.first }
             .subscribe {
                 Log.d("FB",it.toString())
+
+
+
+                val storeSingleData = {store:ProductModel.Editing.Store ->
+                    mapOf(
+                        "photoURL" to store.photoFirebaseUrl,
+                        "storeSection" to store.section,
+                    )
+                }
+                val storesComplex = {list: List<ProductModel.Editing.Store> ->
+                    val map = mutableMapOf<String,Any?>()
+                    list.forEach {store-> map[store.code] = storeSingleData(store) }
+                    map
+                }
+
+                val productMain = mutableMapOf<String,Any?>(
+                    "houseSection" to editingModel.houseSection,
+                    "name" to editingModel.name,
+                    "stores" to storesComplex(editingModel.stores)
+                 )
+
+                val childUpdates = hashMapOf<String, Any>(
+                    "/${editingModel.code}" to productMain
+                )
+
+                Firebase.database.reference.child("allproducts").updateChildren(childUpdates)
+
+
             }
 
 

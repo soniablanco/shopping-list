@@ -15,6 +15,9 @@ class ProductItem(
 
     fun getPhotoChangeObservable(index:Int):Observable<String>{
         val images = listOfNotNull(aldiPhotoURL, lidPhotoURL)
+        if (images.count()==0){
+            return  Observable.just("")
+        }
         val observable1 =  Observable.just(1).map { it.toInt() }
         val observable2 =  Observable.just(2).delay(index.toLong()*150,TimeUnit.MILLISECONDS).map { it.toInt() }
         val observable3 =  Observable.interval(3, TimeUnit.SECONDS).map{it+3}.map { it.toInt() }
