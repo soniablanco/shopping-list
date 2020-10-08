@@ -16,9 +16,9 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
 
     var disposables = CompositeDisposable()
     val data = MutableLiveData<ProductModel>()
-    private  val editingModel = ProductModel.Editing(productName = null,houseSection = null)
+    private  val editingModel = ProductModel.Editing(name = null,houseSection = null)
     fun updateProductName(value:String){
-        editingModel.productName=value
+        editingModel.name=value
     }
     fun updateHouseSectionCode(code: String?) {
         editingModel.houseSection = code
@@ -81,7 +81,7 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
 
 
         templateObservable.subscribe {
-            data.value = ProductModel(productTemplate = it,editingProduct = editingModel)
+            data.value = ProductModel(template = it,editing = editingModel,saved = null)
         }
     }
 
