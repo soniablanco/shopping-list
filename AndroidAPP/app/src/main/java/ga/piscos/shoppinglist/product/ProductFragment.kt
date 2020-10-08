@@ -38,6 +38,7 @@ import io.reactivex.rxjava3.kotlin.Observables
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.android.synthetic.main.product_product_layout.*
 import kotlinx.android.synthetic.main.product_product_store_item.view.*
+import java.util.*
 
 
 class ProductFragment : Fragment() {
@@ -61,7 +62,7 @@ class ProductFragment : Fragment() {
         rv_stores_list.layoutManager = LinearLayoutManager(activity)
         rv_stores_list.addItemDecoration(DividerItemDecoration(rv_stores_list.context, DividerItemDecoration.VERTICAL))
         rv_stores_list.setHasFixedSize(true)
-        val adapter = ProductsListItemAdapter{
+        val adapter = StoresListItemAdapter{
         }
         rv_stores_list.adapter = adapter
 
@@ -70,9 +71,9 @@ class ProductFragment : Fragment() {
 
         observe(model.data){
             adapter.updateProducts(it.productTemplate.stores)
-            val sections = mutableListOf(TemplateHouseSection("noselect","Select Section:"))
+            val sections = mutableListOf(ProductModel.Template.HouseSection("noselect","Select Section:"))
             sections.addAll(it.productTemplate.houseSections)
-            val sectionsAdapter: ArrayAdapter<TemplateHouseSection> =
+            val sectionsAdapter: ArrayAdapter<ProductModel.Template.HouseSection> =
                 ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, sections)
             sectionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             house_spinner.adapter = sectionsAdapter
@@ -88,14 +89,14 @@ class ProductFragment : Fragment() {
         model.loadData()
 
     }
-    private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(store: TemplateStore, onclickListener: (TemplateStoreSection) -> Unit)= with(itemView){
+    private inner class StoresListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(store: ProductModel.Template.Store, onclickListener: (ProductModel.Template.Store) -> Unit)= with(itemView){
 
 
 
-            val sections = mutableListOf(TemplateStoreSection("noselect","Select Section:"))
+            val sections = mutableListOf(ProductModel.Template.Store.Section("noselect","Select Section:"))
             sections.addAll(store.sections)
-            val adapter: ArrayAdapter<TemplateStoreSection> =
+            val adapter: ArrayAdapter<ProductModel.Template.Store.Section> =
                 ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, sections)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
@@ -117,33 +118,32 @@ class ProductFragment : Fragment() {
             setOnClickListener {  }
         }
     }
-    private var selectedStore:TemplateStoreSection? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 45 && resultCode == Activity.RESULT_OK) {
             val extras: Bundle = data!!.extras!!
             val imageBitmap = extras["data"] as Bitmap?
             //selectedStore!!.photoBMP = imageBitmap
-            val adapter = rv_stores_list.adapter as ProductFragment.ProductsListItemAdapter
+            val adapter = rv_stores_list.adapter as ProductFragment.StoresListItemAdapter
             adapter.notifyDataSetChanged()
         }
     }
 
-    private inner class ProductsListItemAdapter(private var elements:MutableList<TemplateStore> = arrayListOf(), val onclickListener: (TemplateStoreSection) -> Unit
-    ) : RecyclerView.Adapter<ProductsListItemHolder>() {
+    private inner class StoresListItemAdapter(private var elements:MutableList<ProductModel.Template.Store> = arrayListOf(), val onclickListener: (ProductModel.Template.Store) -> Unit
+    ) : RecyclerView.Adapter<StoresListItemHolder>() {
 
 
-        fun updateProducts(stockList:List<TemplateStore>){
+        fun updateProducts(stockList:List<ProductModel.Template.Store>){
             elements.clear()
             elements.addAll(stockList)
             notifyDataSetChanged()
         }
 
-        override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ProductsListItemHolder {
-            return ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.product_product_store_item, viewGroup, false))
+        override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): StoresListItemHolder {
+            return StoresListItemHolder(LayoutInflater.from(activity).inflate(R.layout.product_product_store_item, viewGroup, false))
         }
 
-        override fun onBindViewHolder(holder: ProductsListItemHolder, position: Int) = holder.bind(elements[position], onclickListener)
+        override fun onBindViewHolder(holder: StoresListItemHolder, position: Int) = holder.bind(elements[position], onclickListener)
 
         override fun getItemCount(): Int {  return elements.size  }
     }

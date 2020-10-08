@@ -16,7 +16,7 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
 
     var disposables = CompositeDisposable()
     val data = MutableLiveData<ProductModel>()
-    private  val editingModel = EditingProduct(productName = null,houseSection = null)
+    private  val editingModel = ProductModel.Editing(productName = null,houseSection = null)
     fun updateProductName(value:String){
         editingModel.productName=value
     }
@@ -30,7 +30,7 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
         }
         else{
             editingModel.stores.add(
-                EditingProductStore(
+                ProductModel.Editing.Store(
                     code = storeCode,
                     photoFile = null,
                     section = sectionCode
@@ -44,11 +44,11 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
             .observable()
             .map {
                 it.children.map { storeSnapShot ->
-                    TemplateStore(
+                    ProductModel.Template.Store(
                         code = storeSnapShot.key!!,
                         logoURL = storeSnapShot.child("photoURL").value.toString(),
                         sections = storeSnapShot.child("sections").children.map { sec ->
-                            TemplateStoreSection(
+                            ProductModel.Template.Store.Section(
                                 code = sec.key!!,
                                 name = sec.child("name").value.toString()
                             )
@@ -61,7 +61,7 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
             .observable()
             .map {
                 it.children.map { sec ->
-                    TemplateHouseSection(
+                    ProductModel.Template.HouseSection(
                         code = sec.key!!,
                         name = sec.child("name").value.toString()
                     )
@@ -72,8 +72,8 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
         val templateObservable = Observable.combineLatest(
             storesObservable,
             houseSectionsObservable
-        , BiFunction { stores:List<TemplateStore>, houseSections:List<TemplateHouseSection>->
-            ProductTemplate(
+        , BiFunction { stores:List<ProductModel.Template.Store>, houseSections:List<ProductModel.Template.HouseSection>->
+            ProductModel.Template(
                 houseSections = houseSections,
                 stores = stores
             )
