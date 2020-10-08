@@ -125,11 +125,17 @@ class ProductFragment : Fragment() {
                 viewModel.updateStoreSection(storeCode = store.template.code, sectionCode = code)
             }
             if (store.editing?.photoURI!=null){
+                imPhotoView.alpha = 1F
                 Glide.with(itemView)
                     .load(store.editing!!.photoURI!!)
                     .into(imPhotoView)
+                imPhotoViewLogo.alpha = 0.7F
+                Glide.with(itemView)
+                    .load(store.template.logoURL)
+                    .into(imPhotoViewLogo)
             }
             else {
+                imPhotoView.alpha = 0.5F
                 Glide.with(itemView)
                     .load(store.template.logoURL)
                     .into(imPhotoView)

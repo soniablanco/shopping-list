@@ -7,7 +7,7 @@ class ProductStoreModel(val template: ProductModel.Template.Store, var editing: 
     fun getEditingSectionIndex():Int? {
         if (editing==null)
             return null
-        val houseSection = template.sections.firstOrNull { it.code == editing!!.code }
+        val houseSection = template.sections.firstOrNull { it.code == editing!!.section }
         return if (houseSection!=null) template.sections.indexOf(houseSection) else null
     }
 
@@ -20,7 +20,7 @@ class ProductModel(val template: Template, val editing: Editing, val saved:Saved
             }
 
     fun getEditingHouseSectionIndex():Int? {
-        val houseSection = template.houseSections.firstOrNull { it.code == editing.code }
+        val houseSection = template.houseSections.firstOrNull { it.code == editing.houseSection }
         return if (houseSection!=null) template.houseSections.indexOf(houseSection) else null
     }
 
