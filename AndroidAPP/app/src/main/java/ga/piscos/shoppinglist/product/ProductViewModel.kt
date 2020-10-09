@@ -153,7 +153,7 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
         val templateObservable = Observable.combineLatest(
             storesObservable,
             houseSectionsObservable
-        , BiFunction { stores:List<ProductModel.Template.Store>, houseSections:List<ProductModel.Template.HouseSection>->
+        , { stores:List<ProductModel.Template.Store>, houseSections:List<ProductModel.Template.HouseSection>->
             ProductModel.Template(
                 houseSections = houseSections,
                 stores = stores

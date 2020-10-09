@@ -34,6 +34,9 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.allproducts_all_products_fragment.*
 import kotlinx.android.synthetic.main.allproducts_product_item.view.*
+import kotlinx.android.synthetic.main.allproducts_product_item.view.imPhotoView
+import kotlinx.android.synthetic.main.allproducts_product_item.view.imPhotoViewLogo
+import kotlinx.android.synthetic.main.product_product_store_item.view.*
 import java.util.concurrent.TimeUnit
 
 
@@ -108,9 +111,14 @@ class AllProductsFragment: Fragment() {
             val disposable = product.getPhotoChangeObservable(index).subscribe {
 
                 Glide.with(this)
-                    .load(it)
+                    .load(it.photoURL)
                     .transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
                     .into(imPhotoView)
+
+                imPhotoViewLogo.alpha = 0.7F
+                Glide.with(itemView)
+                    .load(it.logoURL)
+                    .into(imPhotoViewLogo)
             }
             itemDisposables +=disposable
             viewsObservable[itemView] = disposable

@@ -7,6 +7,8 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.observable
 import ga.piscos.shoppinglist.plus
+import ga.piscos.shoppinglist.product.ProductModel
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.allproducts_all_products_fragment.*
 
@@ -16,15 +18,40 @@ class AllProductsViewModel(application: Application) : AndroidViewModel(applicat
     val data= MutableLiveData<List<ProductItem>>()
 
         fun loadData(){
-            disposables += Firebase.database.reference.child("allproducts").observable().subscribe { dataSnapshot->
-                val products = dataSnapshot.children.map {
-                    ProductItem(
-                        code = it.key!!,
-                        name = it.child("name").value.toString(),
-                        stores = it.child("stores").children.map {stRef -> ProductItem.Store(code = stRef.key!!, photoURL = stRef.child("photoURL").value.toString()) }
-                    )
+
+
+            val storesObservable = Firebase.database.reference.child("stores")
+                .observable()
+                .map {
+                    it.children.map { storeSnapShot ->
+                        ProductItem.Store.Template(
+                            code = storeSnapShot.key!!,
+                            logoURL = storeSnapShot.child("photoURL").value.toString()
+                        )
+                    }
                 }
-                data.value = products
+
+            val allProductsObservable = { stores:List<ProductItem.Store.Template> ->
+                Firebase.database.reference.child("allproducts").observable().map { dataSnapshot ->
+                    dataSnapshot.children.map {
+                        ProductItem(
+                            code = it.key!!,
+                            name = it.child("name").value.toString(),
+                            stores = it.child("stores").children.map { stRef ->
+                                ProductItem.Store(
+                                    code = stRef.key!!,
+                                    photoURL = stRef.child("photoURL").value.toString(),
+                                    logoURL = stores.first { st -> st.code == stRef.key!! }.logoURL
+                                )
+                            }
+                        )
+                    }
+                }
+            }
+            storesObservable.flatMap {
+                allProductsObservable(it)
+            }.subscribe {
+                data.value = it
             }
         }
 
