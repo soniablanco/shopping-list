@@ -21,8 +21,7 @@ class AllProductsViewModel(application: Application) : AndroidViewModel(applicat
                     ProductItem(
                         code = it.key!!,
                         name = it.child("name").value.toString(),
-                        aldiPhotoURL = it.child("stores/aldi/photoURL").value?.toString(),
-                        lidPhotoURL = it.child("stores/lidl/photoURL").value?.toString()
+                        stores = it.child("stores").children.map {stRef -> ProductItem.Store(code = stRef.key!!, photoURL = stRef.child("photoURL").value.toString()) }
                     )
                 }
                 data.value = products
