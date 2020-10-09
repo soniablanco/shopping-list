@@ -95,8 +95,13 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
         store.first().photoTakenURI=photoUri
     }
 
+    fun loadData(){
+        getLoadDataObservable(null).subscribe {
+            data.value = it
+        }
+    }
 
-    fun loadData() {
+    fun getLoadDataObservable(productId:String?):Observable<ProductModel> {
 
         val storesObservable = Firebase.database.reference.child("stores")
             .observable()
@@ -126,44 +131,69 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
                 }
             }
 
-        val savedObservable = Firebase.database.reference.child("allproducts/72fe9e43-d706-4aa4-8f5e-bf4d3b724836")
-            .observable()
-            .map { productSnap ->
-                    ProductModel.Saved(
-                        code = productSnap.key!!,
-                        name = productSnap.child("name").value.toString(),
-                        houseSection = productSnap.child("houseSection").value.toString(),
-                        stores = productSnap.child("stores").children.map { sto ->
-                            ProductModel.Saved.Store(
-                                code = sto.key!!,
-                                section = sto.child("section").value.toString(),
-                                photoURL = sto.child("photoURL").value.toString()
+
+        if (productId!=null) {
+
+            val savedObservable =
+                Firebase.database.reference.child("allproducts/${productId}")
+                    .observable()
+                    .map { productSnap ->
+                        ProductModel.Saved(
+                            code = productSnap.key!!,
+                            name = productSnap.child("name").value.toString(),
+                            houseSection = productSnap.child("houseSection").value.toString(),
+                            stores = productSnap.child("stores").children.map { sto ->
+                                ProductModel.Saved.Store(
+                                    code = sto.key!!,
+                                    section = sto.child("section").value.toString(),
+                                    photoURL = sto.child("photoURL").value.toString()
+                                )
+                            }
+                        )
+                    }
+            return Observable.combineLatest(
+                storesObservable,
+                houseSectionsObservable,
+                savedObservable,
+                { templateStores: List<ProductModel.Template.Store>, houseSections: List<ProductModel.Template.HouseSection>, saved ->
+
+                    ProductModel(template = ProductModel.Template(
+                        houseSections = houseSections,
+                        stores = templateStores
+                    ), editing = ProductModel.Editing(code = null,
+                        name = saved.name,
+                        houseSection = saved.houseSection,
+                        stores =
+                        templateStores.map { templateStore ->
+                            ProductModel.Editing.Store(code = templateStore.code,
+                                section = saved.stores.firstOrNull { savedStore -> savedStore.code == templateStore.code }?.section
                             )
-                        }
+                        }), saved = saved
                     )
-            }
-        val resultObservable = Observable.combineLatest(
-            storesObservable,
-            houseSectionsObservable,
-            savedObservable
-        , { templateStores:List<ProductModel.Template.Store>, houseSections:List<ProductModel.Template.HouseSection>, saved->
 
-                ProductModel(template = ProductModel.Template(
-                    houseSections = houseSections,
-                    stores = templateStores
-                )
-                    , editing = ProductModel.Editing(code = null, name = saved.name,houseSection = saved.houseSection,stores =
-                    templateStores.map  { templateStore-> ProductModel.Editing.Store(code = templateStore.code,
-                        section = saved.stores.firstOrNull { savedStore-> savedStore.code==templateStore.code }?.section) })
-                    ,saved = saved)
+                })
+        }
+        else{
+            return Observable.combineLatest(
+                storesObservable,
+                houseSectionsObservable,
+                { templateStores: List<ProductModel.Template.Store>, houseSections: List<ProductModel.Template.HouseSection>->
 
-        })
+                    ProductModel(template = ProductModel.Template(
+                        houseSections = houseSections,
+                        stores = templateStores
+                    ), editing = ProductModel.Editing(code = null,
+                        name = null,
+                        houseSection = null,
+                        stores =
+                        templateStores.map { templateStore ->
+                            ProductModel.Editing.Store(code = templateStore.code,
+                                section = null
+                            )
+                        }), saved = null
+                    )
 
-
-
-
-        resultObservable.subscribe {
-            data.value = it
+                })
         }
     }
 
