@@ -149,20 +149,42 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
                 }
             }
 
-
-        val templateObservable = Observable.combineLatest(
+        val savedObservable = Firebase.database.reference.child("allproducts/72fe9e43-d706-4aa4-8f5e-bf4d3b724836")
+            .observable()
+            .map { productSnap ->
+                    ProductModel.Saved(
+                        code = productSnap.key!!,
+                        name = productSnap.child("name").value.toString(),
+                        houseSection = productSnap.child("houseSection").value.toString(),
+                        stores = productSnap.child("stores").children.map { sto ->
+                            ProductModel.Saved.Store(
+                                code = sto.key!!,
+                                section = sto.child("section").value.toString(),
+                                photoURL = sto.child("photoURL").value.toString()
+                            )
+                        }
+                    )
+            }
+        val resultObservable = Observable.combineLatest(
             storesObservable,
-            houseSectionsObservable
-        , { stores:List<ProductModel.Template.Store>, houseSections:List<ProductModel.Template.HouseSection>->
-            ProductModel.Template(
-                houseSections = houseSections,
-                stores = stores
-            )
+            houseSectionsObservable,
+            savedObservable
+        , { stores:List<ProductModel.Template.Store>, houseSections:List<ProductModel.Template.HouseSection>, saved->
+
+                ProductModel(template = ProductModel.Template(
+                    houseSections = houseSections,
+                    stores = stores
+                )
+                    , editing = editingModel
+                    ,saved = saved)
+
         })
 
 
-        templateObservable.subscribe {
-            data.value = ProductModel(template = it,editing = editingModel,saved = null)
+
+
+        resultObservable.subscribe {
+            data.value = it
         }
     }
 
