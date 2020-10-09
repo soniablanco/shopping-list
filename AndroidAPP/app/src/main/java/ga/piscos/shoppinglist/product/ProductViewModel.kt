@@ -27,14 +27,13 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
 
     var disposables = CompositeDisposable()
     val data = MutableLiveData<ProductModel>()
-    private  val editingModel = ProductModel.Editing(name = null,houseSection = null,code = null)
     fun updateProductName(value:String){
         editingModel.name=value
     }
     fun updateHouseSectionCode(code: String?) {
         editingModel.houseSection = code
     }
-
+    private  val editingModel get() = data.value!!.editing
     fun sync():Observable<Any> {
 
 
@@ -88,34 +87,12 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
 
     fun updateStoreSection(storeCode: String, sectionCode: String?) {
         val store = editingModel.stores.filter { it.code==storeCode }
-        if (store.any()){
-            store.first().section=sectionCode
-        }
-        else{
-            editingModel.stores.add(
-                ProductModel.Editing.Store(
-                    code = storeCode,
-                    photoTakenURI = null,
-                    section = sectionCode
-                )
-            )
-        }
+        store.first().section=sectionCode
     }
 
     fun updateStorePhoto(storeCode: String, photoUri: Uri?) {
         val store = editingModel.stores.filter { it.code==storeCode }
-        if (store.any()){
-            store.first().photoTakenURI=photoUri
-        }
-        else{
-            editingModel.stores.add(
-                ProductModel.Editing.Store(
-                    code = storeCode,
-                    photoTakenURI = photoUri,
-                    section = null
-                )
-            )
-        }
+        store.first().photoTakenURI=photoUri
     }
 
 
@@ -169,13 +146,15 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
             storesObservable,
             houseSectionsObservable,
             savedObservable
-        , { stores:List<ProductModel.Template.Store>, houseSections:List<ProductModel.Template.HouseSection>, saved->
+        , { templateStores:List<ProductModel.Template.Store>, houseSections:List<ProductModel.Template.HouseSection>, saved->
 
                 ProductModel(template = ProductModel.Template(
                     houseSections = houseSections,
-                    stores = stores
+                    stores = templateStores
                 )
-                    , editing = editingModel
+                    , editing = ProductModel.Editing(code = null, name = saved.name,houseSection = saved.houseSection,stores =
+                    templateStores.map  { templateStore-> ProductModel.Editing.Store(code = templateStore.code,
+                        section = saved.stores.firstOrNull { savedStore-> savedStore.code==templateStore.code }?.section) })
                     ,saved = saved)
 
         })
