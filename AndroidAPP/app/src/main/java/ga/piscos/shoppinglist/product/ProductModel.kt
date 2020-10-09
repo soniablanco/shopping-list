@@ -26,6 +26,17 @@ class ProductModel(val template: Template, val editing: Editing, val saved:Saved
 
     class Editing(var code:String?, var name:String?, var houseSection:String?, val stores: MutableList<Store> = mutableListOf()){
         val isNew get() = code==null
+        fun getFirebaseEditingNode() =  mapOf(
+            "/${code}" to mapOf(
+                "houseSection" to houseSection,
+                "name" to name,
+                "stores" to stores.associateBy({store-> store.code},{store-> mapOf(
+                    "photoURL" to store.photoFirebaseUrl,
+                    "storeSection" to store.section,
+                )})
+            )
+        )
+
         class Store(val code:String, var photoTakenURI: Uri? =null, var photoFirebaseUrl: String? =null, var section: String? =null)
     }
 

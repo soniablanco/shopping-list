@@ -14,6 +14,7 @@ import ga.piscos.shoppinglist.BuildConfig
 import ga.piscos.shoppinglist.observable
 import ga.piscos.shoppinglist.uploadObservable
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.functions.BiFunction
 import java.io.File
@@ -33,59 +34,41 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
         editingModel.houseSection = code
     }
 
-    fun sync(){
-
+    fun sync() {
 
 
         val storageRef = Firebase.storage.reference
-        editingModel.code =  UUID.randomUUID().toString()
-        val filesToUpload = editingModel.stores.filter { it.photoTakenURI!=null }
-        Observable.fromIterable(filesToUpload)
-            .map { Pair(first = it,second =  storageRef.child("allproducts/${editingModel.code}/stores/${it.code}/${it.photoTakenURI!!.lastPathSegment}")) }
-            .flatMap {pair-> pair.second.uploadObservable(pair.first.photoTakenURI!!)
-                .map { pair }
-            }
-            .flatMap {pair-> pair.second.downloadUrl.observable().map { Pair(first = pair.first,second = it)  } }
-            .doOnEach{
-               it.value.first.photoFirebaseUrl = it.value.second.toString()
-            }
-            .map { it.first }
-            .subscribe {
-                Log.d("FB",it.toString())
-
-
-
-                val storeSingleData = {store:ProductModel.Editing.Store ->
-                    mapOf(
-                        "photoURL" to store.photoFirebaseUrl,
-                        "storeSection" to store.section,
-                    )
-                }
-                val storesComplex = {list: List<ProductModel.Editing.Store> ->
-                    val map = mutableMapOf<String,Any?>()
-                    list.forEach {store-> map[store.code] = storeSingleData(store) }
-                    map
-                }
-
-                val productMain = mutableMapOf<String,Any?>(
-                    "houseSection" to editingModel.houseSection,
-                    "name" to editingModel.name,
-                    "stores" to storesComplex(editingModel.stores)
-                 )
-
-                val childUpdates = hashMapOf<String, Any>(
-                    "/${editingModel.code}" to productMain
+        editingModel.code = UUID.randomUUID().toString()
+        val filesToUpload = editingModel.stores.filter { it.photoTakenURI != null }
+        val photosStorageObservable = Observable.fromIterable(filesToUpload)
+            .map {
+                Pair(
+                    first = it,
+                    second = storageRef.child("allproducts/${editingModel.code}/stores/${it.code}/${it.photoTakenURI!!.lastPathSegment}")
                 )
+            }
+            .flatMap { pair ->
+                pair.second.uploadObservable(pair.first.photoTakenURI!!)
+                    .map { pair }
+            }
+            .flatMap { pair ->
+                pair.second.downloadUrl.observable().map { Pair(first = pair.first, second = it) }
+            }
+            .doAfterNext {
+                it.first.photoFirebaseUrl = it.second.toString()
+            }
+        val firebaseDatabaseObservable = Firebase.database.reference.child("allproducts")
+            .updateChildren(editingModel.getFirebaseEditingNode()).observable()
 
-                Firebase.database.reference.child("allproducts").updateChildren(childUpdates)
-
-
+        Observable.concat(photosStorageObservable, firebaseDatabaseObservable)
+            .last(1).toObservable()
+            .subscribe {
+                Log.d("BNO", it.toString())
             }
 
 
-        }
 
-
+    }
 
 
     fun createImageFile(): Uri {

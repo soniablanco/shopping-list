@@ -27,12 +27,15 @@ fun  DatabaseReference.observable(): Observable<DataSnapshot> {
 }
 
 fun <T> Task<T>.observable():Observable<T>{
-    return Observable.create<T>(){
+    return Observable.create{
         val failureListener =  {error:Exception->
             it.onError(error)
         }
         val succesListener =  { result:T ->
-            it.onNext(result)
+            if (result!=null){
+                it.onNext(result)
+            }
+            it.onComplete()
         }
         this.addOnSuccessListener(succesListener)
         this.addOnFailureListener(failureListener)
