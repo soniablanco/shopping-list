@@ -17,6 +17,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.functions.BiFunction
+import io.reactivex.rxjava3.internal.operators.observable.ObservableAny
 import java.io.File
 import java.util.*
 import kotlin.math.log
@@ -34,7 +35,7 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
         editingModel.houseSection = code
     }
 
-    fun sync() {
+    fun sync():Observable<Any> {
 
 
         val storageRef = Firebase.storage.reference
@@ -54,18 +55,14 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
             .flatMap { pair ->
                 pair.second.downloadUrl.observable().map { Pair(first = pair.first, second = it) }
             }
-            .doAfterNext {
+            .doOnNext {
                 it.first.photoFirebaseUrl = it.second.toString()
             }
-        val firebaseDatabaseObservable = Firebase.database.reference.child("allproducts")
-            .updateChildren(editingModel.getFirebaseEditingNode()).observable()
+        val firebaseDatabaseObservable =
+            Observable.just(1).flatMap { Observable.just(editingModel.getFirebaseEditingNode()) }
+            .flatMap {Firebase.database.reference.child("allproducts").updateChildren(it).observable()}
 
-        Observable.concat(photosStorageObservable, firebaseDatabaseObservable)
-            .last(1).toObservable()
-            .subscribe {
-                Log.d("BNO", it.toString())
-            }
-
+       return Observable.concat(photosStorageObservable, firebaseDatabaseObservable).last(1).toObservable()
 
 
     }

@@ -59,6 +59,12 @@ class ProductFragment : Fragment() {
 
     }
     private val viewModel by viewModels<ProductViewModel>()
+    var disposables = CompositeDisposable()
+    override fun onStop() {
+        super.onStop()
+        disposables.clear()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_stores_list.layoutManager = LinearLayoutManager(activity)
@@ -70,7 +76,10 @@ class ProductFragment : Fragment() {
 
 
         fabSyncProduct.setOnClickListener {
-            viewModel.sync()
+            fabSyncProduct.hide()
+            disposables+=viewModel.sync().subscribe {
+                requireActivity().finish()
+            }
         }
 
         observe(viewModel.data){ productModel ->

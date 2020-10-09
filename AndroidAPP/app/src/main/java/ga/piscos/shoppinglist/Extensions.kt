@@ -54,6 +54,7 @@ fun StorageReference.uploadObservable(file: Uri):Observable<UploadTask.TaskSnaps
         }
         val succesListener =  {taskSnapshot:UploadTask.TaskSnapshot->
             it.onNext(taskSnapshot)
+            it.onComplete()
         }
         val uploadTask = this.putFile(file)
         uploadTask.addOnFailureListener(failureListener)
