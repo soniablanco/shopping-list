@@ -38,7 +38,6 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
 
 
         val storageRef = Firebase.storage.reference
-        editingModel.code = UUID.randomUUID().toString()
         val filesToUpload = editingModel.stores.filter { it.photoTakenURI != null }
         val photosStorageObservable = Observable.fromIterable(filesToUpload)
             .map {
@@ -95,13 +94,13 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
         store.first().photoTakenURI=photoUri
     }
 
-    fun loadData(){
-        getLoadDataObservable(null).subscribe {
+    fun loadData(productId: String?){
+        getLoadDataObservable(productId).subscribe {
             data.value = it
         }
     }
 
-    fun getLoadDataObservable(productId:String?):Observable<ProductModel> {
+    private fun getLoadDataObservable(productId:String?):Observable<ProductModel> {
 
         val storesObservable = Firebase.database.reference.child("stores")
             .observable()
@@ -140,13 +139,13 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
                     .map { productSnap ->
                         ProductModel.Saved(
                             code = productSnap.key!!,
-                            name = productSnap.child("name").value.toString(),
-                            houseSection = productSnap.child("houseSection").value.toString(),
+                            name = productSnap.child("name").value?.toString(),
+                            houseSection = productSnap.child("houseSection").value?.toString(),
                             stores = productSnap.child("stores").children.map { sto ->
                                 ProductModel.Saved.Store(
                                     code = sto.key!!,
-                                    section = sto.child("section").value.toString(),
-                                    photoURL = sto.child("photoURL").value.toString()
+                                    section = sto.child("section").value?.toString(),
+                                    photoURL = sto.child("photoURL").value?.toString()
                                 )
                             }
                         )
@@ -160,13 +159,15 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
                     ProductModel(template = ProductModel.Template(
                         houseSections = houseSections,
                         stores = templateStores
-                    ), editing = ProductModel.Editing(code = null,
+                    ), editing = ProductModel.Editing(
+                        code = saved.code,
                         name = saved.name,
                         houseSection = saved.houseSection,
                         stores =
                         templateStores.map { templateStore ->
                             ProductModel.Editing.Store(code = templateStore.code,
-                                section = saved.stores.firstOrNull { savedStore -> savedStore.code == templateStore.code }?.section
+                                section = saved.stores.firstOrNull { savedStore -> savedStore.code == templateStore.code }?.section,
+                                photoFirebaseUrl = saved.stores.firstOrNull { savedStore -> savedStore.code == templateStore.code }?.photoURL
                             )
                         }), saved = saved
                     )
@@ -182,7 +183,8 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
                     ProductModel(template = ProductModel.Template(
                         houseSections = houseSections,
                         stores = templateStores
-                    ), editing = ProductModel.Editing(code = null,
+                    ), editing = ProductModel.Editing(
+                        code = UUID.randomUUID().toString(),
                         name = null,
                         houseSection = null,
                         stores =

@@ -40,7 +40,7 @@ class AllProductsViewModel(application: Application) : AndroidViewModel(applicat
                             stores = it.child("stores").children.map { stRef ->
                                 ProductItem.Store(
                                     code = stRef.key!!,
-                                    photoURL = stRef.child("photoURL").value.toString(),
+                                    photoURL = stRef.child("photoURL").value?.toString(),
                                     logoURL = stores.first { st -> st.code == stRef.key!! }.logoURL
                                 )
                             }

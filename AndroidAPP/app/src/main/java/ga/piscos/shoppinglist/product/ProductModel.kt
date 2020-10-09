@@ -32,7 +32,7 @@ class ProductModel(val template: Template, val editing: Editing, val saved:Saved
                 "name" to name,
                 "stores" to stores.associateBy({store-> store.code},{store-> mapOf(
                     "photoURL" to store.photoFirebaseUrl,
-                    "storeSection" to store.section,
+                    "section" to store.section,
                 )})
             )
         )
@@ -43,7 +43,7 @@ class ProductModel(val template: Template, val editing: Editing, val saved:Saved
 
 
 
-    class Saved (val code:String, val name:String, val houseSection:String, val stores:List<Store>){
+    class Saved (val code:String, val name:String?, val houseSection:String?, val stores:List<Store>){
         class Store (val code:String, val photoURL:String?, val section:String?)
     }
 

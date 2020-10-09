@@ -46,8 +46,15 @@ import java.util.*
 class ProductFragment : Fragment() {
 
     companion object {
-        fun newInstance(): ProductFragment {
-            return ProductFragment()
+        private const val PROD_ID = "PROD_ID"
+        fun newInstance(productId:String?): ProductFragment {
+            val args = Bundle()
+            if (productId!=null) {
+                args.putSerializable(PROD_ID, productId)
+            }
+            val fragment = ProductFragment()
+            fragment.arguments = args
+            return fragment
         }
 
 
@@ -76,6 +83,8 @@ class ProductFragment : Fragment() {
 
 
         fabSyncProduct.setOnClickListener {
+            if (viewModel.data.value!!.editing.name.isNullOrBlank())
+                return@setOnClickListener
             fabSyncProduct.hide()
             disposables+=viewModel.sync().subscribe {
                 requireActivity().finish()
@@ -106,7 +115,7 @@ class ProductFragment : Fragment() {
             storesAdapter.updateElements(productModel.getStoresModel())
 
         }
-        viewModel.loadData()
+        viewModel.loadData(requireArguments().getString(PROD_ID))
 
     }
 

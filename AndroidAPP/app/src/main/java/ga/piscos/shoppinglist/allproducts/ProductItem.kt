@@ -11,19 +11,22 @@ class ProductItem(
     val stores:List<Store>
 
     ){
-class Store(val code:String, val photoURL:String, val logoURL: String){
+class Store(val code:String, val photoURL:String?, val logoURL: String){
     class Template(val code:String, val logoURL:String)
 }
 
     fun getPhotoChangeObservable(index:Int):Observable<Store>{
-        if (stores.count()==0){
+        val filteredStores = stores.filter { it.photoURL!=null }
+        if (filteredStores.count()==0){
             return  Observable.just(Store("","",""))
         }
+        else if (filteredStores.count()==1){
+            return Observable.just(filteredStores[0])
+        }
         val observable1 =  Observable.just(1).map { it.toInt() }
-        val observable2 =  Observable.just(2).delay(index.toLong()*150,TimeUnit.MILLISECONDS).map { it.toInt() }
-        val observable3 =  Observable.interval(3, TimeUnit.SECONDS).map{it+3}.map { it.toInt() }
-        return Observable.concat(observable1,observable2,observable3)
-                .map { stores[it % stores.count()]}
+        val observable2 =  Observable.interval(4, TimeUnit.SECONDS).delay(index.toLong()*150,TimeUnit.MILLISECONDS).map { it.toInt() }
+        return Observable.concat(observable1,observable2)
+                .map { filteredStores[it % filteredStores.count()]}
                 .observeOn(AndroidSchedulers.mainThread())
     }
 }

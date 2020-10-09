@@ -66,11 +66,13 @@ class AllProductsFragment: Fragment() {
         rv_products_list.addItemDecoration(DividerItemDecoration(rv_products_list.context, DividerItemDecoration.VERTICAL))
         rv_products_list.setHasFixedSize(true)
         val adapter = ProductsListItemAdapter{
+            val intent = ProductActivity.newIntent(requireActivity(),it.code)
+            startActivityForResult(intent,323)
         }
         rv_products_list.adapter = adapter
 
         fabAddProduct.setOnClickListener {
-            val intent = Intent(context, ProductActivity::class.java)
+            val intent = ProductActivity.newIntent(requireActivity(),null)
             startActivityForResult(intent,323)
         }
         val model by viewModels<AllProductsViewModel>()
