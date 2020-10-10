@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -27,11 +28,11 @@ import com.google.firebase.ktx.Firebase
 import com.jakewharton.rxbinding4.view.changeEvents
 import com.jakewharton.rxbinding4.widget.itemSelections
 import com.jakewharton.rxbinding4.widget.textChanges
-import ga.piscos.shoppinglist.R
+import ga.piscos.shoppinglist.*
 import ga.piscos.shoppinglist.allproducts.AllProductsViewModel
-import ga.piscos.shoppinglist.observable
-import ga.piscos.shoppinglist.observe
-import ga.piscos.shoppinglist.plus
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.default
+import id.zelory.compressor.constraint.destination
 import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -40,6 +41,10 @@ import io.reactivex.rxjava3.kotlin.Observables
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.android.synthetic.main.product_product_layout.*
 import kotlinx.android.synthetic.main.product_product_store_item.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.io.File
 import java.util.*
 
 
@@ -120,12 +125,24 @@ class ProductFragment : Fragment() {
     }
 
     private var storeCode:String? = null
-    private var storePhotoUri: Uri? = null
+    private var storePhotoFile: File? = null
     val getContent = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-        viewModel.updateStorePhoto(storeCode!!,storePhotoUri!!)
-        storeCode = null
-        storePhotoUri = null
-        (rv_stores_list.adapter as StoresListItemAdapter).updateElements(viewModel.data.value!!.getStoresModel())
+
+        GlobalScope.launch {
+            val compressedImageFile = Compressor.compress(requireActivity(), storePhotoFile!!) {
+                default()
+                destination(viewModel.createImageFile())
+            }
+            viewModel.updateStorePhoto(storeCode!!,viewModel.convertToUri(compressedImageFile))
+            storeCode = null
+            storePhotoFile = null
+            GlobalScope.launch(Dispatchers.Main) {
+                (rv_stores_list.adapter as StoresListItemAdapter).updateElements(viewModel.data.value!!.getStoresModel())
+            }
+        }
+
+
+
     }
     private inner class StoresListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(store: ProductStoreModel, onclickListener: (ProductModel.Template.Store) -> Unit)= with(itemView){
@@ -172,10 +189,11 @@ class ProductFragment : Fragment() {
             }
 
             imPhotoView.setOnClickListener {
-                val uri = viewModel.createImageFile()
-                storePhotoUri  = uri
+                val file = viewModel.createImageFile()
+                val storePhotoUri  = viewModel.convertToUri(file)
                 storeCode = store.template.code
-                getContent.launch(uri)
+                storePhotoFile = file
+                getContent.launch(storePhotoUri)
             }
 
             setOnClickListener {  }

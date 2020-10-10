@@ -43,7 +43,7 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
             .map {
                 Pair(
                     first = it,
-                    second = storageRef.child("allproducts/${editingModel.code}/stores/${it.code}/${it.photoTakenURI!!.lastPathSegment}")
+                    second = storageRef.child("v1/allproducts/${editingModel.code}/stores/${it.code}/photo.jpg")
                 )
             }
             .flatMap { pair ->
@@ -66,22 +66,25 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
     }
 
 
-    fun createImageFile(): Uri {
+    fun convertToUri(file: File):Uri{
+        return FileProvider.getUriForFile(
+            getApplication(),
+            BuildConfig.APPLICATION_ID +".fileprovider",
+            file
+        )
+    }
+    fun createImageFile(): File {
 
         val appFilesDir = (getApplication() as Context).filesDir
         val filesRoot = File(appFilesDir, "attachments")
         if (!filesRoot.exists()) {
             filesRoot.mkdirs()
         }
-        val file = File(filesRoot, UUID.randomUUID().toString()+".jpg")
+        return File(filesRoot, UUID.randomUUID().toString()+".jpg")
 
 
 
-        return FileProvider.getUriForFile(
-            getApplication(),
-            BuildConfig.APPLICATION_ID +".fileprovider",
-            file
-        )
+
     }
 
     fun updateStoreSection(storeCode: String, sectionCode: String?) {
