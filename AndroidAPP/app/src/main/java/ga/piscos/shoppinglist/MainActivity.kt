@@ -4,13 +4,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import ga.piscos.shoppinglist.allproducts.AllProductsFragment
+import ga.piscos.shoppinglist.planning.ProductListFragment
 
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        loadFragment(AllProductsFragment.newInstance())
+        loadFragment(ProductListFragment.newInstance())
     }
 
 

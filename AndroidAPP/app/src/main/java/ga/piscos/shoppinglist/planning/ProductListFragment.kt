@@ -122,7 +122,7 @@ class ProductListFragment: Fragment() {
         }
 
         override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ProductsListItemHolder {
-            return ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.allproducts_product_item, viewGroup, false))
+            return ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.planning_product_item, viewGroup, false))
         }
 
         override fun onBindViewHolder(holder: ProductsListItemHolder, position: Int) = holder.bind(position,elements[position], onclickListener)
