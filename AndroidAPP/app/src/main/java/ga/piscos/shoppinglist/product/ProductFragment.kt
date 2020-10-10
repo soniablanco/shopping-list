@@ -1,58 +1,43 @@
 package ga.piscos.shoppinglist.product
 
-import android.R.attr
-import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import com.jakewharton.rxbinding4.view.changeEvents
 import com.jakewharton.rxbinding4.widget.itemSelections
 import com.jakewharton.rxbinding4.widget.textChanges
-import ga.piscos.shoppinglist.*
-import ga.piscos.shoppinglist.allproducts.AllProductsViewModel
+import com.yalantis.ucrop.UCrop
+import ga.piscos.shoppinglist.R
+import ga.piscos.shoppinglist.observe
+import ga.piscos.shoppinglist.plus
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.default
 import id.zelory.compressor.constraint.destination
-import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.functions.BiFunction
-import io.reactivex.rxjava3.kotlin.Observables
-import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.android.synthetic.main.product_product_layout.*
 import kotlinx.android.synthetic.main.product_product_store_item.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
-import java.util.*
 
 
 class ProductFragment : Fragment() {
 
     companion object {
         private const val PROD_ID = "PROD_ID"
-        fun newInstance(productId:String?): ProductFragment {
+        fun newInstance(productId: String?): ProductFragment {
             val args = Bundle()
             if (productId!=null) {
                 args.putSerializable(PROD_ID, productId)
@@ -65,7 +50,11 @@ class ProductFragment : Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         return inflater.inflate(R.layout.product_product_layout, container, false)
 
@@ -80,7 +69,12 @@ class ProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_stores_list.layoutManager = LinearLayoutManager(activity)
-        rv_stores_list.addItemDecoration(DividerItemDecoration(rv_stores_list.context, DividerItemDecoration.VERTICAL))
+        rv_stores_list.addItemDecoration(
+            DividerItemDecoration(
+                rv_stores_list.context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
         rv_stores_list.setHasFixedSize(true)
         val storesAdapter = StoresListItemAdapter{
         }
@@ -98,7 +92,12 @@ class ProductFragment : Fragment() {
 
         observe(viewModel.data){ productModel ->
 
-            val sections = mutableListOf(ProductModel.Template.HouseSection("noselect","Select Section:"))
+            val sections = mutableListOf(
+                ProductModel.Template.HouseSection(
+                    "noselect",
+                    "Select Section:"
+                )
+            )
             sections.addAll(productModel.template.houseSections)
             val sectionsAdapter: ArrayAdapter<ProductModel.Template.HouseSection> =
                 ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, sections)
@@ -106,13 +105,13 @@ class ProductFragment : Fragment() {
             house_spinner.adapter = sectionsAdapter
 
             val sectionIndex = productModel.getEditingHouseSectionIndex()
-            house_spinner.setSelection( if (sectionIndex==null) 0 else sectionIndex+1)
-            house_spinner.itemSelections().subscribe {index->
+            house_spinner.setSelection(if (sectionIndex == null) 0 else sectionIndex + 1)
+            house_spinner.itemSelections().subscribe { index->
                 val code = if (index>0)  sections[index].code else null
                 viewModel.updateHouseSectionCode(code)
             }
 
-            dialogTextEdit.setText(productModel.editing.name?:"")
+            dialogTextEdit.setText(productModel.editing.name ?: "")
             dialogTextEdit.textChanges().subscribe { prodName ->
                 viewModel.updateProductName(prodName.toString())
             }
@@ -126,18 +125,42 @@ class ProductFragment : Fragment() {
 
     private var storeCode:String? = null
     private var storePhotoFile: File? = null
-    val getContent = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+
+
+
+
+    val cropContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        if (it.resultCode == RESULT_OK ) {
+            val resultUri = UCrop.getOutput(it.data!!)
+            val contentUri = viewModel.convertToUri(File(resultUri!!.path!!))
+            viewModel.updateStorePhoto(storeCode!!,contentUri)
+            (rv_stores_list.adapter as StoresListItemAdapter).updateElements(viewModel.data.value!!.getStoresModel())
+            storeCode = null
+            storePhotoFile = null
+        } else if (it.resultCode == UCrop.RESULT_ERROR) {
+            val cropError = UCrop.getError(it.data!!)
+            storeCode = null
+            storePhotoFile = null
+        }
+    }
+
+    private val getContent = registerForActivityResult(ActivityResultContracts.TakePicture()) {
 
         GlobalScope.launch {
             val compressedImageFile = Compressor.compress(requireActivity(), storePhotoFile!!) {
                 default()
                 destination(viewModel.createImageFile())
             }
-            viewModel.updateStorePhoto(storeCode!!,viewModel.convertToUri(compressedImageFile))
-            storeCode = null
-            storePhotoFile = null
+
+
+            val compressedUri = Uri.fromFile(compressedImageFile)
+            val croppedUri = Uri.fromFile(viewModel.createImageFile())
             GlobalScope.launch(Dispatchers.Main) {
-                (rv_stores_list.adapter as StoresListItemAdapter).updateElements(viewModel.data.value!!.getStoresModel())
+                val intent = UCrop.of(compressedUri, croppedUri)
+                    .withAspectRatio(4F, 4F)
+                    .getIntent(requireContext())
+                cropContent.launch(intent)
+
             }
         }
 
@@ -145,19 +168,26 @@ class ProductFragment : Fragment() {
 
     }
     private inner class StoresListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(store: ProductStoreModel, onclickListener: (ProductModel.Template.Store) -> Unit)= with(itemView){
+        fun bind(store: ProductStoreModel, onclickListener: (ProductModel.Template.Store) -> Unit)= with(
+            itemView
+        ){
 
 
 
-            val sections = mutableListOf(ProductModel.Template.Store.Section("noselect","Select Section:"))
+            val sections = mutableListOf(
+                ProductModel.Template.Store.Section(
+                    "noselect",
+                    "Select Section:"
+                )
+            )
             sections.addAll(store.template.sections)
             val adapter: ArrayAdapter<ProductModel.Template.Store.Section> =
                 ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, sections)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
             val sectionIndex = store.getEditingSectionIndex()
-            spinner.setSelection( if (sectionIndex==null) 0 else sectionIndex+1)
-            spinner.itemSelections().subscribe {index->
+            spinner.setSelection(if (sectionIndex == null) 0 else sectionIndex + 1)
+            spinner.itemSelections().subscribe { index->
                 val code = if (index>0)  sections[index].code else null
                 viewModel.updateStoreSection(storeCode = store.template.code, sectionCode = code)
             }
@@ -201,21 +231,32 @@ class ProductFragment : Fragment() {
     }
 
 
-    private inner class StoresListItemAdapter(private var elements:MutableList<ProductStoreModel> = arrayListOf(), val onclickListener: (ProductModel.Template.Store) -> Unit
+    private inner class StoresListItemAdapter(
+        private var elements: MutableList<ProductStoreModel> = arrayListOf(),
+        val onclickListener: (ProductModel.Template.Store) -> Unit
     ) : RecyclerView.Adapter<StoresListItemHolder>() {
 
 
-        fun updateElements(stores:List<ProductStoreModel>){
+        fun updateElements(stores: List<ProductStoreModel>){
             elements.clear()
             elements.addAll(stores)
             notifyDataSetChanged()
         }
 
         override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): StoresListItemHolder {
-            return StoresListItemHolder(LayoutInflater.from(activity).inflate(R.layout.product_product_store_item, viewGroup, false))
+            return StoresListItemHolder(
+                LayoutInflater.from(activity).inflate(
+                    R.layout.product_product_store_item,
+                    viewGroup,
+                    false
+                )
+            )
         }
 
-        override fun onBindViewHolder(holder: StoresListItemHolder, position: Int) = holder.bind(elements[position], onclickListener)
+        override fun onBindViewHolder(holder: StoresListItemHolder, position: Int) = holder.bind(
+            elements[position],
+            onclickListener
+        )
 
         override fun getItemCount(): Int {  return elements.size  }
     }
