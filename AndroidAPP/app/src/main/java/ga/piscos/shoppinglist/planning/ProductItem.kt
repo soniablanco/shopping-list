@@ -1,6 +1,9 @@
 package ga.piscos.shoppinglist.planning
 
 import android.util.Log
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import ga.piscos.shoppinglist.observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import java.util.concurrent.TimeUnit
@@ -33,14 +36,17 @@ class Store(val code:String, val photoURL:String?, val logoURL: String){
     }
 
     fun selectItem() {
-        if (selectedData==null) {
-            selectedData = SelecteData(code = code, neededQty = 0)
-        }
-        selectedData!!.neededQty++
-
+        val neededQty = if (selectedData==null) 1 else (selectedData!!.neededQty+1)
+        val firebaseDatabaseObservable =
+            Observable.just(1).flatMap { Observable.just(mapOf("neededQty" to neededQty)) }
+                .flatMap { Firebase.database.reference.child("lists/current/products/${code}").updateChildren(it).observable()}
+        firebaseDatabaseObservable.subscribe()
     }
 
     fun unSelect() {
-        selectedData=null
+        val firebaseDatabaseObservable =
+            Observable.just(1).flatMap { Observable.just(mapOf(code to null)) }
+                .flatMap { Firebase.database.reference.child("lists/current/products").updateChildren(it).observable()}
+        firebaseDatabaseObservable.subscribe()
     }
 }

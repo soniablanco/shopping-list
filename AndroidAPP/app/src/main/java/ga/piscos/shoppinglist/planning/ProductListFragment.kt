@@ -52,7 +52,6 @@ class ProductListFragment: Fragment() {
         rv_planning_products_list.setHasFixedSize(true)
         val adapter = ProductsListItemAdapter{
             it.selectItem()
-            rv_planning_products_list.adapter!!.notifyDataSetChanged()
         }
         rv_planning_products_list.adapter = adapter
 
@@ -87,12 +86,13 @@ class ProductListFragment: Fragment() {
         fun bind(index:Int, product: ProductItem, onclickListener: (ProductItem) -> Unit)= with(itemView){
             tvPlanningProductProductName.text = product.name
             if (product.selectedData!=null){
+                tvPlanningProductQty.visibility=View.VISIBLE
+                tvPlanningProductQty.text = "x${product.selectedData!!.neededQty}"
                 imRemove.visibility=View.VISIBLE
-                imRemove.setOnClickListener { product.unSelect()
-                rv_planning_products_list.adapter!!.notifyDataSetChanged()
-                }
+                imRemove.setOnClickListener { product.unSelect()  }
             }
             else{
+                tvPlanningProductQty.visibility=View.GONE
                 imRemove.visibility=View.GONE
                 imRemove.setOnClickListener {}
             }
