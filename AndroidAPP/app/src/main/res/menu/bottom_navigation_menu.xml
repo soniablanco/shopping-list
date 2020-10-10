@@ -5,8 +5,14 @@
         android:icon="@drawable/list"
         android:title="Plan"/>
     <item
+        android:id="@+id/collection"
+        android:icon="@drawable/cart"
+        android:enabled="true"
+        android:title="Collection"/>
+    <item
         android:id="@+id/allproducts"
         android:icon="@drawable/food"
         android:enabled="true"
         android:title="All Products"/>
+
 </menu>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imCollectionProductPhotoView"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:visibility="visible"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_height="120dp"
+        tools:layout_width="120dp" />
+
+    <ImageView
+        android:id="@+id/imCollectionProductPhotoViewLogo"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:alpha="0.7"
+        app:layout_constraintStart_toStartOf="@id/imCollectionProductPhotoView"
+
+        app:layout_constraintTop_toTopOf="@id/imCollectionProductPhotoView"
+        />
+
+    <Button
+        android:id="@+id/imCollectionRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:drawableLeft="@drawable/removecart"
+        android:text="Remove"
+        android:textColor="@color/darkred"
+        android:background="@null"
+        app:layout_constraintRight_toRightOf="parent
+"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        />
+
+    <TextView
+        android:id="@+id/tvCollectionProductProductName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="TextView"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="20sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/imCollectionProductPhotoView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.503" />
+    <TextView
+        android:id="@+id/tvCollectionProductQty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="x3"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="20sp"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/tvCollectionProductProductName"
+        app:layout_constraintLeft_toRightOf="@id/imCollectionProductPhotoView"
+        app:layout_constraintVertical_bias="0.503" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
