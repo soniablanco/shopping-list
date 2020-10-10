@@ -1,17 +1,28 @@
 package ga.piscos.shoppinglist
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import ga.piscos.shoppinglist.allproducts.AllProductsFragment
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var listFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as AllProductsFragment?
-        if (listFragment == null) {
-            listFragment = AllProductsFragment.newInstance()
-            supportFragmentManager.beginTransaction().add(R.id.fragment_container, listFragment!!).commit()
+        loadFragment(AllProductsFragment.newInstance())
+    }
+
+
+    private fun loadFragment(fragment: Fragment?): Boolean {
+        //switching fragment
+        if (fragment != null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
+            return true
         }
+        return false
     }
 }

@@ -35,6 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/txtVw"
         app:layout_constraintBottom_toBottomOf="@id/txtVw"
+        android:backgroundTint="@color/cardview_light_background"
         android:layout_centerHorizontal="true"
         android:layout_width="0dp"
         android:layout_height="0dp" />
