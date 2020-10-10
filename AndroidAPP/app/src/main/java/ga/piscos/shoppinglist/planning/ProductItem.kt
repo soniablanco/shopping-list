@@ -8,12 +8,14 @@ import java.util.concurrent.TimeUnit
 class ProductItem(
     val code:String,
     val name: String,
+    var selectedData:SelecteData?,
     val stores:List<Store>
 
     ){
 class Store(val code:String, val photoURL:String?, val logoURL: String){
     class Template(val code:String, val logoURL:String)
 }
+    class SelecteData(val code:String, var neededQty:Int)
 
     fun getPhotoChangeObservable(index:Int):Observable<Store>{
         val filteredStores = stores.filter { it.photoURL!=null }
@@ -28,5 +30,17 @@ class Store(val code:String, val photoURL:String?, val logoURL: String){
         return Observable.concat(observable1,observable2)
                 .map { filteredStores[it % filteredStores.count()]}
                 .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun selectItem() {
+        if (selectedData==null) {
+            selectedData = SelecteData(code = code, neededQty = 0)
+        }
+        selectedData!!.neededQty++
+
+    }
+
+    fun unSelect() {
+        selectedData=null
     }
 }

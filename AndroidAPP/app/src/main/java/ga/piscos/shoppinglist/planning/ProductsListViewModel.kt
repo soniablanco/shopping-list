@@ -15,6 +15,7 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
     var disposables = CompositeDisposable()
     val data= MutableLiveData<List<ProductItem>>()
 
+
         fun loadData(){
 
 
@@ -29,12 +30,14 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                     }
                 }
 
-            val allProductsObservable = { stores:List<ProductItem.Store.Template> ->
+            val allProductsObservable = { stores:List<ProductItem.Store.Template>, selectedProducts:List<ProductItem.SelecteData> ->
                 Firebase.database.reference.child("allproducts").observable().map { dataSnapshot ->
+                   // dataSnapshot.children.filter {sna-> selectedProducts.any { s->s.code==sna.key!! }  }
                     dataSnapshot.children.map {
                         ProductItem(
                             code = it.key!!,
                             name = it.child("name").value.toString(),
+                            selectedData  = selectedProducts.firstOrNull {s-> s.code==it.key!! },
                             stores = it.child("stores").children.map { stRef ->
                                 ProductItem.Store(
                                     code = stRef.key!!,
@@ -46,8 +49,22 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                     }
                 }
             }
-            storesObservable.flatMap {
-                allProductsObservable(it)
+
+            val selectedProductsObervable = Firebase.database.reference.child("lists/current/products").observable().map { dataSnapshot ->
+                dataSnapshot.children.map {
+                    ProductItem.SelecteData(
+                        code = it.key!!,
+                        neededQty = (it.child("neededQty").value as Long).toInt()
+                    )
+                }
+            }
+
+            val infoObservable = Observable.combineLatest(storesObservable,selectedProductsObervable,{ sto,selected ->
+                Pair(sto,selected)
+            })
+
+            infoObservable.flatMap {
+                allProductsObservable(it.first,it.second)
             }
             .map {list-> list.sortedBy { it.name } }
             .subscribe {

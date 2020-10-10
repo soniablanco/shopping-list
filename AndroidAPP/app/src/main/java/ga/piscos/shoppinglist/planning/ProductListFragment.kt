@@ -1,5 +1,6 @@
 package ga.piscos.shoppinglist.planning
 
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -50,7 +51,8 @@ class ProductListFragment: Fragment() {
         rv_planning_products_list.addItemDecoration(DividerItemDecoration(rv_planning_products_list.context, DividerItemDecoration.VERTICAL))
         rv_planning_products_list.setHasFixedSize(true)
         val adapter = ProductsListItemAdapter{
-
+            it.selectItem()
+            rv_planning_products_list.adapter!!.notifyDataSetChanged()
         }
         rv_planning_products_list.adapter = adapter
 
@@ -84,6 +86,16 @@ class ProductListFragment: Fragment() {
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(index:Int, product: ProductItem, onclickListener: (ProductItem) -> Unit)= with(itemView){
             tvPlanningProductProductName.text = product.name
+            if (product.selectedData!=null){
+                imRemove.visibility=View.VISIBLE
+                imRemove.setOnClickListener { product.unSelect()
+                rv_planning_products_list.adapter!!.notifyDataSetChanged()
+                }
+            }
+            else{
+                imRemove.visibility=View.GONE
+                imRemove.setOnClickListener {}
+            }
             val prevObservable = viewsObservable[itemView]
             if (prevObservable!=null) {
                 itemDisposables.remove(prevObservable)
