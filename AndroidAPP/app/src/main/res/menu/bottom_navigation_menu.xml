@@ -1,10 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/page_1"
+        android:id="@+id/plan"
         android:enabled="true"
-        android:title="string/text_label_1"/>
+        android:icon="@drawable/list"
+        android:title="Plan"/>
     <item
-        android:id="@+id/page_2"
+        android:id="@+id/allproducts"
+        android:icon="@drawable/food"
         android:enabled="true"
-        android:title="string/text_label_2"/>
+        android:title="All Products"/>
 </menu>
