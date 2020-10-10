@@ -50,8 +50,10 @@ class AllProductsViewModel(application: Application) : AndroidViewModel(applicat
             }
             storesObservable.flatMap {
                 allProductsObservable(it)
-            }.subscribe {
-                data.value = it
+            }
+            .map {list-> list.sortedBy { it.name } }
+            .subscribe {
+                    data.value = it
             }
         }
 

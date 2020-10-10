@@ -212,7 +212,7 @@ class ProductFragment : Fragment() {
                     .into(imPhotoViewLogo)
             }
             else {
-                imPhotoView.alpha = 0.5F
+                imPhotoView.alpha = 0.3F
                 Glide.with(itemView)
                     .load(store.template.logoURL)
                     .into(imPhotoView)

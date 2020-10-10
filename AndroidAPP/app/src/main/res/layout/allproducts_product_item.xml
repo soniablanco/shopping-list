@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:text="TextView"
+        android:textColor="@color/cardview_light_background"
         android:textSize="20sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
