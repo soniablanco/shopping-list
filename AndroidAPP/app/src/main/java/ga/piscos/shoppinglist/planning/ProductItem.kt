@@ -11,14 +11,14 @@ import java.util.concurrent.TimeUnit
 class ProductItem(
     val code:String,
     val name: String,
-    var selectedData:SelecteData?,
+    val selectedData:SelecteData?,
     val stores:List<Store>
 
     ){
 class Store(val code:String, val photoURL:String?, val logoURL: String){
     class Template(val code:String, val logoURL:String)
 }
-    class SelecteData(val code:String, var neededQty:Int)
+    class SelecteData(val code:String, val neededQty:Int)
 
     fun getPhotoChangeObservable(index:Int):Observable<Store>{
         val filteredStores = stores.filter { it.photoURL!=null }

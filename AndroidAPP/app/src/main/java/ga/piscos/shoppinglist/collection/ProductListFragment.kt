@@ -1,6 +1,6 @@
 package ga.piscos.shoppinglist.collection
 
-import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -36,7 +36,11 @@ class ProductListFragment: Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         return inflater.inflate(R.layout.collection_products_list_fragment, container, false)
     }
@@ -48,7 +52,12 @@ class ProductListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_collection_products_list.layoutManager = LinearLayoutManager(activity)
-        rv_collection_products_list.addItemDecoration(DividerItemDecoration(rv_collection_products_list.context, DividerItemDecoration.VERTICAL))
+        rv_collection_products_list.addItemDecoration(
+            DividerItemDecoration(
+                rv_collection_products_list.context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
         rv_collection_products_list.setHasFixedSize(true)
         val adapter = ProductsListItemAdapter{
             it.selectItem()
@@ -75,7 +84,10 @@ class ProductListFragment: Fragment() {
     }
 
     class DrawableAlwaysCrossFadeFactory : TransitionFactory<Drawable> {
-        private val resourceTransition: DrawableCrossFadeTransition = DrawableCrossFadeTransition(300, true) //customize to your own needs or apply a builder pattern
+        private val resourceTransition: DrawableCrossFadeTransition = DrawableCrossFadeTransition(
+            300,
+            true
+        ) //customize to your own needs or apply a builder pattern
         override fun build(dataSource: DataSource?, isFirstResource: Boolean): Transition<Drawable> {
             return resourceTransition
         }
@@ -83,16 +95,22 @@ class ProductListFragment: Fragment() {
 
     private val viewsObservable = hashMapOf<View, Disposable>()
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(index:Int, product: ProductItem, onclickListener: (ProductItem) -> Unit)= with(itemView){
+        fun bind(index: Int, product: ProductItem, onclickListener: (ProductItem) -> Unit)= with(
+            itemView
+        ){
             tvCollectionProductProductName.text = product.name
             tvCollectionProductQty.text = "x${product.picked.neededQty}"
-            if (product.picked.pickedQty!=null){
+            if (product.picked.pickedQty!=null && product.picked.pickedQty==product.picked.neededQty){
                 imCollectionRemove.visibility=View.VISIBLE
+                tvCollectionProductProductName.paintFlags = tvCollectionProductProductName.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                tvCollectionProductQty.paintFlags = tvCollectionProductQty.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 imCollectionRemove.setOnClickListener { product.unSelect()  }
             }
             else{
                 imCollectionRemove.visibility=View.GONE
                 imCollectionRemove.setOnClickListener {}
+                tvCollectionProductProductName.paintFlags = tvCollectionProductProductName.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                tvCollectionProductQty.paintFlags = tvCollectionProductQty.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             }
             val prevObservable = viewsObservable[itemView]
             if (prevObservable!=null) {
@@ -119,11 +137,13 @@ class ProductListFragment: Fragment() {
 
 
 
-    private inner class ProductsListItemAdapter(private var elements:MutableList<ProductItem> = arrayListOf(), val onclickListener: (ProductItem) -> Unit
+    private inner class ProductsListItemAdapter(
+        private var elements: MutableList<ProductItem> = arrayListOf(),
+        val onclickListener: (ProductItem) -> Unit
     ) : RecyclerView.Adapter<ProductsListItemHolder>() {
 
 
-        fun updateProducts(stockList:List<ProductItem>){
+        fun updateProducts(stockList: List<ProductItem>){
             itemDisposables.clear()
             viewsObservable.clear()
             elements.clear()
@@ -132,10 +152,20 @@ class ProductListFragment: Fragment() {
         }
 
         override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ProductsListItemHolder {
-            return ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.collection_product_item, viewGroup, false))
+            return ProductsListItemHolder(
+                LayoutInflater.from(activity).inflate(
+                    R.layout.collection_product_item,
+                    viewGroup,
+                    false
+                )
+            )
         }
 
-        override fun onBindViewHolder(holder: ProductsListItemHolder, position: Int) = holder.bind(position,elements[position], onclickListener)
+        override fun onBindViewHolder(holder: ProductsListItemHolder, position: Int) = holder.bind(
+            position,
+            elements[position],
+            onclickListener
+        )
 
         override fun getItemCount(): Int {  return elements.size  }
     }

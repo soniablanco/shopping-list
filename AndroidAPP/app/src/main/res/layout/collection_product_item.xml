@@ -37,6 +37,7 @@
         android:id="@+id/imCollectionRemove"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:padding="5dp"
         android:drawableLeft="@drawable/removecart"
         android:text="Remove"
         android:textColor="@color/darkred"

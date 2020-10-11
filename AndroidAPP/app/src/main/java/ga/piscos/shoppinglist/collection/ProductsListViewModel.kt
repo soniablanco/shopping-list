@@ -67,7 +67,7 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
             infoObservable.flatMap {
                 allProductsObservable(it.first,it.second)
             }
-            .map {list-> list.sortedBy { it.picked.pickedQty } }
+            .map {list-> list.sortedBy { it.picked.hasPicked } }
             .subscribe {
                     data.value = it
             }

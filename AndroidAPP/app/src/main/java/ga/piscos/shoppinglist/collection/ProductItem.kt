@@ -17,7 +17,9 @@ class ProductItem(
 class Store(val code:String, val photoURL:String?, val logoURL: String){
     class Template(val code:String, val logoURL:String)
 }
-    class PickedData(val code:String, val neededQty:Int,val  pickedQty:Int?)
+    class PickedData(val code:String, val neededQty:Int,val  pickedQty:Int?){
+        val hasPicked get() = pickedQty!=null && pickedQty==neededQty
+    }
 
     fun getPhotoChangeObservable(index:Int):Observable<Store>{
         val filteredStores = stores.filter { it.photoURL!=null }
@@ -35,10 +37,10 @@ class Store(val code:String, val photoURL:String?, val logoURL: String){
     }
 
     fun selectItem() {
-
+        Firebase.database.reference.child("lists/current/products/${code}/pickedQty").setValue(picked.neededQty).observable().subscribe()
     }
 
     fun unSelect() {
-
+        Firebase.database.reference.child("lists/current/products/${code}/pickedQty").setValue(null).observable().subscribe()
     }
 }
