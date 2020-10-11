@@ -102,12 +102,14 @@ class ProductListFragment: Fragment() {
             tvCollectionProductQty.text = "x${product.picked.neededQty}"
             if (product.picked.pickedQty!=null && product.picked.pickedQty==product.picked.neededQty){
                 imCollectionRemove.visibility=View.VISIBLE
+                imCollectionCheck.visibility = View.VISIBLE
                 tvCollectionProductProductName.paintFlags = tvCollectionProductProductName.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 tvCollectionProductQty.paintFlags = tvCollectionProductQty.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 imCollectionRemove.setOnClickListener { product.unSelect()  }
             }
             else{
                 imCollectionRemove.visibility=View.GONE
+                imCollectionCheck.visibility = View.GONE
                 imCollectionRemove.setOnClickListener {}
                 tvCollectionProductProductName.paintFlags = tvCollectionProductProductName.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                 tvCollectionProductQty.paintFlags = tvCollectionProductQty.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()

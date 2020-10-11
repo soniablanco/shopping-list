@@ -50,6 +50,19 @@
         android:layout_marginBottom="5dp"
         />
 
+
+    <ImageView
+        android:id="@+id/imCollectionCheck"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:alpha="0.9"
+        android:src="@drawable/check"
+        app:layout_constraintStart_toEndOf="@id/imCollectionProductPhotoView"
+
+
+        app:layout_constraintTop_toTopOf="@id/imCollectionProductPhotoView"
+        />
+
     <TextView
         android:id="@+id/tvCollectionProductProductName"
         android:layout_width="0dp"

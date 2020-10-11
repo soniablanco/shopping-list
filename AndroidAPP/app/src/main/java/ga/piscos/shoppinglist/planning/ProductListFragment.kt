@@ -86,13 +86,15 @@ class ProductListFragment: Fragment() {
         fun bind(index:Int, product: ProductItem, onclickListener: (ProductItem) -> Unit)= with(itemView){
             tvPlanningProductProductName.text = product.name
             if (product.selectedData!=null){
-                tvPlanningProductQty.visibility=View.VISIBLE
+                imPlanningCheck.visibility=View.VISIBLE
+                tvPlanningProductQty.visibility = View.VISIBLE
                 tvPlanningProductQty.text = "x${product.selectedData!!.neededQty}"
                 imRemove.visibility=View.VISIBLE
                 imRemove.setOnClickListener { product.unSelect()  }
             }
             else{
-                tvPlanningProductQty.visibility=View.GONE
+                imPlanningCheck.visibility=View.GONE
+                tvPlanningProductQty.visibility = View.GONE
                 imRemove.visibility=View.GONE
                 imRemove.setOnClickListener {}
             }
