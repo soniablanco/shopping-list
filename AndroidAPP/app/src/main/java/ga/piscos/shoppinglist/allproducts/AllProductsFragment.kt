@@ -33,6 +33,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.allproducts_all_products_fragment.*
+import kotlinx.android.synthetic.main.allproducts_housesection_header.*
 import kotlinx.android.synthetic.main.allproducts_product_item.view.*
 import kotlinx.android.synthetic.main.allproducts_product_item.view.imPhotoView
 import kotlinx.android.synthetic.main.allproducts_product_item.view.imPhotoViewLogo
@@ -66,8 +67,11 @@ class AllProductsFragment: Fragment() {
         rv_products_list.addItemDecoration(DividerItemDecoration(rv_products_list.context, DividerItemDecoration.VERTICAL))
         rv_products_list.setHasFixedSize(true)
         val adapter = ProductsListItemAdapter{
-            val intent = ProductActivity.newIntent(requireActivity(),it.code)
-            startActivityForResult(intent,323)
+            val productItem = it as ProductItem?
+            if (productItem!=null) {
+                val intent = ProductActivity.newIntent(requireActivity(), it.code)
+                startActivityForResult(intent, 323)
+            }
         }
         rv_products_list.adapter = adapter
 
@@ -77,7 +81,7 @@ class AllProductsFragment: Fragment() {
         }
         val model by viewModels<AllProductsViewModel>()
         observe(model.data){
-            adapter.updateProducts(it)
+            adapter.updateElements(it)
         }
 
     }
@@ -102,15 +106,19 @@ class AllProductsFragment: Fragment() {
     }
 
     private val viewsObservable = hashMapOf<View,Disposable>()
-    private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(index:Int, product: ProductItem, onclickListener: (ProductItem) -> Unit)= with(itemView){
+    interface AllProductsItemRowHolder{//holder
+    fun bind(item: AllProductItemRow, listener: (AllProductItemRow) -> Unit)
+    }
+    private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),AllProductsItemRowHolder {
+        override fun bind(item: AllProductItemRow, listener: (AllProductItemRow) -> Unit)= with(itemView){
+            val product = item as ProductItem
             tvProductName.text = product.name
             val prevObservable = viewsObservable[itemView]
             if (prevObservable!=null) {
                 itemDisposables.remove(prevObservable)
                 viewsObservable.remove(itemView)
             }
-            val disposable = product.getPhotoChangeObservable(index).subscribe {
+            val disposable = product.getPhotoChangeObservable(1).subscribe {
 
                 Glide.with(this)
                     .load(it.photoURL)
@@ -124,17 +132,26 @@ class AllProductsFragment: Fragment() {
             }
             itemDisposables +=disposable
             viewsObservable[itemView] = disposable
-            setOnClickListener { onclickListener(product) }
+            setOnClickListener { listener(item) }
+        }
+    }
+
+
+    private inner class HouseSectionItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),AllProductsItemRowHolder {
+        override fun bind(item: AllProductItemRow, listener: (AllProductItemRow) -> Unit)= with(itemView){
+            val houseSection = item as HouseSection
+            tvAllProductsHouseSection.text = houseSection.name
+            setOnClickListener { listener(item) }
         }
     }
 
 
 
-    private inner class ProductsListItemAdapter(private var elements:MutableList<ProductItem> = arrayListOf(), val onclickListener: (ProductItem) -> Unit
-    ) : RecyclerView.Adapter<ProductsListItemHolder>() {
+    private inner class ProductsListItemAdapter(private var elements:MutableList<AllProductItemRow> = arrayListOf(), val listener: (AllProductItemRow) -> Unit
+    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
-        fun updateProducts(stockList:List<ProductItem>){
+        fun updateElements(stockList:List<AllProductItemRow>){
             itemDisposables.clear()
             viewsObservable.clear()
             elements.clear()
@@ -142,11 +159,15 @@ class AllProductsFragment: Fragment() {
             notifyDataSetChanged()
         }
 
-        override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ProductsListItemHolder {
-            return ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.allproducts_product_item, viewGroup, false))
-        }
+        override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        override fun onBindViewHolder(holder: ProductsListItemHolder, position: Int) = holder.bind(position,elements[position], onclickListener)
+            return when(viewType){
+                AllProductItemRow.Type.Item.intValue -> ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.allproducts_product_item, viewGroup, false))
+                else ->HouseSectionItemHolder(LayoutInflater.from(activity).inflate(R.layout.allproducts_housesection_header, viewGroup, false))
+            }
+        }
+        override fun getItemViewType(position: Int)=elements[position].type.intValue
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = (holder as AllProductsItemRowHolder).bind(elements[position], listener)
 
         override fun getItemCount(): Int {  return elements.size  }
     }

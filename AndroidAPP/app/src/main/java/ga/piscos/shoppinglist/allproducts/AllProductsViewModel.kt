@@ -6,16 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.observable
-import ga.piscos.shoppinglist.plus
-import ga.piscos.shoppinglist.product.ProductModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.allproducts_all_products_fragment.*
 
 class AllProductsViewModel(application: Application) : AndroidViewModel(application){
 
     var disposables = CompositeDisposable()
-    val data= MutableLiveData<List<ProductItem>>()
+    val data= MutableLiveData<List<AllProductItemRow>>()
 
         fun loadData(){
 
@@ -37,6 +34,7 @@ class AllProductsViewModel(application: Application) : AndroidViewModel(applicat
                         ProductItem(
                             code = it.key!!,
                             name = it.child("name").value.toString(),
+                            houseSection = it.child("houseSection").value.toString(),
                             stores = it.child("stores").children.map { stRef ->
                                 ProductItem.Store(
                                     code = stRef.key!!,
@@ -48,10 +46,36 @@ class AllProductsViewModel(application: Application) : AndroidViewModel(applicat
                     }
                 }
             }
-            storesObservable.flatMap {
+
+            val houseSectionsObservable = Firebase.database.reference.child("house/sections")
+                .observable()
+                .map {
+                    it.children.map { sec ->
+                            HouseSection(
+                            code = sec.key!!,
+                            name = sec.child("name").value.toString(),
+                            index = (sec.child("index").value as Long).toInt()
+                        )
+                    }.sortedBy {s-> s.index  }
+                }
+
+
+            val productListObservable = storesObservable.flatMap {
                 allProductsObservable(it)
             }
-            .map {list-> list.sortedBy { it.name } }
+
+            val resultObservable = Observable.combineLatest(
+                houseSectionsObservable,
+                productListObservable,
+                { houseSections:List<HouseSection>, products:List<ProductItem> ->
+                    houseSections.forEach {hs-> hs.products = products.filter {p-> p.houseSection==hs.code } }
+                    val rows = mutableListOf<AllProductItemRow>()
+                    houseSections.forEach { hs-> rows.addAll(hs.getAllRows()) }
+                    rows
+                })
+
+
+            resultObservable
             .subscribe {
                     data.value = it
             }

@@ -1,6 +1,5 @@
 package ga.piscos.shoppinglist.allproducts
 
-import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import java.util.concurrent.TimeUnit
@@ -8,12 +7,13 @@ import java.util.concurrent.TimeUnit
 class ProductItem(
     val code:String,
     val name: String,
+    val houseSection:String,
     val stores:List<Store>
 
-    ){
-class Store(val code:String, val photoURL:String?, val logoURL: String){
-    class Template(val code:String, val logoURL:String)
-}
+    ):AllProductItemRow{
+        class Store(val code:String, val photoURL:String?, val logoURL: String){
+            class Template(val code:String, val logoURL:String)
+        }
 
     fun getPhotoChangeObservable(index:Int):Observable<Store>{
         val filteredStores = stores.filter { it.photoURL!=null }
@@ -29,4 +29,6 @@ class Store(val code:String, val photoURL:String?, val logoURL: String){
                 .map { filteredStores[it % filteredStores.count()]}
                 .observeOn(AndroidSchedulers.mainThread())
     }
+
+    override val type get() = AllProductItemRow.Type.Item
 }
