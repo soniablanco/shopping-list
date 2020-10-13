@@ -111,6 +111,7 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
                 it.children.map { storeSnapShot ->
                     ProductModel.Template.Store(
                         code = storeSnapShot.key!!,
+                        index = (storeSnapShot.child("index").value as Long).toInt(),
                         logoURL = storeSnapShot.child("photoURL").value.toString(),
                         sections = storeSnapShot.child("sections").children.map { sec ->
                             ProductModel.Template.Store.Section(

@@ -3,7 +3,7 @@ package ga.piscos.shoppinglist.product
 import android.net.Uri
 
 
-class ProductStoreModel(val template: ProductModel.Template.Store, var editing: ProductModel.Editing.Store, val saved: ProductModel.Saved.Store?){
+class ProductStoreModel(val template: ProductModel.Template.Store, var editing: ProductModel.Editing.Store, val saved: ProductModel.Saved.Store?,val  index: Int){
 
     fun getEditingSectionIndex():Int? {
         val houseSection = template.sections.firstOrNull { it.code == editing.section }
@@ -15,9 +15,13 @@ class ProductStoreModel(val template: ProductModel.Template.Store, var editing: 
 class ProductModel(val template: Template, val editing: Editing, val saved:Saved?){
 
 
-    fun getStoresModel() = template.stores.map { storeTemplate->
-        ProductStoreModel(template = storeTemplate,editing = editing.stores.first { it.code == storeTemplate.code },saved = saved?.stores?.firstOrNull { it.code == storeTemplate.code })
-            }
+    fun getStoresModel() = template.stores.map { storeTemplate ->
+        ProductStoreModel(
+            template = storeTemplate,
+            index = storeTemplate.index,
+            editing = editing.stores.first { it.code == storeTemplate.code },
+            saved = saved?.stores?.firstOrNull { it.code == storeTemplate.code })
+    }.sortedBy { it.index }
 
     fun getEditingHouseSectionIndex():Int? {
         val houseSection = template.houseSections.firstOrNull { it.code == editing.houseSection }
@@ -53,7 +57,7 @@ class ProductModel(val template: Template, val editing: Editing, val saved:Saved
                 return name
             }
         }
-        class Store(val code:String, val logoURL:String,val sections:List<Section>){
+        class Store(val code:String, val logoURL:String,val sections:List<Section>,val index: Int){
             class Section(val code:String, val name:String){
                 override fun toString(): String {
                     return name

@@ -101,7 +101,7 @@ class ProductFragment : Fragment() {
             )
             sections.addAll(productModel.template.houseSections)
             val sectionsAdapter: ArrayAdapter<ProductModel.Template.HouseSection> =
-                ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, sections)
+                ArrayAdapter(requireActivity(), R.layout.spinner_item, sections)
             sectionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             house_spinner.adapter = sectionsAdapter
 
@@ -183,7 +183,7 @@ class ProductFragment : Fragment() {
             )
             sections.addAll(store.template.sections)
             val adapter: ArrayAdapter<ProductModel.Template.Store.Section> =
-                ArrayAdapter(activity!!, android.R.layout.simple_spinner_item, sections)
+                ArrayAdapter(activity!!, R.layout.spinner_item, sections)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
             val sectionIndex = store.getEditingSectionIndex()

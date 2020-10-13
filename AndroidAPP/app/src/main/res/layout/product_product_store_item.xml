@@ -39,6 +39,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/imPhotoView"
         app:layout_constraintBottom_toBottomOf="@id/imPhotoView"
+        android:layout_marginStart="15dp"
+        android:backgroundTint="@color/white"
         android:layout_centerHorizontal="true"
         android:layout_width="0dp"
         android:layout_height="0dp" />
