@@ -58,7 +58,7 @@ class ProductModel(val template: Template, val editing: Editing, val saved:Saved
             }
         }
         class Store(val code:String, val logoURL:String,val sections:List<Section>,val index: Int){
-            class Section(val code:String, val name:String){
+            class Section(val code:String, val name:String, val  index: Int){
                 override fun toString(): String {
                     return name
                 }

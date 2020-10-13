@@ -116,9 +116,10 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
                         sections = storeSnapShot.child("sections").children.map { sec ->
                             ProductModel.Template.Store.Section(
                                 code = sec.key!!,
+                                index = (sec.child("index").value as Long).toInt(),
                                 name = sec.child("name").value.toString()
                             )
-                        }
+                        }.sortedBy {sec-> sec.index }
                     )
                 }
             }

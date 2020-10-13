@@ -178,7 +178,8 @@ class ProductFragment : Fragment() {
             val sections = mutableListOf(
                 ProductModel.Template.Store.Section(
                     "noselect",
-                    "Select Section:"
+                    "Select Section:",
+                    index = -1
                 )
             )
             sections.addAll(store.template.sections)
