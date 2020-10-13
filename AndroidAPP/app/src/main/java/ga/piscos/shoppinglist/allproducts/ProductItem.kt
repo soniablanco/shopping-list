@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 class ProductItem(
     val code:String,
     val name: String,
-    val houseSection:String,
+    val houseSection:String?,
     val stores:List<Store>
 
     ):AllProductItemRow{

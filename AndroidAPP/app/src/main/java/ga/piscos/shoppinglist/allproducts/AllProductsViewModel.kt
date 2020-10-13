@@ -34,7 +34,7 @@ class AllProductsViewModel(application: Application) : AndroidViewModel(applicat
                         ProductItem(
                             code = it.key!!,
                             name = it.child("name").value.toString(),
-                            houseSection = it.child("houseSection").value.toString(),
+                            houseSection = it.child("houseSection").value?.toString(),
                             stores = it.child("stores").children.map { stRef ->
                                 ProductItem.Store(
                                     code = stRef.key!!,
@@ -68,9 +68,16 @@ class AllProductsViewModel(application: Application) : AndroidViewModel(applicat
                 houseSectionsObservable,
                 productListObservable,
                 { houseSections:List<HouseSection>, products:List<ProductItem> ->
-                    houseSections.forEach {hs-> hs.products = products.filter {p-> p.houseSection==hs.code } }
+                    houseSections.forEach {hs-> hs.products = products.filter {p->p.houseSection!=null && p.houseSection==hs.code } }
+                    val productsWithSections = mutableListOf<ProductItem>()
+                    houseSections.forEach { hs->productsWithSections.addAll(hs.products!!)}
+                    val productsWithNoSection = products.filter { !productsWithSections.contains(it) }
                     val rows = mutableListOf<AllProductItemRow>()
-                    houseSections.forEach { hs-> rows.addAll(hs.getAllRows()) }
+                   if (productsWithNoSection.count()>0){
+                       val houseSectionNotEntered = HouseSection(code = "unknown",name = "Need to Assign Section",index = -1,products = productsWithNoSection)
+                       rows.addAll(houseSectionNotEntered.getAllRows())
+                   }
+                        houseSections.forEach { hs-> rows.addAll(hs.getAllRows()) }
                     rows
                 })
 
