@@ -33,11 +33,8 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.allproducts_all_products_fragment.*
-import kotlinx.android.synthetic.main.allproducts_housesection_header.*
+import kotlinx.android.synthetic.main.allproducts_housesection_header.view.*
 import kotlinx.android.synthetic.main.allproducts_product_item.view.*
-import kotlinx.android.synthetic.main.allproducts_product_item.view.imPhotoView
-import kotlinx.android.synthetic.main.allproducts_product_item.view.imPhotoViewLogo
-import kotlinx.android.synthetic.main.product_product_store_item.view.*
 import java.util.concurrent.TimeUnit
 
 
@@ -140,7 +137,7 @@ class AllProductsFragment: Fragment() {
     private inner class HouseSectionItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),AllProductsItemRowHolder {
         override fun bind(item: AllProductItemRow, listener: (AllProductItemRow) -> Unit)= with(itemView){
             val houseSection = item as HouseSection
-            tvAllProductsHouseSection.text = houseSection.name
+            tvAllProductsHouseSection.text = "\uD83C\uDFE0 ${houseSection.name}"
             setOnClickListener { listener(item) }
         }
     }

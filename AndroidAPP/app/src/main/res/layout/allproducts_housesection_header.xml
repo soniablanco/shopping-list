@@ -10,11 +10,11 @@
     <TextView
         android:id="@+id/tvAllProductsHouseSection"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="House Section"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text=" 🏠 House Section"
         android:textColor="@color/cardview_light_background"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
