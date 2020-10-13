@@ -128,9 +128,10 @@ class ProductViewModel (application: Application) : AndroidViewModel(application
                 it.children.map { sec ->
                     ProductModel.Template.HouseSection(
                         code = sec.key!!,
-                        name = sec.child("name").value.toString()
+                        name = sec.child("name").value.toString(),
+                        index = (sec.child("index").value as Long).toInt()
                     )
-                }
+                }.sortedBy {s-> s.index  }
             }
 
 

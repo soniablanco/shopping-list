@@ -48,7 +48,7 @@ class ProductModel(val template: Template, val editing: Editing, val saved:Saved
     }
 
     class Template(val houseSections:List<HouseSection>, val stores: List<Store>){
-        class HouseSection(val code:String, val name:String){
+        class HouseSection(val code:String, val name:String,val index:Int){
             override fun toString(): String {
                 return name
             }
