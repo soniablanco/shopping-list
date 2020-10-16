@@ -1,11 +1,14 @@
 package ga.piscos.shoppinglist.planning
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -20,8 +23,12 @@ import com.bumptech.glide.request.transition.TransitionFactory
 import ga.piscos.shoppinglist.R
 import ga.piscos.shoppinglist.observe
 import ga.piscos.shoppinglist.plus
+import ga.piscos.shoppinglist.product.ProductActivity
+import ga.piscos.shoppinglist.stickyrecycler.StickyAdapter
+import ga.piscos.shoppinglist.stickyrecycler.StickyHeaderItemDecorator
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
+import kotlinx.android.synthetic.main.allproducts_housesection_header.view.*
 import kotlinx.android.synthetic.main.planning_product_item.view.*
 import kotlinx.android.synthetic.main.planning_products_list_fragment.*
 
@@ -51,13 +58,18 @@ class ProductListFragment: Fragment() {
         rv_planning_products_list.addItemDecoration(DividerItemDecoration(rv_planning_products_list.context, DividerItemDecoration.VERTICAL))
         rv_planning_products_list.setHasFixedSize(true)
         val adapter = ProductsListItemAdapter{
-            it.selectItem()
+            val productItem = it as? ProductItem
+            productItem?.selectItem()
         }
+        val decorator =
+            StickyHeaderItemDecorator(
+                adapter
+            )
+        decorator.attachToRecyclerView(rv_planning_products_list)
         rv_planning_products_list.adapter = adapter
-
         val model by viewModels<ProductsListViewModel>()
         observe(model.data){
-            adapter.updateProducts(it)
+            adapter.updateElements(it)
         }
 
     }
@@ -82,9 +94,15 @@ class ProductListFragment: Fragment() {
     }
 
     private val viewsObservable = hashMapOf<View, Disposable>()
-    private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(index:Int, product: ProductItem, onclickListener: (ProductItem) -> Unit)= with(itemView){
-            tvPlanningProductProductName.text = product.name
+    interface AllProductsItemRowHolder{//holder
+    fun bind(item: AllProductItemRow, allItems:List<AllProductItemRow>, listener: (AllProductItemRow) -> Unit)
+    }
+    private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        AllProductsItemRowHolder {
+        override fun bind(item: AllProductItemRow, allItems: List<AllProductItemRow>, listener: (AllProductItemRow) -> Unit)= with(
+            itemView){
+            val product = item as ProductItem
+                    tvPlanningProductProductName.text = product.name
             if (product.selectedData!=null){
                 imPlanningCheck.visibility=View.VISIBLE
                 tvPlanningProductQty.visibility = View.VISIBLE
@@ -103,7 +121,7 @@ class ProductListFragment: Fragment() {
                 itemDisposables.remove(prevObservable)
                 viewsObservable.remove(itemView)
             }
-            val disposable = product.getPhotoChangeObservable(index).subscribe {
+            val disposable = product.getPhotoChangeObservable(0).subscribe {
 
                 Glide.with(this)
                     .load(it.photoURL)
@@ -117,32 +135,112 @@ class ProductListFragment: Fragment() {
             }
             itemDisposables +=disposable
             viewsObservable[itemView] = disposable
-            setOnClickListener { onclickListener(product) }
+            setOnClickListener { listener(item) }
         }
     }
 
+    private inner class HouseSectionItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        AllProductsItemRowHolder {
+        override fun bind(item: AllProductItemRow, allItems: List<AllProductItemRow>, listener: (AllProductItemRow) -> Unit)= with(
+            itemView
+        ){
+            val houseSection = item as HouseSection
+            tvAllProductsHouseSection.text = "\uD83C\uDFE0 ${houseSection.name}"
+            setOnClickListener {
 
 
-    private inner class ProductsListItemAdapter(private var elements:MutableList<ProductItem> = arrayListOf(), val onclickListener: (ProductItem) -> Unit
-    ) : RecyclerView.Adapter<ProductsListItemHolder>() {
+                onHouseSectionClick(allItems)
+
+            }
+        }
+    }
+
+    private inner class ProductsListItemAdapter(private var elements:MutableList<AllProductItemRow> = arrayListOf(), val listener: (AllProductItemRow) -> Unit
+    ) : StickyAdapter<HouseSectionItemHolder, RecyclerView.ViewHolder>() {
 
 
-        fun updateProducts(stockList:List<ProductItem>){
+        fun updateElements(stockList:List<AllProductItemRow>){
             itemDisposables.clear()
             viewsObservable.clear()
             elements.clear()
             elements.addAll(stockList)
             notifyDataSetChanged()
         }
+        override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ProductsListItemHolder {
-            return ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.planning_product_item, viewGroup, false))
+            return when(viewType){
+                AllProductItemRow.Type.Item.intValue -> ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.planning_product_item, viewGroup, false))
+                else ->HouseSectionItemHolder(
+                    LayoutInflater.from(activity).inflate(
+                        R.layout.allproducts_housesection_header,
+                        viewGroup,
+                        false
+                    )
+                )
+            }
         }
-
-        override fun onBindViewHolder(holder: ProductsListItemHolder, position: Int) = holder.bind(position,elements[position], onclickListener)
+        override fun getItemViewType(position: Int)=elements[position].type.intValue
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = (holder as AllProductsItemRowHolder).bind(
+            elements[position], elements,listener
+        )
 
         override fun getItemCount(): Int {  return elements.size  }
-    }
 
+
+        override fun getHeaderPositionForItem(itemPosition: Int): Int {
+            val product = elements[itemPosition] as? ProductItem
+            val section = if (product!= null){
+                product.houseSectionInstance!!
+            } else{
+                elements[itemPosition] as HouseSection
+            }
+            return elements.indexOf(section)
+        }
+
+        override fun onBindHeaderViewHolder(holder: HouseSectionItemHolder, position: Int) {
+            holder.bind(elements[position],elements, listener)
+        }
+
+        override fun onCreateHeaderViewHolder(viewGroup: ViewGroup?): HouseSectionItemHolder {
+            return HouseSectionItemHolder(
+                LayoutInflater.from(activity).inflate(
+                    R.layout.allproducts_housesection_header,
+                    viewGroup,
+                    false
+                )
+            )
+        }
+
+        override fun handleHeaderClickAtPosition(headerPosition: Int) {
+            onHouseSectionClick(elements)
+        }
+
+    }
+    private fun onHouseSectionClick(elements: List<AllProductItemRow>) {
+        val builderSingle = AlertDialog.Builder(requireContext())
+        builderSingle.setTitle("House section")
+
+        val arrayAdapter = ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.select_dialog_item
+        )
+        val houseSections = elements.filterIsInstance<HouseSection>()
+
+        houseSections.forEach { arrayAdapter.add(it.name) }
+
+        builderSingle.setNegativeButton("cancel",
+            DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
+
+        builderSingle.setAdapter(arrayAdapter,
+            DialogInterface.OnClickListener { dialog, which ->
+                val houseSection = houseSections[which]
+                val indexToMove = elements.indexOf(houseSection)
+                (rv_planning_products_list.layoutManager!! as LinearLayoutManager).scrollToPositionWithOffset(
+                    indexToMove,
+                    0
+                )
+            })
+        builderSingle.show()
+    }
 
 }

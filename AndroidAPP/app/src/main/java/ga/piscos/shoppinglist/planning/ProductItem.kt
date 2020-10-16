@@ -12,6 +12,7 @@ class ProductItem(
     val code:String,
     val name: String,
     val selectedData:SelecteData?,
+    val houseSection:String?,
     val stores:List<Store>,
     var houseSectionInstance: HouseSection?=null
 

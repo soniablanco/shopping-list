@@ -6,14 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.observable
-import ga.piscos.shoppinglist.plus
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class ProductsListViewModel(application: Application) : AndroidViewModel(application){
 
     var disposables = CompositeDisposable()
-    val data= MutableLiveData<List<ProductItem>>()
+    val data= MutableLiveData<List<AllProductItemRow>>()
 
 
         fun loadData(){
@@ -38,6 +37,7 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                             code = it.key!!,
                             name = it.child("name").value.toString(),
                             selectedData  = selectedProducts.firstOrNull {s-> s.code==it.key!! },
+                            houseSection = it.child("houseSection").value?.toString(),
                             stores = it.child("stores").children.map { stRef ->
                                 ProductItem.Store(
                                     code = stRef.key!!,
@@ -49,6 +49,17 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                     }
                 }
             }
+            val houseSectionsObservable = Firebase.database.reference.child("house/sections")
+                .observable()
+                .map {
+                    it.children.map { sec ->
+                        HouseSection(
+                            code = sec.key!!,
+                            name = sec.child("name").value.toString(),
+                            index = (sec.child("index").value as Long).toInt()
+                        )
+                    }.sortedBy {s-> s.index  }
+                }
 
             val selectedProductsObervable = Firebase.database.reference.child("lists/current/products").observable().map { dataSnapshot ->
                 dataSnapshot.children.map {
@@ -63,10 +74,31 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                 Pair(sto,selected)
             })
 
-            infoObservable.flatMap {
+            val resultingProductsObservable = infoObservable.flatMap {
                 allProductsObservable(it.first,it.second)
             }
-            .map {list-> list.sortedBy { it.name } }
+
+
+            val resultObservable = Observable.combineLatest(
+                houseSectionsObservable,
+                resultingProductsObservable,
+                { houseSections:List<HouseSection>, products:List<ProductItem> ->
+                    houseSections.forEach {hs-> hs.products = products.filter {p->p.houseSection!=null && p.houseSection==hs.code } }
+                    val productsWithSections = mutableListOf<ProductItem>()
+                    houseSections.forEach { hs->productsWithSections.addAll(hs.products!!)}
+                    val productsWithNoSection = products.filter { !productsWithSections.contains(it) }
+                    val rows = mutableListOf<AllProductItemRow>()
+                    if (productsWithNoSection.count()>0){
+                        val houseSectionNotEntered = HouseSection(code = "unknown",name = "Need to Assign Section",index = -1,products = productsWithNoSection)
+                        houseSectionNotEntered.assignSection()
+                        rows.addAll(houseSectionNotEntered.getAllRows())
+                    }
+                    houseSections.forEach { hs-> rows.addAll(hs.getAllRows()) }
+                    houseSections.forEach { hs-> hs.assignSection() }
+                    rows
+                })
+
+            resultObservable
             .subscribe {
                     data.value = it
             }
