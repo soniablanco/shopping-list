@@ -42,7 +42,7 @@ public class StickyHeaderItemDecorator extends RecyclerView.ItemDecoration {
                     if (e.getAction()==MotionEvent.ACTION_DOWN && currentStickyHolder!=null) {
                         int y = (int) e.getY();
                         int bottomHeader = currentStickyHolder.itemView.getBottom();
-                        if (y<=bottomHeader && currentStickyPosition>0){
+                        if (y<=bottomHeader && currentStickyPosition>=0){
                             adapter.handleHeaderClickAtPosition(currentStickyPosition);
                             return  true;
                         }

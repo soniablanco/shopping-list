@@ -1,11 +1,14 @@
 package ga.piscos.shoppinglist.allproducts
 
+import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -70,10 +73,6 @@ class AllProductsFragment: Fragment() {
                 val intent = ProductActivity.newIntent(requireActivity(), it.code)
                 startActivityForResult(intent, 323)
             }
-            else{
-                val houseSection = it as HouseSection;
-                Toast.makeText(requireContext(),houseSection.name,Toast.LENGTH_SHORT).show()
-            }
         }
         val decorator =
             StickyHeaderItemDecorator(
@@ -117,10 +116,10 @@ class AllProductsFragment: Fragment() {
 
     private val viewsObservable = hashMapOf<View, Disposable>()
     interface AllProductsItemRowHolder{//holder
-    fun bind(item: AllProductItemRow, listener: (AllProductItemRow) -> Unit)
+    fun bind(item: AllProductItemRow,allItems:List<AllProductItemRow>, listener: (AllProductItemRow) -> Unit)
     }
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),AllProductsItemRowHolder {
-        override fun bind(item: AllProductItemRow, listener: (AllProductItemRow) -> Unit)= with(
+        override fun bind(item: AllProductItemRow, allItems: List<AllProductItemRow>, listener: (AllProductItemRow) -> Unit)= with(
             itemView
         ){
             val product = item as ProductItem
@@ -150,12 +149,17 @@ class AllProductsFragment: Fragment() {
 
 
     private inner class HouseSectionItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),AllProductsItemRowHolder {
-        override fun bind(item: AllProductItemRow, listener: (AllProductItemRow) -> Unit)= with(
+        override fun bind(item: AllProductItemRow, allItems: List<AllProductItemRow>, listener: (AllProductItemRow) -> Unit)= with(
             itemView
         ){
             val houseSection = item as HouseSection
             tvAllProductsHouseSection.text = "\uD83C\uDFE0 ${houseSection.name}"
-            setOnClickListener { listener(item) }
+            setOnClickListener {
+
+
+                onHouseSectionClick(allItems)
+
+            }
         }
     }
 
@@ -195,8 +199,7 @@ class AllProductsFragment: Fragment() {
         }
         override fun getItemViewType(position: Int)=elements[position].type.intValue
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = (holder as AllProductsItemRowHolder).bind(
-            elements[position],
-            listener
+            elements[position], elements,listener
         )
 
         override fun getItemCount(): Int {  return elements.size  }
@@ -211,7 +214,7 @@ class AllProductsFragment: Fragment() {
         }
 
         override fun onBindHeaderViewHolder(holder: HouseSectionItemHolder, position: Int) {
-            holder.bind(elements[position], listener)
+            holder.bind(elements[position],elements, listener)
         }
 
         override fun onCreateHeaderViewHolder(viewGroup: ViewGroup?): HouseSectionItemHolder {
@@ -225,10 +228,36 @@ class AllProductsFragment: Fragment() {
         }
 
         override fun handleHeaderClickAtPosition(headerPosition: Int) {
-            val houseSection = elements[headerPosition] as HouseSection;
-            Toast.makeText(requireContext(),houseSection.name,Toast.LENGTH_SHORT).show()
+            onHouseSectionClick(elements)
         }
 
+    }
+
+    private fun onHouseSectionClick(elements: List<AllProductItemRow>) {
+        val builderSingle = AlertDialog.Builder(requireContext())
+        builderSingle.setTitle("House section")
+
+        val arrayAdapter = ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.select_dialog_item
+        )
+        val houseSections = elements.filterIsInstance<HouseSection>()
+
+        houseSections.forEach { arrayAdapter.add(it.name) }
+
+        builderSingle.setNegativeButton("cancel",
+            DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
+
+        builderSingle.setAdapter(arrayAdapter,
+            DialogInterface.OnClickListener { dialog, which ->
+                val houseSection = houseSections[which]
+                val indexToMove = elements.indexOf(houseSection)
+                (rv_products_list.layoutManager!! as LinearLayoutManager).scrollToPositionWithOffset(
+                    indexToMove,
+                    0
+                )
+            })
+        builderSingle.show()
     }
 
 
