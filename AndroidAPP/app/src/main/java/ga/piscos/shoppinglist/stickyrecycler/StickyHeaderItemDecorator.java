@@ -39,11 +39,11 @@ public class StickyHeaderItemDecorator extends RecyclerView.ItemDecoration {
             recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
                 @Override
                 public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                    if (e.getAction()==MotionEvent.ACTION_DOWN) {
-                        int gg = (int) e.getY();
-                        int booti = currentStickyHolder.itemView.getBottom();
-                        if (gg<=booti){
-                            adapter.HandleClick(currentStickyHolder.itemView);
+                    if (e.getAction()==MotionEvent.ACTION_DOWN && currentStickyHolder!=null) {
+                        int y = (int) e.getY();
+                        int bottomHeader = currentStickyHolder.itemView.getBottom();
+                        if (y<=bottomHeader && currentStickyPosition>0){
+                            adapter.handleHeaderClickAtPosition(currentStickyPosition);
                             return  true;
                         }
                     }

@@ -224,6 +224,11 @@ class AllProductsFragment: Fragment() {
            )
         }
 
+        override fun handleHeaderClickAtPosition(headerPosition: Int) {
+            val houseSection = elements[headerPosition] as HouseSection;
+            Toast.makeText(requireContext(),houseSection.name,Toast.LENGTH_SHORT).show()
+        }
+
     }
 
 
