@@ -16,12 +16,12 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeTransition
 import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.request.transition.TransitionFactory
-import com.shuhart.stickyheader.StickyAdapter
-import com.shuhart.stickyheader.StickyHeaderItemDecorator
 import ga.piscos.shoppinglist.R
 import ga.piscos.shoppinglist.observe
 import ga.piscos.shoppinglist.plus
 import ga.piscos.shoppinglist.product.ProductActivity
+import ga.piscos.shoppinglist.stickyrecycler.StickyAdapter
+import ga.piscos.shoppinglist.stickyrecycler.StickyHeaderItemDecorator
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.allproducts_all_products_fragment.*
@@ -70,7 +70,10 @@ class AllProductsFragment: Fragment() {
                 startActivityForResult(intent, 323)
             }
         }
-        val decorator = StickyHeaderItemDecorator(adapter)
+        val decorator =
+            StickyHeaderItemDecorator(
+                adapter
+            )
         decorator.attachToRecyclerView(rv_products_list)
         rv_products_list.adapter = adapter
 
@@ -156,7 +159,7 @@ class AllProductsFragment: Fragment() {
     private inner class ProductsListItemAdapter(
         private var elements: MutableList<AllProductItemRow> = arrayListOf(),
         val listener: (AllProductItemRow) -> Unit
-    ) : StickyAdapter<RecyclerView.ViewHolder, RecyclerView.ViewHolder>() {
+    ) : StickyAdapter<HouseSectionItemHolder, RecyclerView.ViewHolder>() {
 
 
         fun updateElements(stockList: List<AllProductItemRow>){
@@ -201,11 +204,11 @@ class AllProductsFragment: Fragment() {
             return elements.indexOf(section)
         }
 
-        override fun onBindHeaderViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-            (holder as AllProductsItemRowHolder).bind(elements[position], listener)
+        override fun onBindHeaderViewHolder(holder: HouseSectionItemHolder, position: Int) {
+            holder.bind(elements[position], listener)
         }
 
-        override fun onCreateHeaderViewHolder(viewGroup: ViewGroup?): RecyclerView.ViewHolder {
+        override fun onCreateHeaderViewHolder(viewGroup: ViewGroup?): HouseSectionItemHolder {
            return HouseSectionItemHolder(
                LayoutInflater.from(activity).inflate(
                    R.layout.allproducts_housesection_header,
