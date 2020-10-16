@@ -48,4 +48,5 @@ public abstract class StickyAdapter<SVH extends RecyclerView.ViewHolder,
      * @see #onBindHeaderViewHolder(RecyclerView.ViewHolder, int)
      */
     public abstract SVH onCreateHeaderViewHolder(ViewGroup parent);
+
 }

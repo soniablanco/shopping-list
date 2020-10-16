@@ -1,6 +1,7 @@
 package ga.piscos.shoppinglist.stickyrecycler;
 
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -35,6 +36,33 @@ public class StickyHeaderItemDecorator extends RecyclerView.ItemDecoration {
             currentStickyHolder = adapter.onCreateHeaderViewHolder(recyclerView);
             fixLayoutSize();
             setupCallbacks();
+            recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+                @Override
+                public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                    if (e.getAction()==MotionEvent.ACTION_DOWN) {
+                        int gg = (int) e.getY();
+                        int booti = currentStickyHolder.itemView.getBottom();
+                        if (gg<=booti){
+                            adapter.HandleClick(currentStickyHolder.itemView);
+                            return  true;
+                        }
+                    }
+
+
+                    return false;
+                }
+
+                @Override
+                public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+                }
+
+                @Override
+                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+                }
+            });
+
         }
     }
 
@@ -45,6 +73,7 @@ public class StickyHeaderItemDecorator extends RecyclerView.ItemDecoration {
     private void destroyCallbacks(RecyclerView recyclerView) {
         recyclerView.removeItemDecoration(this);
     }
+
 
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {

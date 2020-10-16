@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -64,10 +65,14 @@ class AllProductsFragment: Fragment() {
         )
         rv_products_list.setHasFixedSize(true)
         val adapter = ProductsListItemAdapter{
-            val productItem = it as ProductItem?
+            val productItem = it as? ProductItem
             if (productItem!=null) {
                 val intent = ProductActivity.newIntent(requireActivity(), it.code)
                 startActivityForResult(intent, 323)
+            }
+            else{
+                val houseSection = it as HouseSection;
+                Toast.makeText(requireContext(),houseSection.name,Toast.LENGTH_SHORT).show()
             }
         }
         val decorator =
@@ -162,6 +167,7 @@ class AllProductsFragment: Fragment() {
     ) : StickyAdapter<HouseSectionItemHolder, RecyclerView.ViewHolder>() {
 
 
+
         fun updateElements(stockList: List<AllProductItemRow>){
             itemDisposables.clear()
             viewsObservable.clear()
@@ -217,6 +223,7 @@ class AllProductsFragment: Fragment() {
                )
            )
         }
+
     }
 
 
