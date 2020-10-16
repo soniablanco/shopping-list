@@ -12,9 +12,10 @@ class ProductItem(
     val code:String,
     val name: String,
     val selectedData:SelecteData?,
-    val stores:List<Store>
+    val stores:List<Store>,
+    var houseSectionInstance: HouseSection?=null
 
-    ){
+    ): AllProductItemRow {
 class Store(val code:String, val photoURL:String?, val logoURL: String){
     class Template(val code:String, val logoURL:String)
 }
@@ -49,4 +50,5 @@ class Store(val code:String, val photoURL:String?, val logoURL: String){
                 .flatMap { Firebase.database.reference.child("lists/current/products").updateChildren(it).observable()}
         firebaseDatabaseObservable.subscribe()
     }
+    override val type get() = AllProductItemRow.Type.Item
 }
