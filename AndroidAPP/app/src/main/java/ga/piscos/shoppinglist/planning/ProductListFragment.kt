@@ -125,7 +125,7 @@ class ProductListFragment: Fragment() {
 
                 Glide.with(this)
                     .load(it.photoURL)
-                    .transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
+                    //.transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
                     .into(imPlanningProductPhotoView)
 
                 imPlanningProductPhotoViewLogo.alpha = 0.7F
