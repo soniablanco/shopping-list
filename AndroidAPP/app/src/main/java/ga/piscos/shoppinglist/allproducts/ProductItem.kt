@@ -8,7 +8,8 @@ class ProductItem(
     val code:String,
     val name: String,
     val houseSection:String?,
-    val stores:List<Store>
+    val stores:List<Store>,
+    var houseSectionInstance:HouseSection?=null
 
     ):AllProductItemRow{
         class Store(val code:String, val photoURL:String?, val logoURL: String){

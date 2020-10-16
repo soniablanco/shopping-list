@@ -10,6 +10,10 @@ class HouseSection(val code:String,val  name:String,val index:Int, var products:
         return  list
     }
 
+    fun assignSection(){
+        products!!.forEach { it.houseSectionInstance=this }
+    }
+
     override val type get() = AllProductItemRow.Type.Header
 
 

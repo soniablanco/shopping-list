@@ -75,9 +75,11 @@ class AllProductsViewModel(application: Application) : AndroidViewModel(applicat
                     val rows = mutableListOf<AllProductItemRow>()
                    if (productsWithNoSection.count()>0){
                        val houseSectionNotEntered = HouseSection(code = "unknown",name = "Need to Assign Section",index = -1,products = productsWithNoSection)
+                       houseSectionNotEntered.assignSection()
                        rows.addAll(houseSectionNotEntered.getAllRows())
                    }
-                        houseSections.forEach { hs-> rows.addAll(hs.getAllRows()) }
+                    houseSections.forEach { hs-> rows.addAll(hs.getAllRows()) }
+                    houseSections.forEach { hs-> hs.assignSection() }
                     rows
                 })
 
