@@ -91,25 +91,9 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                 selectedStoreObservable,
                 productListObservable,
                 { selectedStore:ProductItem.Store.Template, products:List<ProductItem> ->
-                    val storeSections =selectedStore.sections.map { ss-> StoreSection(code = ss.code,name = ss.name, index = ss.index)}
-                    storeSections.forEach {hs-> hs.products =
-                        products
-                            .filter { p-> p.stores.any   { store -> store.code==selectedStore.code }}
-                            .filter { p-> p.stores.first { store -> store.code==selectedStore.code }.sectionCode!=null }
-                            .filter { p-> p.stores.first { store -> store.code==selectedStore.code }.sectionCode!! == hs.code }
-
-                    }
-                    val productsWithSections = mutableListOf<ProductItem>()
-                    storeSections.forEach { hs->productsWithSections.addAll(hs.products!!)}
-                    val productsWithNoSection = products.filter { !productsWithSections.contains(it) }
                     val rows = mutableListOf<CollectionItemRow>()
-                    if (productsWithNoSection.count()>0){
-                        val houseSectionNotEntered = StoreSection(code = "unknown",name = "Need to Assign Section",index = -1,products = productsWithNoSection)
-                        houseSectionNotEntered.assignSection()
-                        rows.addAll(houseSectionNotEntered.getAllRows())
-                    }
-                    storeSections.forEach { hs-> rows.addAll(hs.getAllRows()) }
-                    storeSections.forEach { hs-> hs.assignSection() }
+                    addRows(selectedStore= selectedStore,products=products.filter { !it.picked.hasPicked },rows=rows)
+                    addRows(selectedStore= selectedStore,products=products.filter { it.picked.hasPicked },rows=rows)
                     rows
                 })
 
@@ -123,6 +107,26 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                 storesData.value = it
             }
         }
+    fun addRows(selectedStore:ProductItem.Store.Template, products:List<ProductItem>,rows:MutableList<CollectionItemRow>){
+        val storeSections =selectedStore.sections.map { ss-> StoreSection(code = ss.code,name = ss.name, index = ss.index)}
+        storeSections.forEach {hs-> hs.products =
+            products
+                .filter { p-> p.stores.any   { store -> store.code==selectedStore.code }}
+                .filter { p-> p.stores.first { store -> store.code==selectedStore.code }.sectionCode!=null }
+                .filter { p-> p.stores.first { store -> store.code==selectedStore.code }.sectionCode!! == hs.code }
+
+        }
+        val productsWithSections = mutableListOf<ProductItem>()
+        storeSections.forEach { hs->productsWithSections.addAll(hs.products!!)}
+        val productsWithNoSection = products.filter { !productsWithSections.contains(it) }
+        if (productsWithNoSection.count()>0){
+            val houseSectionNotEntered = StoreSection(code = "unknown",name = "Need to Assign Section",index = -1,products = productsWithNoSection)
+            houseSectionNotEntered.assignSection()
+            rows.addAll(houseSectionNotEntered.getAllRows())
+        }
+        storeSections.forEach { hs-> rows.addAll(hs.getAllRows()) }
+        storeSections.forEach { hs-> hs.assignSection() }
+    }
 
     override fun onCleared() {
         super.onCleared()

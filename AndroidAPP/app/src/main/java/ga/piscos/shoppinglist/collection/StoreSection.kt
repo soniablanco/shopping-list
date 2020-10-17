@@ -6,8 +6,10 @@ class StoreSection (val code:String,val  name:String,val index:Int, var products
     CollectionItemRow {
     fun getAllRows(): List<CollectionItemRow> {
         val list = mutableListOf<CollectionItemRow>()
-        list.add(this)
-        list.addAll(products!!.sortedBy { it.name.toLowerCase(Locale.ROOT) })
+        if (products!!.any()) {
+            list.add(this)
+            list.addAll(products!!.sortedBy { it.name.toLowerCase(Locale.ROOT) })
+        }
         return  list
     }
 
