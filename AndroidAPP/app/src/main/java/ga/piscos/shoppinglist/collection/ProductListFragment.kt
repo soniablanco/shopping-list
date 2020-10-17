@@ -23,6 +23,7 @@ import com.bumptech.glide.request.transition.TransitionFactory
 import ga.piscos.shoppinglist.R
 import ga.piscos.shoppinglist.observe
 import ga.piscos.shoppinglist.plus
+import ga.piscos.shoppinglist.product.ProductActivity
 import ga.piscos.shoppinglist.stickyrecycler.StickyAdapter
 import ga.piscos.shoppinglist.stickyrecycler.StickyHeaderItemDecorator
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -142,7 +143,7 @@ class ProductListFragment: Fragment() {
                 itemDisposables.remove(prevObservable)
                 viewsObservable.remove(itemView)
             }
-            val disposable = product.getPhotoChangeObservable(0).subscribe {
+            val disposable = product.getPhotoChangeObservable("aldi").subscribe {
 
                 Glide.with(this)
                     .load(it.photoURL)
@@ -156,6 +157,11 @@ class ProductListFragment: Fragment() {
             }
             itemDisposables +=disposable
             viewsObservable[itemView] = disposable
+            setOnLongClickListener {
+                val intent = ProductActivity.newIntent(requireActivity(), product.code)
+                startActivity(intent)
+                return@setOnLongClickListener true
+            }
             setOnClickListener { listener(product) }
         }
     }

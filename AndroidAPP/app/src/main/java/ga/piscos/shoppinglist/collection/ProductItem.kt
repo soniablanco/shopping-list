@@ -27,7 +27,11 @@ class Store(val code:String, val photoURL:String?, val logoURL: String, val sect
         val hasPicked get() = pickedQty!=null && pickedQty==neededQty
     }
 
-    fun getPhotoChangeObservable(index:Int):Observable<Store>{
+    fun getPhotoChangeObservable(selectedStoreCode:String):Observable<Store>{
+        if (stores.any { it.code==selectedStoreCode && it.photoURL!=null }){
+            return Observable.just(stores.first {  it.code==selectedStoreCode} )
+        }
+
         val filteredStores = stores.filter { it.photoURL!=null }
         if (filteredStores.count()==0){
             return  Observable.just(Store("","","",sectionCode = null))
@@ -36,7 +40,7 @@ class Store(val code:String, val photoURL:String?, val logoURL: String, val sect
             return Observable.just(filteredStores[0])
         }
         val observable1 =  Observable.just(1).map { it.toInt() }
-        val observable2 =  Observable.interval(4, TimeUnit.SECONDS).delay(index.toLong()*150,TimeUnit.MILLISECONDS).map { it.toInt() }
+        val observable2 =  Observable.interval(4, TimeUnit.SECONDS).delay(0.toLong()*150,TimeUnit.MILLISECONDS).map { it.toInt() }
         return Observable.concat(observable1,observable2)
                 .map { filteredStores[it % filteredStores.count()]}
                 .observeOn(AndroidSchedulers.mainThread())

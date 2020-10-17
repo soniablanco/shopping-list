@@ -135,6 +135,11 @@ class ProductListFragment: Fragment() {
             }
             itemDisposables +=disposable
             viewsObservable[itemView] = disposable
+            setOnLongClickListener {
+                val intent = ProductActivity.newIntent(requireActivity(), product.code)
+                startActivity(intent)
+                return@setOnLongClickListener true
+            }
             setOnClickListener { listener(item) }
         }
     }
