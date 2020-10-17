@@ -1,5 +1,6 @@
 package ga.piscos.shoppinglist.collection
 
+import android.content.DialogInterface
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -168,7 +170,7 @@ class ProductListFragment: Fragment() {
             setOnClickListener {
 
 
-               // onHouseSectionClick(allItems)
+                onSectionsClick(allItems)
 
             }
         }
@@ -239,12 +241,34 @@ class ProductListFragment: Fragment() {
         }
 
         override fun handleHeaderClickAtPosition(headerPosition: Int) {
-            //onHouseSectionClick(elements)
+            onSectionsClick(elements)
         }
-
-
-
     }
 
+    private fun onSectionsClick(elements: List<CollectionItemRow>) {
+        val builderSingle = AlertDialog.Builder(requireContext())
+        builderSingle.setTitle("Store Section")
 
+        val arrayAdapter = ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.select_dialog_item
+        )
+        val houseSections = elements.filterIsInstance<StoreSection>()
+
+        houseSections.forEach { arrayAdapter.add(it.name) }
+
+        builderSingle.setNegativeButton("cancel",
+            DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
+
+        builderSingle.setAdapter(arrayAdapter,
+            DialogInterface.OnClickListener { dialog, which ->
+                val houseSection = houseSections[which]
+                val indexToMove = elements.indexOf(houseSection)
+                (rv_collection_products_list.layoutManager!! as LinearLayoutManager).scrollToPositionWithOffset(
+                    indexToMove,
+                    0
+                )
+            })
+        builderSingle.show()
+    }
 }

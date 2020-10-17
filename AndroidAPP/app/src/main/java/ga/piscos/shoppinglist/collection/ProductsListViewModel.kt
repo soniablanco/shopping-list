@@ -32,7 +32,7 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                                 code = seR.key!!,
                                 name = seR.child("name").value.toString(),
                                 index = (seR.child("index").value!! as Long).toInt()
-                            ) }
+                            ) }.sortedBy { section -> section.index }
                         )
                     }
                 }.share()
