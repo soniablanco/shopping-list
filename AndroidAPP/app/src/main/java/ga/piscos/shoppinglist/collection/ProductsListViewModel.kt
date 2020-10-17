@@ -92,8 +92,8 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                 productListObservable,
                 { selectedStore:ProductItem.Store.Template, products:List<ProductItem> ->
                     val rows = mutableListOf<CollectionItemRow>()
-                    addRows(selectedStore= selectedStore,products=products.filter { !it.picked.hasPicked },rows=rows)
-                    addRows(selectedStore= selectedStore,products=products.filter { it.picked.hasPicked },rows=rows)
+                    addRows(finishedProducts = false, selectedStore= selectedStore,products=products.filter { !it.picked.hasPicked },rows=rows)
+                    addRows(finishedProducts = true, selectedStore= selectedStore,products=products.filter { it.picked.hasPicked },rows=rows)
                     rows
                 })
 
@@ -107,8 +107,9 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                 storesData.value = it
             }
         }
-    fun addRows(selectedStore:ProductItem.Store.Template, products:List<ProductItem>,rows:MutableList<CollectionItemRow>){
-        val storeSections =selectedStore.sections.map { ss-> StoreSection(code = ss.code,name = ss.name, index = ss.index)}
+    private fun addRows(finishedProducts:Boolean, selectedStore:ProductItem.Store.Template, products:List<ProductItem>, rows:MutableList<CollectionItemRow>){
+        val sufix = if (finishedProducts) " ✔" else ""
+        val storeSections =selectedStore.sections.map { ss-> StoreSection(finishedSection = finishedProducts, code = ss.code,name = ss.name + sufix, index = ss.index)}
         storeSections.forEach {hs-> hs.products =
             products
                 .filter { p-> p.stores.any   { store -> store.code==selectedStore.code }}
@@ -120,7 +121,7 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
         storeSections.forEach { hs->productsWithSections.addAll(hs.products!!)}
         val productsWithNoSection = products.filter { !productsWithSections.contains(it) }
         if (productsWithNoSection.count()>0){
-            val houseSectionNotEntered = StoreSection(code = "unknown",name = "Need to Assign Section",index = -1,products = productsWithNoSection)
+            val houseSectionNotEntered = StoreSection(finishedSection = finishedProducts, code = "unknown",name = "No Section$sufix",index = -1,products = productsWithNoSection)
             houseSectionNotEntered.assignSection()
             rows.addAll(houseSectionNotEntered.getAllRows())
         }

@@ -2,7 +2,7 @@ package ga.piscos.shoppinglist.collection
 
 import java.util.*
 
-class StoreSection (val code:String,val  name:String,val index:Int, var products:List<ProductItem>?=null):
+class StoreSection (val code:String,val  name:String,val index:Int,val finishedSection:Boolean, var products:List<ProductItem>?=null):
     CollectionItemRow {
     fun getAllRows(): List<CollectionItemRow> {
         val list = mutableListOf<CollectionItemRow>()
@@ -16,6 +16,7 @@ class StoreSection (val code:String,val  name:String,val index:Int, var products
     fun assignSection(){
         products!!.forEach { it.storeSectionInstance=this }
     }
+
 
     override val type get() = CollectionItemRow.Type.Header
 
