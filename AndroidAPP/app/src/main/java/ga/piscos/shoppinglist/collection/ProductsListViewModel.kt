@@ -25,7 +25,12 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                     it.children.map { storeSnapShot ->
                         ProductItem.Store.Template(
                             code = storeSnapShot.key!!,
-                            logoURL = storeSnapShot.child("photoURL").value.toString()
+                            logoURL = storeSnapShot.child("photoURL").value.toString(),
+                            sections = storeSnapShot.child("sections").children.map { seR-> ProductItem.Store.Template.Section(
+                                code = seR.key!!,
+                                name = seR.child("name").value.toString(),
+                                index = (seR.child("index").value!! as Long).toInt()
+                            ) }
                         )
                     }
                 }
