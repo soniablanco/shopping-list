@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -68,7 +69,14 @@ class ProductListFragment: Fragment() {
         observe(model.data){
             adapter.updateProducts(it)
         }
+        observe(model.storesData){
 
+            val sectionsAdapter: ArrayAdapter<ProductItem.Store.Template> =
+                ArrayAdapter(requireActivity(), R.layout.spinner_item, it)
+            sectionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            store_spinner.adapter = sectionsAdapter
+
+        }
     }
 
     override fun onResume() {

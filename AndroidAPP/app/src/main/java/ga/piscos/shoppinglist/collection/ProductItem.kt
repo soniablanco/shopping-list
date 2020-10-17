@@ -14,9 +14,12 @@ class ProductItem(
     val stores:List<Store>
 
     ){
-class Store(val code:String, val photoURL:String?, val logoURL: String){
-    class Template(val code:String, val logoURL:String, val sections:List<Section>){
-        class Section(val code: String,val index: Int,val name: String)
+class Store(val code:String, val photoURL:String?, val logoURL: String, val sectionCode:String?){
+    class Template(val code:String,val name:String, val logoURL:String, val sections:List<Section>){
+
+        override fun toString() = name
+
+        class Section(val code: String, val index: Int, val name: String)
     }
 }
     class PickedData(val code:String, val neededQty:Int,val  pickedQty:Int?){
@@ -26,7 +29,7 @@ class Store(val code:String, val photoURL:String?, val logoURL: String){
     fun getPhotoChangeObservable(index:Int):Observable<Store>{
         val filteredStores = stores.filter { it.photoURL!=null }
         if (filteredStores.count()==0){
-            return  Observable.just(Store("","",""))
+            return  Observable.just(Store("","","",sectionCode = null))
         }
         else if (filteredStores.count()==1){
             return Observable.just(filteredStores[0])

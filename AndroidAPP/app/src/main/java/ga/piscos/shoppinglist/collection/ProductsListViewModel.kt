@@ -14,6 +14,7 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
 
     var disposables = CompositeDisposable()
     val data= MutableLiveData<List<ProductItem>>()
+    val storesData= MutableLiveData<List<ProductItem.Store.Template>>()
 
 
         fun loadData(){
@@ -25,6 +26,7 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                     it.children.map { storeSnapShot ->
                         ProductItem.Store.Template(
                             code = storeSnapShot.key!!,
+                            name = storeSnapShot.child("name").value.toString(),
                             logoURL = storeSnapShot.child("photoURL").value.toString(),
                             sections = storeSnapShot.child("sections").children.map { seR-> ProductItem.Store.Template.Section(
                                 code = seR.key!!,
@@ -33,7 +35,7 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                             ) }
                         )
                     }
-                }
+                }.share()
 
             val allProductsObservable = { stores:List<ProductItem.Store.Template>, pickedProducts:List<ProductItem.PickedData> ->
                 Firebase.database.reference.child("allproducts").observable().map { dataSnapshot ->
@@ -47,6 +49,7 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                                 ProductItem.Store(
                                     code = stRef.key!!,
                                     photoURL = stRef.child("photoURL").value?.toString(),
+                                    sectionCode = stRef.child("section").value?.toString(),
                                     logoURL = stores.first { st -> st.code == stRef.key!! }.logoURL
                                 )
                             }
@@ -75,6 +78,10 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
             .map {list-> list.sortedBy { it.picked.hasPicked } }
             .subscribe {
                     data.value = it
+            }
+
+            storesObservable.subscribe {
+                storesData.value = it
             }
         }
 
