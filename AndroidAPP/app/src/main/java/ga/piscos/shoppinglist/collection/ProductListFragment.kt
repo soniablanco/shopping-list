@@ -123,7 +123,7 @@ class ProductListFragment: Fragment() {
             val product = item as ProductItem
             tvCollectionProductProductName.text = product.name
             tvCollectionProductQty.text = "x${product.picked.neededQty}"
-            if (product.picked.pickedQty!=null && product.picked.pickedQty==product.picked.neededQty){
+            if (product.picked.hasPicked){
                 imCollectionRemove.visibility=View.VISIBLE
                 imCollectionCheck.visibility = View.VISIBLE
                 tvCollectionProductProductName.paintFlags = tvCollectionProductProductName.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
@@ -166,7 +166,14 @@ class ProductListFragment: Fragment() {
             itemView
         ){
             val section = item as StoreSection
+            this.setBackgroundResource(if (section.finishedSection) R.color.colorFinished else R.color.colorUnFinished)
             tvAllProductsHouseSection.text = "\uD83C\uDFE0 ${section.name}"
+            if (section.finishedSection){
+                tvAllProductsHouseSection.paintFlags = tvAllProductsHouseSection.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            }
+            else{
+                tvAllProductsHouseSection.paintFlags = tvAllProductsHouseSection.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            }
             setOnClickListener {
 
 
