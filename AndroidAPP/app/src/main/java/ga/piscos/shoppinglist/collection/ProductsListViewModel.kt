@@ -13,7 +13,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 class ProductsListViewModel(application: Application) : AndroidViewModel(application){
 
     var disposables = CompositeDisposable()
-    val data= MutableLiveData<List<ProductItem>>()
+    val data= MutableLiveData<List<CollectionItemRow>>()
     val storesData= MutableLiveData<List<ProductItem.Store.Template>>()
 
 
@@ -77,10 +77,44 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                 Pair(sto,selected)
             })
 
-            infoObservable.flatMap {
+            val productListObservable = infoObservable.flatMap {
                 allProductsObservable(it.first,it.second)
             }
-            .map {list-> list.sortedBy { it.picked.hasPicked } }
+
+
+
+
+
+
+
+            val resultObservable = Observable.combineLatest(
+                selectedStoreObservable,
+                productListObservable,
+                { selectedStore:ProductItem.Store.Template, products:List<ProductItem> ->
+                    val storeSections =selectedStore.sections.map { ss-> StoreSection(code = ss.code,name = ss.name, index = ss.index)}
+                    storeSections.forEach {hs-> hs.products =
+                        products
+                            .filter { p-> p.stores.any   { store -> store.code==selectedStore.code }}
+                            .filter { p-> p.stores.first { store -> store.code==selectedStore.code }.sectionCode!=null }
+                            .filter { p-> p.stores.first { store -> store.code==selectedStore.code }.sectionCode!! == hs.code }
+
+                    }
+                    val productsWithSections = mutableListOf<ProductItem>()
+                    storeSections.forEach { hs->productsWithSections.addAll(hs.products!!)}
+                    val productsWithNoSection = products.filter { !productsWithSections.contains(it) }
+                    val rows = mutableListOf<CollectionItemRow>()
+                    if (productsWithNoSection.count()>0){
+                        val houseSectionNotEntered = StoreSection(code = "unknown",name = "Need to Assign Section",index = -1,products = productsWithNoSection)
+                        houseSectionNotEntered.assignSection()
+                        rows.addAll(houseSectionNotEntered.getAllRows())
+                    }
+                    storeSections.forEach { hs-> rows.addAll(hs.getAllRows()) }
+                    storeSections.forEach { hs-> hs.assignSection() }
+                    rows
+                })
+
+
+            resultObservable
             .subscribe {
                     data.value = it
             }
