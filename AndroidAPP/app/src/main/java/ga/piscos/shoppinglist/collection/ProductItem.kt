@@ -11,9 +11,10 @@ class ProductItem(
     val code:String,
     val name: String,
     val picked:PickedData,
-    val stores:List<Store>
+    val stores:List<Store>,
+    var storeSectionInstance:StoreSection?=null
 
-    ){
+    ):CollectionItemRow{
 class Store(val code:String, val photoURL:String?, val logoURL: String, val sectionCode:String?){
     class Template(val code:String,val name:String, val logoURL:String, val sections:List<Section>){
 
@@ -48,4 +49,5 @@ class Store(val code:String, val photoURL:String?, val logoURL: String, val sect
     fun unSelect() {
         Firebase.database.reference.child("lists/current/products/${code}/pickedQty").setValue(null).observable().subscribe()
     }
+    override val type get() = CollectionItemRow.Type.Item
 }

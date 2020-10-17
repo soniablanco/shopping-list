@@ -37,6 +37,11 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                     }
                 }.share()
 
+            val selectedStoreCodeObservable = Observable.just("aldi")
+            val selectedStoreObservable = Observable.combineLatest(storesObservable,selectedStoreCodeObservable,{ sto,selectedStoreCode ->
+                sto.first { it.code == selectedStoreCode }
+            })
+
             val allProductsObservable = { stores:List<ProductItem.Store.Template>, pickedProducts:List<ProductItem.PickedData> ->
                 Firebase.database.reference.child("allproducts").observable().map { dataSnapshot ->
                     dataSnapshot.children.filter {sna-> pickedProducts.any { s->s.code==sna.key!! }  }
