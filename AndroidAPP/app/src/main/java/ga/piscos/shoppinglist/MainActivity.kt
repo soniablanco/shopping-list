@@ -2,6 +2,7 @@ package ga.piscos.shoppinglist
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -13,6 +14,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        window.attributes.screenBrightness = 1F
         loadFragment(ga.piscos.shoppinglist.planning.ProductListFragment.newInstance())
         bottom_navigation.setOnNavigationItemSelectedListener(this)
     }
