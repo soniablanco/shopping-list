@@ -20,6 +20,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeTransition
 import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.request.transition.TransitionFactory
+import com.l4digital.fastscroll.FastScroller
 import ga.piscos.shoppinglist.R
 import ga.piscos.shoppinglist.observe
 import ga.piscos.shoppinglist.plus
@@ -74,13 +75,13 @@ class AllProductsFragment: Fragment() {
                 startActivityForResult(intent, 323)
             }
         }
+
+        rv_products_list.adapter = adapter
         val decorator =
             StickyHeaderItemDecorator(
                 adapter
             )
         decorator.attachToRecyclerView(rv_products_list)
-        rv_products_list.adapter = adapter
-
         fabAddProduct.setOnClickListener {
             val intent = ProductActivity.newIntent(requireActivity(), null)
             startActivityForResult(intent, 323)
@@ -168,7 +169,7 @@ class AllProductsFragment: Fragment() {
     private inner class ProductsListItemAdapter(
         private var elements: MutableList<AllProductItemRow> = arrayListOf(),
         val listener: (AllProductItemRow) -> Unit
-    ) : StickyAdapter<HouseSectionItemHolder, RecyclerView.ViewHolder>() {
+    ) : StickyAdapter<HouseSectionItemHolder, RecyclerView.ViewHolder>() , FastScroller.SectionIndexer{
 
 
 
@@ -218,17 +219,27 @@ class AllProductsFragment: Fragment() {
         }
 
         override fun onCreateHeaderViewHolder(viewGroup: ViewGroup?): HouseSectionItemHolder {
-           return HouseSectionItemHolder(
-               LayoutInflater.from(activity).inflate(
-                   R.layout.allproducts_housesection_header,
-                   viewGroup,
-                   false
-               )
-           )
+            return HouseSectionItemHolder(
+                LayoutInflater.from(activity).inflate(
+                    R.layout.allproducts_housesection_header,
+                    viewGroup,
+                    false
+                )
+            )
         }
 
         override fun handleHeaderClickAtPosition(headerPosition: Int) {
             onHouseSectionClick(elements)
+        }
+
+        override fun getSectionText(position: Int): CharSequence {
+            val product = elements[position] as? ProductItem
+            val section = if (product!= null){
+                product.houseSectionInstance!!
+            } else{
+                elements[position] as HouseSection
+            }
+            return  section.name
         }
 
     }
