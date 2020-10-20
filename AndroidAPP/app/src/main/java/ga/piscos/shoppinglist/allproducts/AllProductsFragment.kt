@@ -239,7 +239,7 @@ class AllProductsFragment: Fragment() {
             } else{
                 elements[position] as HouseSection
             }
-            return  section.name
+            return  "\uD83C\uDFE0 ${section.name}"
         }
 
     }
