@@ -89,6 +89,8 @@ public class FastScroller extends LinearLayout {
         }
 
         public static Size fromOrdinal(int ordinal) {
+
+
             return ordinal >= 0 && ordinal < values().length ? values()[ordinal] : NORMAL;
         }
     }
@@ -173,7 +175,7 @@ public class FastScroller extends LinearLayout {
     };
 
     public FastScroller(@NonNull Context context) {
-        this(context, Size.NORMAL);
+        this(context, Size.SMALL);
     }
 
     public FastScroller(@NonNull Context context, Size size) {
@@ -701,7 +703,7 @@ public class FastScroller extends LinearLayout {
     }
 
     private void layout(Context context, AttributeSet attrs) {
-        layout(context, attrs, Size.NORMAL);
+        layout(context, attrs, Size.SMALL);
     }
 
     private void layout(Context context, Size size) {

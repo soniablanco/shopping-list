@@ -9,7 +9,7 @@
         android:id="@+id/rv_products_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:bubbleColor="@color/colorPrimaryDark"
+        app:bubbleColor="@color/black"
         app:bubbleTextColor="@color/white"
         app:handleColor="#999999" />
 
