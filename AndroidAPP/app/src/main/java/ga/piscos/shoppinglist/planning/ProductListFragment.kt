@@ -120,7 +120,7 @@ class ProductListFragment: Fragment() {
             product.currentVisibleStore.let {
                 Glide.with(itemView)
                     .load(it?.photoURL)
-                    //.transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
+                    .transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
                     .into(imPlanningProductPhotoView)
 
                 imPlanningProductPhotoViewLogo.alpha = 0.7F
@@ -153,6 +153,74 @@ class ProductListFragment: Fragment() {
             }
         }
     }
+
+    private inner class SelectedProductsListItemAdapter(private var elements:MutableList<ProductItem> = arrayListOf(), val listener: (ProductItem) -> Unit
+    ) : RecyclerView.Adapter<ProductsListItemHolder>() {
+
+
+        fun updateElements(stockList:List<ProductItem>){
+            itemDisposables.clear()
+            elements.clear()
+            elements.addAll(stockList)
+            notifyDataSetChanged()
+            val elementsReference = elements
+            itemDisposables += Observable.interval(4,4,TimeUnit.SECONDS)
+                .map { elementsReference.filterIsInstance<ProductItem>().filter { it.moveNextStoreIndex() } }
+                .flatMap { Observable.fromIterable(it) }
+                .map {  elementsReference.indexOf(element = it) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    notifyItemChanged(it)
+                }
+        }
+
+        override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ProductsListItemHolder {
+
+            return ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.planning_selected_product_item, viewGroup, false))
+        }
+        override fun onBindViewHolder(holder: ProductsListItemHolder, position: Int) {
+
+
+        }
+
+        override fun getItemCount(): Int {  return elements.size  }
+
+
+
+
+    }
+    private fun onHouseSectionClick(elements: List<AllProductItemRow>) {
+        val builderSingle = AlertDialog.Builder(requireContext())
+        builderSingle.setTitle("House section")
+
+        val arrayAdapter = ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.select_dialog_item
+        )
+        val houseSections = elements.filterIsInstance<HouseSection>()
+
+        houseSections.forEach { arrayAdapter.add(it.name) }
+
+        builderSingle.setNegativeButton("cancel",
+            DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
+
+        builderSingle.setAdapter(arrayAdapter,
+            DialogInterface.OnClickListener { dialog, which ->
+                val houseSection = houseSections[which]
+                val indexToMove = elements.indexOf(houseSection)
+                (rv_planning_products_list.layoutManager!! as LinearLayoutManager).scrollToPositionWithOffset(
+                    indexToMove,
+                    0
+                )
+            })
+        builderSingle.show()
+    }
+
+
+
+
+
+
 
     private inner class ProductsListItemAdapter(private var elements:MutableList<AllProductItemRow> = arrayListOf(), val listener: (AllProductItemRow) -> Unit
     ) : StickyAdapter<HouseSectionItemHolder, RecyclerView.ViewHolder>() {
@@ -222,32 +290,6 @@ class ProductListFragment: Fragment() {
             onHouseSectionClick(elements)
         }
 
-    }
-    private fun onHouseSectionClick(elements: List<AllProductItemRow>) {
-        val builderSingle = AlertDialog.Builder(requireContext())
-        builderSingle.setTitle("House section")
-
-        val arrayAdapter = ArrayAdapter<String>(
-            requireContext(),
-            android.R.layout.select_dialog_item
-        )
-        val houseSections = elements.filterIsInstance<HouseSection>()
-
-        houseSections.forEach { arrayAdapter.add(it.name) }
-
-        builderSingle.setNegativeButton("cancel",
-            DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
-
-        builderSingle.setAdapter(arrayAdapter,
-            DialogInterface.OnClickListener { dialog, which ->
-                val houseSection = houseSections[which]
-                val indexToMove = elements.indexOf(houseSection)
-                (rv_planning_products_list.layoutManager!! as LinearLayoutManager).scrollToPositionWithOffset(
-                    indexToMove,
-                    0
-                )
-            })
-        builderSingle.show()
     }
 
 }
