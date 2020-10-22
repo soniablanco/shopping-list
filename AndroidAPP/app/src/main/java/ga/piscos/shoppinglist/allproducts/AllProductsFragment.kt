@@ -27,11 +27,13 @@ import ga.piscos.shoppinglist.plus
 import ga.piscos.shoppinglist.product.ProductActivity
 import ga.piscos.shoppinglist.stickyrecycler.StickyAdapter
 import ga.piscos.shoppinglist.stickyrecycler.StickyHeaderItemDecorator
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.allproducts_all_products_fragment.*
 import kotlinx.android.synthetic.main.allproducts_housesection_header.view.*
 import kotlinx.android.synthetic.main.allproducts_product_item.view.*
+import java.util.concurrent.TimeUnit
 
 
 class AllProductsFragment: Fragment() {
@@ -170,6 +172,13 @@ class AllProductsFragment: Fragment() {
             elements.clear()
             elements.addAll(stockList)
             notifyDataSetChanged()
+            itemDisposables += Observable.interval(4,4,TimeUnit.SECONDS).subscribe {
+                val updatedElements = elements.filterIsInstance<ProductItem>().filter { it.moveNextStoreIndex() }
+                updatedElements.forEach {
+                    val updatedIndex = elements.indexOf(it)
+                    notifyItemChanged(updatedIndex)
+                }
+            }
         }
 
         override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

@@ -30,7 +30,9 @@ class ProductItem(
         if (!filteredStores.any())
             return false
         val nextIndex = (currentVisibleStoreIndex + 1) % filteredStores.count()
-        return nextIndex != currentVisibleStoreIndex
+        val indexChanged = nextIndex != currentVisibleStoreIndex
+        currentVisibleStoreIndex = nextIndex
+        return indexChanged
     }
 
 
