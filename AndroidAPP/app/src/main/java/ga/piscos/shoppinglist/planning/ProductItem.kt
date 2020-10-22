@@ -30,9 +30,8 @@ class Store(val code:String, val photoURL:String?, val logoURL: String){
         else if (filteredStores.count()==1){
             return Observable.just(filteredStores[0])
         }
-        val observable1 =  Observable.just(1).map { it.toInt() }
-        val observable2 =  Observable.interval(4, TimeUnit.SECONDS).delay(index.toLong()*150,TimeUnit.MILLISECONDS).map { it.toInt() }
-        return Observable.concat(observable1,observable2)
+        val observable2 =  Observable.interval(4, TimeUnit.SECONDS).map { it.toInt() }
+        return observable2
                 .map { filteredStores[it % filteredStores.count()]}
                 .observeOn(AndroidSchedulers.mainThread())
     }

@@ -121,6 +121,18 @@ class ProductListFragment: Fragment() {
                 itemDisposables.remove(prevObservable)
                 viewsObservable.remove(itemView)
             }
+            val filteredStores = product.stores.filter { it.photoURL!=null }
+            if (filteredStores.count()>0){
+                Glide.with(this)
+                    .load(filteredStores.first().photoURL)
+                    //.transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
+                    .into(imPlanningProductPhotoView)
+
+                imPlanningProductPhotoViewLogo.alpha = 0.7F
+                Glide.with(itemView)
+                    .load(filteredStores.first().logoURL)
+                    .into(imPlanningProductPhotoViewLogo)
+            }
             val disposable = product.getPhotoChangeObservable(0).subscribe {
 
                 Glide.with(this)
