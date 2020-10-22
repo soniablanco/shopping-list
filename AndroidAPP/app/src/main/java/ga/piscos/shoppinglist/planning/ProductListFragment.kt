@@ -75,7 +75,7 @@ class ProductListFragment: Fragment() {
         rv_selectedProducts.layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.HORIZONTAL,
-            false)
+            true)
         rv_selectedProducts.setHasFixedSize(true)
         rv_selectedProducts.adapter = selectedAdapter
         val model by viewModels<ProductsListViewModel>()
