@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/tvAllProductsHouseSection"
         android:layout_width="0dp"
-        android:layout_height="25dp"
+        android:layout_height="27dp"
         android:layout_marginStart="15dp"
         android:gravity="center_vertical"
         android:text=" 🏠 House Section"

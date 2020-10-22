@@ -1,5 +1,6 @@
 package ga.piscos.shoppinglist.planning
 
+import android.content.Context
 import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -15,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeTransition
 import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.request.transition.TransitionFactory
@@ -45,7 +45,11 @@ class ProductListFragment: Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         return inflater.inflate(R.layout.planning_products_list_fragment, container, false)
     }
@@ -57,12 +61,19 @@ class ProductListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_planning_products_list.layoutManager = LinearLayoutManager(activity)
-        rv_planning_products_list.addItemDecoration(DividerItemDecoration(rv_planning_products_list.context, DividerItemDecoration.VERTICAL))
+        rv_planning_products_list.addItemDecoration(
+            DividerItemDecoration(
+                rv_planning_products_list.context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
         rv_planning_products_list.setHasFixedSize(true)
+
         val adapter = ProductsListItemAdapter{
             val productItem = it as? ProductItem
             productItem?.selectItem()
         }
+        adapter.setHasStableIds(true)
         val decorator =
             StickyHeaderItemDecorator(
                 adapter
@@ -70,12 +81,17 @@ class ProductListFragment: Fragment() {
         decorator.attachToRecyclerView(rv_planning_products_list)
         rv_planning_products_list.adapter = adapter
         val selectedAdapter = SelectedProductsListItemAdapter{
-
+            val indexToMove = adapter.indexOf(it)
+            (rv_planning_products_list.layoutManager!! as LinearLayoutManager).scrollToPositionWithOffset(
+                indexToMove,
+                (27 *  requireContext().resources.displayMetrics.density).toInt()
+            )
         }
         rv_selectedProducts.layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.HORIZONTAL,
-            false)
+            false
+        )
         rv_selectedProducts.setHasFixedSize(true)
         rv_selectedProducts.adapter = selectedAdapter
         val model by viewModels<ProductsListViewModel>()
@@ -105,19 +121,31 @@ class ProductListFragment: Fragment() {
     }
 
     class DrawableAlwaysCrossFadeFactory : TransitionFactory<Drawable> {
-        private val resourceTransition: DrawableCrossFadeTransition = DrawableCrossFadeTransition(300, true) //customize to your own needs or apply a builder pattern
+        private val resourceTransition: DrawableCrossFadeTransition = DrawableCrossFadeTransition(
+            300,
+            true
+        ) //customize to your own needs or apply a builder pattern
         override fun build(dataSource: DataSource?, isFirstResource: Boolean): Transition<Drawable> {
             return resourceTransition
         }
     }
 
     interface AllProductsItemRowHolder{//holder
-    fun bind(item: AllProductItemRow, allItems:List<AllProductItemRow>, listener: (AllProductItemRow) -> Unit)
+    fun bind(
+        item: AllProductItemRow,
+        allItems: List<AllProductItemRow>,
+        listener: (AllProductItemRow) -> Unit
+    )
     }
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         AllProductsItemRowHolder {
-        override fun bind(item: AllProductItemRow, allItems: List<AllProductItemRow>, listener: (AllProductItemRow) -> Unit)= with(
-            itemView){
+        override fun bind(
+            item: AllProductItemRow,
+            allItems: List<AllProductItemRow>,
+            listener: (AllProductItemRow) -> Unit
+        )= with(
+            itemView
+        ){
             val product = item as ProductItem
                     tvPlanningProductProductName.text = product.name
             if (product.selectedData!=null){
@@ -156,7 +184,11 @@ class ProductListFragment: Fragment() {
 
     private inner class HouseSectionItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         AllProductsItemRowHolder {
-        override fun bind(item: AllProductItemRow, allItems: List<AllProductItemRow>, listener: (AllProductItemRow) -> Unit)= with(
+        override fun bind(
+            item: AllProductItemRow,
+            allItems: List<AllProductItemRow>,
+            listener: (AllProductItemRow) -> Unit
+        )= with(
             itemView
         ){
             val houseSection = item as HouseSection
@@ -169,9 +201,12 @@ class ProductListFragment: Fragment() {
             }
         }
     }
-    private inner class ProductsListSelectedItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: ProductItem,  listener: (ProductItem) -> Unit)= with(
-            itemView){
+    private inner class ProductsListSelectedItemHolder(itemView: View) : RecyclerView.ViewHolder(
+        itemView
+    ) {
+        fun bind(item: ProductItem, listener: (ProductItem) -> Unit)= with(
+            itemView
+        ){
             item.currentVisibleStore.let {
                 Glide.with(itemView)
                     .load(it?.photoURL)
@@ -180,11 +215,13 @@ class ProductListFragment: Fragment() {
             setOnClickListener { listener(item) }
         }
     }
-    private inner class SelectedProductsListItemAdapter(private var elements:MutableList<ProductItem> = arrayListOf(), val listener: (ProductItem) -> Unit
+    private inner class SelectedProductsListItemAdapter(
+        private var elements: MutableList<ProductItem> = arrayListOf(),
+        val listener: (ProductItem) -> Unit
     ) : RecyclerView.Adapter<ProductsListSelectedItemHolder>() {
 
 
-        fun updateElements(stockList:List<ProductItem>){
+        fun updateElements(stockList: List<ProductItem>){
             elements.clear()
             elements.addAll(stockList)
             notifyDataSetChanged()
@@ -192,10 +229,16 @@ class ProductListFragment: Fragment() {
 
         override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ProductsListSelectedItemHolder {
 
-            return ProductsListSelectedItemHolder(LayoutInflater.from(activity).inflate(R.layout.planning_selected_product_item, viewGroup, false))
+            return ProductsListSelectedItemHolder(
+                LayoutInflater.from(activity).inflate(
+                    R.layout.planning_selected_product_item,
+                    viewGroup,
+                    false
+                )
+            )
         }
         override fun onBindViewHolder(holder: ProductsListSelectedItemHolder, position: Int) {
-            holder.bind(elements[position],listener)
+            holder.bind(elements[position], listener)
 
         }
 
@@ -238,17 +281,19 @@ class ProductListFragment: Fragment() {
 
 
 
-    private inner class ProductsListItemAdapter(private var elements:MutableList<AllProductItemRow> = arrayListOf(), val listener: (AllProductItemRow) -> Unit
+    private inner class ProductsListItemAdapter(
+        private var elements: MutableList<AllProductItemRow> = arrayListOf(),
+        val listener: (AllProductItemRow) -> Unit
     ) : StickyAdapter<HouseSectionItemHolder, RecyclerView.ViewHolder>() {
 
 
-        fun updateElements(stockList:List<AllProductItemRow>){
+        fun updateElements(stockList: List<AllProductItemRow>){
             itemDisposables.clear()
             elements.clear()
             elements.addAll(stockList)
             notifyDataSetChanged()
             val elementsReference = elements
-            itemDisposables += Observable.interval(4,4,TimeUnit.SECONDS)
+            itemDisposables += Observable.interval(4, 4, TimeUnit.SECONDS)
                 .map { elementsReference.filterIsInstance<ProductItem>().filter { it.moveNextStoreIndex() } }
                 .flatMap { Observable.fromIterable(it) }
                 .map {  elementsReference.indexOf(element = it) }
@@ -260,7 +305,11 @@ class ProductListFragment: Fragment() {
         override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
             return when(viewType){
-                AllProductItemRow.Type.Item.intValue -> ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.planning_product_item, viewGroup, false))
+                AllProductItemRow.Type.Item.intValue -> ProductsListItemHolder(
+                    LayoutInflater.from(
+                        activity
+                    ).inflate(R.layout.planning_product_item, viewGroup, false)
+                )
                 else ->HouseSectionItemHolder(
                     LayoutInflater.from(activity).inflate(
                         R.layout.allproducts_housesection_header,
@@ -272,7 +321,7 @@ class ProductListFragment: Fragment() {
         }
         override fun getItemViewType(position: Int)=elements[position].type.intValue
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = (holder as AllProductsItemRowHolder).bind(
-            elements[position], elements,listener
+            elements[position], elements, listener
         )
 
         override fun getItemCount(): Int {  return elements.size  }
@@ -289,7 +338,7 @@ class ProductListFragment: Fragment() {
         }
 
         override fun onBindHeaderViewHolder(holder: HouseSectionItemHolder, position: Int) {
-            holder.bind(elements[position],elements, listener)
+            holder.bind(elements[position], elements, listener)
         }
 
         override fun onCreateHeaderViewHolder(viewGroup: ViewGroup?): HouseSectionItemHolder {
@@ -305,6 +354,8 @@ class ProductListFragment: Fragment() {
         override fun handleHeaderClickAtPosition(headerPosition: Int) {
             onHouseSectionClick(elements)
         }
+
+        fun indexOf(product: ProductItem) = elements.indexOf(product)
 
     }
 
