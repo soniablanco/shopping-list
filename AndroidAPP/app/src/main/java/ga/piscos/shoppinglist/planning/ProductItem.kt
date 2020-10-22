@@ -14,7 +14,8 @@ class ProductItem(
     val selectedData:SelecteData?,
     val houseSection:String?,
     val stores:List<Store>,
-    var houseSectionInstance: HouseSection?=null
+    var houseSectionInstance: HouseSection?=null,
+    var currentVisibleStoreIndex:Int=0
 
     ): AllProductItemRow {
 class Store(val code:String, val photoURL:String?, val logoURL: String){
@@ -22,18 +23,22 @@ class Store(val code:String, val photoURL:String?, val logoURL: String){
 }
     class SelecteData(val code:String, val neededQty:Int)
 
-    fun getPhotoChangeObservable(index:Int):Observable<Store>{
+    val currentVisibleStore: Store? get() {
         val filteredStores = stores.filter { it.photoURL!=null }
-        if (filteredStores.count()==0){
-            return  Observable.just(Store("","",""))
+        return if (filteredStores.count()==0){
+            null
+        }else {
+            filteredStores[currentVisibleStoreIndex]
         }
-        else if (filteredStores.count()==1){
-            return Observable.just(filteredStores[0])
-        }
-        val observable2 =  Observable.interval(4, TimeUnit.SECONDS).map { it.toInt() }
-        return observable2
-                .map { filteredStores[it % filteredStores.count()]}
-                .observeOn(AndroidSchedulers.mainThread())
+    }
+    fun moveNextStoreIndex():Boolean{
+        val filteredStores = stores.filter { it.photoURL!=null }
+        if (!filteredStores.any())
+            return false
+        val nextIndex = (currentVisibleStoreIndex + 1) % filteredStores.count()
+        val indexChanged = nextIndex != currentVisibleStoreIndex
+        currentVisibleStoreIndex = nextIndex
+        return indexChanged
     }
 
     fun selectItem() {

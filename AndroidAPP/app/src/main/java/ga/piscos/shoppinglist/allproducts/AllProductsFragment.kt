@@ -126,7 +126,7 @@ class AllProductsFragment: Fragment() {
             val product = item as ProductItem
             tvProductName.text = product.name
             product.currentVisibleStore.let {
-                Glide.with(this)
+                Glide.with(itemView)
                     .load(it?.photoURL)
                     .transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
                     .into(imPhotoView)

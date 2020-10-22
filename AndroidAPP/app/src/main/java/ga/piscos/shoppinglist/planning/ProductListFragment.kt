@@ -26,11 +26,13 @@ import ga.piscos.shoppinglist.plus
 import ga.piscos.shoppinglist.product.ProductActivity
 import ga.piscos.shoppinglist.stickyrecycler.StickyAdapter
 import ga.piscos.shoppinglist.stickyrecycler.StickyHeaderItemDecorator
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.allproducts_housesection_header.view.*
 import kotlinx.android.synthetic.main.planning_product_item.view.*
 import kotlinx.android.synthetic.main.planning_products_list_fragment.*
+import java.util.concurrent.TimeUnit
 
 class ProductListFragment: Fragment() {
 
@@ -83,7 +85,6 @@ class ProductListFragment: Fragment() {
     override fun onPause() {
         super.onPause()
         itemDisposables.clear()
-        viewsObservable.clear()
     }
 
     class DrawableAlwaysCrossFadeFactory : TransitionFactory<Drawable> {
@@ -93,7 +94,6 @@ class ProductListFragment: Fragment() {
         }
     }
 
-    private val viewsObservable = hashMapOf<View, Disposable>()
     interface AllProductsItemRowHolder{//holder
     fun bind(item: AllProductItemRow, allItems:List<AllProductItemRow>, listener: (AllProductItemRow) -> Unit)
     }
@@ -116,37 +116,18 @@ class ProductListFragment: Fragment() {
                 imRemove.visibility=View.GONE
                 imRemove.setOnClickListener {}
             }
-            val prevObservable = viewsObservable[itemView]
-            if (prevObservable!=null) {
-                itemDisposables.remove(prevObservable)
-                viewsObservable.remove(itemView)
-            }
-            val filteredStores = product.stores.filter { it.photoURL!=null }
-            if (filteredStores.count()>0){
-                Glide.with(this)
-                    .load(filteredStores.first().photoURL)
+            product.currentVisibleStore.let {
+                Glide.with(itemView)
+                    .load(it?.photoURL)
                     //.transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
                     .into(imPlanningProductPhotoView)
 
                 imPlanningProductPhotoViewLogo.alpha = 0.7F
                 Glide.with(itemView)
-                    .load(filteredStores.first().logoURL)
+                    .load(it?.logoURL)
                     .into(imPlanningProductPhotoViewLogo)
             }
-            val disposable = product.getPhotoChangeObservable(0).subscribe {
 
-                Glide.with(this)
-                    .load(it.photoURL)
-                    //.transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
-                    .into(imPlanningProductPhotoView)
-
-                imPlanningProductPhotoViewLogo.alpha = 0.7F
-                Glide.with(itemView)
-                    .load(it.logoURL)
-                    .into(imPlanningProductPhotoViewLogo)
-            }
-            itemDisposables +=disposable
-            viewsObservable[itemView] = disposable
             setOnLongClickListener {
                 val intent = ProductActivity.newIntent(requireActivity(), product.code)
                 startActivity(intent)
@@ -178,10 +159,16 @@ class ProductListFragment: Fragment() {
 
         fun updateElements(stockList:List<AllProductItemRow>){
             itemDisposables.clear()
-            viewsObservable.clear()
             elements.clear()
             elements.addAll(stockList)
             notifyDataSetChanged()
+            itemDisposables += Observable.interval(4,4, TimeUnit.SECONDS).subscribe {
+                val updatedElements = elements.filterIsInstance<ProductItem>().filter { it.moveNextStoreIndex() }
+                updatedElements.forEach {
+                    val updatedIndex = elements.indexOf(it)
+                    notifyItemChanged(updatedIndex)
+                }
+            }
         }
         override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
