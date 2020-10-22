@@ -1,7 +1,6 @@
 package ga.piscos.shoppinglist.planning
 
 import android.content.DialogInterface
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -29,10 +28,10 @@ import ga.piscos.shoppinglist.stickyrecycler.StickyHeaderItemDecorator
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.allproducts_housesection_header.view.*
 import kotlinx.android.synthetic.main.planning_product_item.view.*
 import kotlinx.android.synthetic.main.planning_products_list_fragment.*
+import kotlinx.android.synthetic.main.planning_selected_product_item.view.*
 import java.util.concurrent.TimeUnit
 
 class ProductListFragment: Fragment() {
@@ -70,9 +69,20 @@ class ProductListFragment: Fragment() {
             )
         decorator.attachToRecyclerView(rv_planning_products_list)
         rv_planning_products_list.adapter = adapter
+        val selectedAdapter = SelectedProductsListItemAdapter{
+
+        }
+        rv_selectedProducts.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.HORIZONTAL,
+            false)
+        rv_selectedProducts.setHasFixedSize(true)
+        rv_selectedProducts.adapter = selectedAdapter
         val model by viewModels<ProductsListViewModel>()
         observe(model.data){
             adapter.updateElements(it)
+            val selectedElements = it.filterIsInstance<ProductItem>().filter { p->p.selectedData!=null }
+            selectedAdapter.updateElements(selectedElements)
         }
 
     }
@@ -153,33 +163,33 @@ class ProductListFragment: Fragment() {
             }
         }
     }
-
+    private inner class ProductsListSelectedItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(item: ProductItem,  listener: (ProductItem) -> Unit)= with(
+            itemView){
+            item.currentVisibleStore.let {
+                Glide.with(itemView)
+                    .load(it?.photoURL)
+                    .into(imPlanningSelectedImage)
+            }
+            setOnClickListener { listener(item) }
+        }
+    }
     private inner class SelectedProductsListItemAdapter(private var elements:MutableList<ProductItem> = arrayListOf(), val listener: (ProductItem) -> Unit
-    ) : RecyclerView.Adapter<ProductsListItemHolder>() {
+    ) : RecyclerView.Adapter<ProductsListSelectedItemHolder>() {
 
 
         fun updateElements(stockList:List<ProductItem>){
-            itemDisposables.clear()
             elements.clear()
             elements.addAll(stockList)
             notifyDataSetChanged()
-            val elementsReference = elements
-            itemDisposables += Observable.interval(4,4,TimeUnit.SECONDS)
-                .map { elementsReference.filterIsInstance<ProductItem>().filter { it.moveNextStoreIndex() } }
-                .flatMap { Observable.fromIterable(it) }
-                .map {  elementsReference.indexOf(element = it) }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    notifyItemChanged(it)
-                }
         }
 
-        override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ProductsListItemHolder {
+        override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ProductsListSelectedItemHolder {
 
-            return ProductsListItemHolder(LayoutInflater.from(activity).inflate(R.layout.planning_selected_product_item, viewGroup, false))
+            return ProductsListSelectedItemHolder(LayoutInflater.from(activity).inflate(R.layout.planning_selected_product_item, viewGroup, false))
         }
-        override fun onBindViewHolder(holder: ProductsListItemHolder, position: Int) {
-
+        override fun onBindViewHolder(holder: ProductsListSelectedItemHolder, position: Int) {
+            holder.bind(elements[position],listener)
 
         }
 
