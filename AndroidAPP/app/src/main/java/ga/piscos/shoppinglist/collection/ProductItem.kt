@@ -3,6 +3,7 @@ package ga.piscos.shoppinglist.collection
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.observable
+import ga.piscos.shoppinglist.planning.ProductItem
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import java.util.concurrent.TimeUnit
@@ -12,7 +13,8 @@ class ProductItem(
     val name: String,
     val picked:PickedData,
     val stores:List<Store>,
-    var storeSectionInstance:StoreSection?=null
+    var storeSectionInstance:StoreSection?=null,
+    var currentVisibleStoreIndex:Int = 0
 
     ):CollectionItemRow{
 class Store(val code:String, val photoURL:String?, val logoURL: String, val sectionCode:String?){
@@ -27,24 +29,27 @@ class Store(val code:String, val photoURL:String?, val logoURL: String, val sect
         val hasPicked get() = pickedQty!=null && pickedQty==neededQty
     }
 
-    fun getPhotoChangeObservable(selectedStoreCode:String):Observable<Store>{
-        if (stores.any { it.code==selectedStoreCode && it.photoURL!=null }){
-            return Observable.just(stores.first {  it.code==selectedStoreCode} )
+    fun getCurrentVisibleStore (selectedStoreCode:String): Store? {
+        val store = stores.firstOrNull { it.code==selectedStoreCode && it.photoURL!=null }
+        val filteredStores =  if (store!=null) listOf(store) else stores.filter { it.photoURL!=null }
+        return if (filteredStores.count()==0){
+            null
+        }else {
+            filteredStores[currentVisibleStoreIndex]
         }
-
-        val filteredStores = stores.filter { it.photoURL!=null }
-        if (filteredStores.count()==0){
-            return  Observable.just(Store("","","",sectionCode = null))
-        }
-        else if (filteredStores.count()==1){
-            return Observable.just(filteredStores[0])
-        }
-        val observable1 =  Observable.just(1).map { it.toInt() }
-        val observable2 =  Observable.interval(4, TimeUnit.SECONDS).delay(0.toLong()*150,TimeUnit.MILLISECONDS).map { it.toInt() }
-        return Observable.concat(observable1,observable2)
-                .map { filteredStores[it % filteredStores.count()]}
-                .observeOn(AndroidSchedulers.mainThread())
     }
+    fun moveNextStoreIndex(selectedStoreCode:String):Boolean{
+        val store = stores.firstOrNull { it.code==selectedStoreCode && it.photoURL!=null }
+        val filteredStores =  if (store!=null) listOf(store) else stores.filter { it.photoURL!=null }
+        if (!filteredStores.any())
+            return false
+        val nextIndex = (currentVisibleStoreIndex + 1) % filteredStores.count()
+        val indexChanged = nextIndex != currentVisibleStoreIndex
+        currentVisibleStoreIndex = nextIndex
+        return indexChanged
+    }
+
+
 
     fun selectItem() {
         Firebase.database.reference.child("lists/current/products/${code}/pickedQty").setValue(picked.neededQty).observable().subscribe()
