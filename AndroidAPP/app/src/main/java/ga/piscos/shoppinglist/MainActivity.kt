@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        window.attributes.screenBrightness = 1F
+        //window.attributes.screenBrightness = 1F
         loadFragment(ga.piscos.shoppinglist.planning.ProductListFragment.newInstance())
         bottom_navigation.setOnNavigationItemSelectedListener(this)
     }

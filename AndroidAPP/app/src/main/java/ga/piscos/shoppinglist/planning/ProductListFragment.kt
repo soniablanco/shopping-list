@@ -75,14 +75,20 @@ class ProductListFragment: Fragment() {
         rv_selectedProducts.layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.HORIZONTAL,
-            true)
+            false)
         rv_selectedProducts.setHasFixedSize(true)
         rv_selectedProducts.adapter = selectedAdapter
         val model by viewModels<ProductsListViewModel>()
         observe(model.data){
             adapter.updateElements(it)
             val selectedElements = it.filterIsInstance<ProductItem>().filter { p->p.selectedData!=null }
-            selectedAdapter.updateElements(selectedElements)
+            selectedAdapter.updateElements(selectedElements.sortedByDescending { p -> p.selectedData!!.addedTimeStamp })
+            if (selectedElements.any()) {
+                rv_selectedProducts.visibility=View.VISIBLE
+            }
+            else{
+                rv_selectedProducts.visibility=View.GONE
+            }
         }
 
     }
@@ -130,7 +136,7 @@ class ProductListFragment: Fragment() {
             product.currentVisibleStore.let {
                 Glide.with(itemView)
                     .load(it?.photoURL)
-                    .transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
+                    //.transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
                     .into(imPlanningProductPhotoView)
 
                 imPlanningProductPhotoViewLogo.alpha = 0.7F

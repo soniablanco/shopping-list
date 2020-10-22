@@ -6,6 +6,7 @@ import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class ProductItem(
@@ -21,7 +22,7 @@ class ProductItem(
 class Store(val code:String, val photoURL:String?, val logoURL: String){
     class Template(val code:String, val logoURL:String)
 }
-    class SelecteData(val code:String, val neededQty:Int)
+    class SelecteData(val code:String, val neededQty:Int, val addedTimeStamp:Int)
 
     val currentVisibleStore: Store? get() {
         val filteredStores = stores.filter { it.photoURL!=null }
@@ -42,9 +43,9 @@ class Store(val code:String, val photoURL:String?, val logoURL: String){
     }
 
     fun selectItem() {
-        val neededQty = if (selectedData==null) 1 else (selectedData!!.neededQty+1)
+        val neededQty = if (selectedData==null) 1 else (selectedData.neededQty+1)
         val firebaseDatabaseObservable =
-            Observable.just(1).flatMap { Observable.just(mapOf("neededQty" to neededQty)) }
+            Observable.just(1).flatMap { Observable.just(mapOf("neededQty" to neededQty, "addedTimeStamp" to (Date().time/1000).toInt())) }
                 .flatMap { Firebase.database.reference.child("lists/current/products/${code}").updateChildren(it).observable()}
         firebaseDatabaseObservable.subscribe()
     }
