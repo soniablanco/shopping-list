@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imPlanningProductPhotoView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
@@ -19,9 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
 
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_height="120dp"
-        tools:layout_width="120dp" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/imPlanningProductPhotoViewLogo"
@@ -50,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:drawableLeft="@drawable/removecart"
-        android:text="Remove"
+        android:text=""
         android:textColor="@color/darkred"
         android:background="@null"
         app:layout_constraintRight_toRightOf="parent"
@@ -68,7 +66,7 @@
         android:layout_marginLeft="16dp"
         android:text="TextView"
         android:textColor="@color/cardview_light_background"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/imPlanningProductPhotoView"
