@@ -9,27 +9,31 @@ class ProductItem(
     val name: String,
     val houseSection:String?,
     val stores:List<Store>,
-    var houseSectionInstance:HouseSection?=null
+    var houseSectionInstance:HouseSection?=null,
+    var currentVisibleStoreIndex: Int = 0
 
     ):AllProductItemRow{
         class Store(val code:String, val photoURL:String?, val logoURL: String){
             class Template(val code:String, val logoURL:String)
         }
 
-    fun getPhotoChangeObservable(index:Int):Observable<Store>{
+    val currentVisibleStore: Store? get() {
         val filteredStores = stores.filter { it.photoURL!=null }
-        if (filteredStores.count()==0){
-            return  Observable.just(Store("","",""))
+        return if (filteredStores.count()==0){
+            null
+        }else {
+            filteredStores[currentVisibleStoreIndex]
         }
-        else if (filteredStores.count()==1){
-            return Observable.just(filteredStores[0])
-        }
-        val observable1 =  Observable.just(1).map { it.toInt() }
-        val observable2 =  Observable.interval(4, TimeUnit.SECONDS).delay(index.toLong()*150,TimeUnit.MILLISECONDS).map { it.toInt() }
-        return Observable.concat(observable1,observable2)
-                .map { filteredStores[it % filteredStores.count()]}
-                .observeOn(AndroidSchedulers.mainThread())
     }
+    fun moveNextStoreIndex():Boolean{
+        val filteredStores = stores.filter { it.photoURL!=null }
+        if (!filteredStores.any())
+            return false
+        val nextIndex = (currentVisibleStoreIndex + 1) % filteredStores.count()
+        return nextIndex != currentVisibleStoreIndex
+    }
+
+
 
     override val type get() = AllProductItemRow.Type.Item
 }

@@ -102,7 +102,6 @@ class AllProductsFragment: Fragment() {
     override fun onPause() {
         super.onPause()
         itemDisposables.clear()
-        viewsObservable.clear()
     }
 
     class DrawableAlwaysCrossFadeFactory : TransitionFactory<Drawable> {
@@ -115,7 +114,6 @@ class AllProductsFragment: Fragment() {
         }
     }
 
-    private val viewsObservable = hashMapOf<View, Disposable>()
     interface AllProductsItemRowHolder{//holder
     fun bind(item: AllProductItemRow,allItems:List<AllProductItemRow>, listener: (AllProductItemRow) -> Unit)
     }
@@ -125,25 +123,19 @@ class AllProductsFragment: Fragment() {
         ){
             val product = item as ProductItem
             tvProductName.text = product.name
-            val prevObservable = viewsObservable[itemView]
-            if (prevObservable!=null) {
-                itemDisposables.remove(prevObservable)
-                viewsObservable.remove(itemView)
-            }
-            val disposable = product.getPhotoChangeObservable(1).subscribe {
-
+            product.currentVisibleStore.let {
                 Glide.with(this)
-                    .load(it.photoURL)
+                    .load(it?.photoURL)
                     .transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
                     .into(imPhotoView)
 
                 imPhotoViewLogo.alpha = 0.7F
                 Glide.with(itemView)
-                    .load(it.logoURL)
+                    .load(it?.logoURL)
                     .into(imPhotoViewLogo)
+
             }
-            itemDisposables +=disposable
-            viewsObservable[itemView] = disposable
+
             setOnClickListener { listener(item) }
         }
     }
@@ -175,7 +167,6 @@ class AllProductsFragment: Fragment() {
 
         fun updateElements(stockList: List<AllProductItemRow>){
             itemDisposables.clear()
-            viewsObservable.clear()
             elements.clear()
             elements.addAll(stockList)
             notifyDataSetChanged()
