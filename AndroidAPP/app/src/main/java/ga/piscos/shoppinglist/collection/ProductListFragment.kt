@@ -139,7 +139,7 @@ class ProductListFragment: Fragment() {
                 tvCollectionProductQty.paintFlags = tvCollectionProductQty.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             }
 
-            product.getCurrentVisibleStore("aldi").let {
+            product.getCurrentVisibleStore("lidl").let {
                 Glide.with(itemView)
                     .load(it?.photoURL)
                     //.transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
@@ -196,7 +196,7 @@ class ProductListFragment: Fragment() {
             notifyDataSetChanged()
             val elementsReference = elements
             itemDisposables += Observable.interval(4,4, TimeUnit.SECONDS)
-                .map { elementsReference.filterIsInstance<ProductItem>().filter { it.moveNextStoreIndex("aldi") } }
+                .map { elementsReference.filterIsInstance<ProductItem>().filter { it.moveNextStoreIndex("lidl") } }
                 .flatMap { Observable.fromIterable(it) }
                 .map {  elementsReference.indexOf(element = it) }
                 .observeOn(AndroidSchedulers.mainThread())

@@ -37,7 +37,7 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                     }
                 }.share()
 
-            val selectedStoreCodeObservable = Observable.just("aldi")
+            val selectedStoreCodeObservable = Observable.just("lidl")
             val selectedStoreObservable = Observable.combineLatest(storesObservable,selectedStoreCodeObservable,{ sto,selectedStoreCode ->
                 sto.first { it.code == selectedStoreCode }
             })
