@@ -34,6 +34,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.allproducts_housesection_header.view.*
 import kotlinx.android.synthetic.main.collection_product_item.view.*
 import kotlinx.android.synthetic.main.collection_products_list_fragment.*
+import kotlinx.android.synthetic.main.planning_selected_product_item.view.*
 import java.util.concurrent.TimeUnit
 
 class ProductListFragment: Fragment() {
@@ -270,6 +271,57 @@ class ProductListFragment: Fragment() {
             onSectionsClick(elements)
         }
     }
+
+    private inner class ProductsListSelectedItemHolder(itemView: View) : RecyclerView.ViewHolder(
+        itemView
+    ) {
+        fun bind(item: ProductItem, listener: (ProductItem) -> Unit)= with(
+            itemView
+        ){
+            item.currentVisibleStore.let {
+                Glide.with(itemView)
+                    .load(it?.photoURL)
+                    .into(imPlanningSelectedImage)
+            }
+            setOnClickListener { listener(item) }
+        }
+    }
+    private inner class SelectedProductsListItemAdapter(
+        private var elements: MutableList<ProductItem> = arrayListOf(),
+        val listener: (ProductItem) -> Unit
+    ) : RecyclerView.Adapter<ProductsListSelectedItemHolder>() {
+
+
+        fun updateElements(stockList: List<ProductItem>){
+            elements.clear()
+            elements.addAll(stockList)
+            notifyDataSetChanged()
+        }
+
+        override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ProductsListSelectedItemHolder {
+
+            return ProductsListSelectedItemHolder(
+                LayoutInflater.from(activity).inflate(
+                    R.layout.planning_selected_product_item,
+                    viewGroup,
+                    false
+                )
+            )
+        }
+        override fun onBindViewHolder(holder: ProductsListSelectedItemHolder, position: Int) {
+            holder.bind(elements[position], listener)
+
+        }
+
+        override fun getItemCount(): Int {  return elements.size  }
+
+
+
+
+    }
+
+
+
 
     private fun onSectionsClick(elements: List<CollectionItemRow>) {
         val builderSingle = AlertDialog.Builder(requireContext())
