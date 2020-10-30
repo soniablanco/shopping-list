@@ -73,7 +73,6 @@ class ProductListFragment: Fragment() {
             val productItem = it as? ProductItem
             productItem?.selectItem()
         }
-        adapter.setHasStableIds(true)
         val decorator =
             StickyHeaderItemDecorator(
                 adapter
