@@ -148,14 +148,12 @@ class ProductListFragment: Fragment() {
             val product = item as ProductItem
                     tvPlanningProductProductName.text = product.name
             if (product.selectedData!=null){
-                imPlanningCheck.visibility=View.VISIBLE
                 tvPlanningProductQty.visibility = View.VISIBLE
                 tvPlanningProductQty.text = "x${product.selectedData!!.neededQty}"
                 imRemove.visibility=View.VISIBLE
                 imRemove.setOnClickListener { product.unSelect()  }
             }
             else{
-                imPlanningCheck.visibility=View.GONE
                 tvPlanningProductQty.visibility = View.GONE
                 imRemove.visibility=View.GONE
                 imRemove.setOnClickListener {}

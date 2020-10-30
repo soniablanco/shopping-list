@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,8 +12,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="visible"
 
@@ -26,63 +26,63 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintStart_toStartOf="@id/imPlanningProductPhotoView"
-
         app:layout_constraintTop_toTopOf="@id/imPlanningProductPhotoView"
-        />
-
-    <ImageView
-        android:id="@+id/imPlanningCheck"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:alpha="0.9"
-        android:src="@drawable/check"
-        app:layout_constraintStart_toEndOf="@id/imPlanningProductPhotoView"
-
-
-        app:layout_constraintTop_toTopOf="@id/imPlanningProductPhotoView"
-        />
-
-
-    <Button
-        android:id="@+id/imRemove"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:drawableLeft="@drawable/removecart"
-        android:text=""
-        android:textColor="@color/darkred"
-        android:background="@null"
-        app:layout_constraintRight_toRightOf="parent"
-        android:padding="5dp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
         />
 
     <TextView
         android:id="@+id/tvPlanningProductProductName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:text="TextView"
-        android:textColor="@color/cardview_light_background"
-        android:textSize="16sp"
-        android:visibility="visible"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/imPlanningProductPhotoView"
+        app:layout_constraintBottom_toTopOf="@+id/imMinus"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/imMinus"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:drawableStart="@drawable/minus"
+        android:text=""
+        android:textColor="@color/white"
+        android:background="@null"
+        app:layout_constraintStart_toStartOf="@id/tvPlanningProductProductName"
+        app:layout_constraintTop_toBottomOf="@id/tvPlanningProductProductName"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/imPlanningProductPhotoView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.503" />
+        />
+
     <TextView
         android:id="@+id/tvPlanningProductQty"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:text="x3"
         android:textColor="@color/cardview_light_background"
         android:textSize="20sp"
         android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@id/tvPlanningProductProductName"
-        app:layout_constraintLeft_toRightOf="@id/imPlanningProductPhotoView"
-        app:layout_constraintVertical_bias="0.503" />
+        app:layout_constraintBaseline_toBaselineOf="@id/imMinus"
+        app:layout_constraintStart_toEndOf="@id/imMinus" />
+
+    <Button
+        android:id="@+id/imRemove"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:drawableStart="@drawable/plus"
+        android:text=""
+        android:textColor="@color/white"
+        android:background="@null"
+        app:layout_constraintStart_toEndOf="@id/tvPlanningProductQty"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@id/imMinus"
+        />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
