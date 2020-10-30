@@ -99,7 +99,7 @@ class ProductListFragment: Fragment() {
         observe(model.data){
             adapter.updateElements(selectedStore = it.selectedStore, stockList = it.list)
 
-            val selectedElements = it.list.filterIsInstance<ProductItem>()
+            val selectedElements = it.list.filterIsInstance<ProductItem>().filter { p->p.picked.pickedTimeStamp!=null }
             selectedAdapter.updateElements(selectedElements.sortedByDescending { p -> p.picked.pickedTimeStamp })
             if (selectedElements.any()) {
                 rv_colselectedProducts_collection.visibility=View.VISIBLE
