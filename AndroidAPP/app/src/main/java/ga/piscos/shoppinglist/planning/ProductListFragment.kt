@@ -31,7 +31,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.allproducts_housesection_header.view.*
 import kotlinx.android.synthetic.main.planning_product_item.view.*
 import kotlinx.android.synthetic.main.planning_products_list_fragment.*
-import kotlinx.android.synthetic.main.planning_selected_product_item.view.*
+import kotlinx.android.synthetic.main.selected_product_item.view.*
 import java.util.concurrent.TimeUnit
 
 class ProductListFragment: Fragment() {
@@ -230,7 +230,7 @@ class ProductListFragment: Fragment() {
 
             return ProductsListSelectedItemHolder(
                 LayoutInflater.from(activity).inflate(
-                    R.layout.planning_selected_product_item,
+                    R.layout.selected_product_item,
                     viewGroup,
                     false
                 )

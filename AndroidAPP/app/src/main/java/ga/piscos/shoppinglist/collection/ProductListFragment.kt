@@ -34,7 +34,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.allproducts_housesection_header.view.*
 import kotlinx.android.synthetic.main.collection_product_item.view.*
 import kotlinx.android.synthetic.main.collection_products_list_fragment.*
-import kotlinx.android.synthetic.main.planning_selected_product_item.view.*
+import kotlinx.android.synthetic.main.selected_product_item.view.*
 import java.util.concurrent.TimeUnit
 
 class ProductListFragment: Fragment() {
@@ -81,7 +81,20 @@ class ProductListFragment: Fragment() {
             )
         decorator.attachToRecyclerView(rv_collection_products_list)
         rv_collection_products_list.adapter = adapter
-
+        val selectedAdapter = SelectedProductsListItemAdapter{
+            val indexToMove = adapter.indexOf(it)
+            (rv_collection_products_list.layoutManager!! as LinearLayoutManager).scrollToPositionWithOffset(
+                indexToMove,
+                (27 *  requireContext().resources.displayMetrics.density).toInt()
+            )
+        }
+        rv_colselectedProducts_collection.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+        rv_colselectedProducts_collection.setHasFixedSize(true)
+        rv_colselectedProducts_collection.adapter = selectedAdapter
         val model by viewModels<ProductsListViewModel>()
         observe(model.data){
             adapter.updateElements(selectedStore = it.selectedStore, stockList = it.list)
@@ -270,6 +283,8 @@ class ProductListFragment: Fragment() {
         override fun handleHeaderClickAtPosition(headerPosition: Int) {
             onSectionsClick(elements)
         }
+
+        fun indexOf(product: ProductItem) = elements.indexOf(product)
     }
 
     private inner class ProductsListSelectedItemHolder(itemView: View) : RecyclerView.ViewHolder(
@@ -302,7 +317,7 @@ class ProductListFragment: Fragment() {
 
             return ProductsListSelectedItemHolder(
                 LayoutInflater.from(activity).inflate(
-                    R.layout.planning_selected_product_item,
+                    R.layout.selected_product_item,
                     viewGroup,
                     false
                 )
