@@ -20,6 +20,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeTransition
 import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.request.transition.TransitionFactory
+import com.jakewharton.rxbinding4.widget.itemSelections
 import ga.piscos.shoppinglist.R
 import ga.piscos.shoppinglist.observe
 import ga.piscos.shoppinglist.plus
@@ -97,7 +98,7 @@ class ProductListFragment: Fragment() {
     override fun onResume() {
         super.onResume()
         val model by viewModels<ProductsListViewModel>()
-        model.loadData()
+        model.loadData(store_spinner.itemSelections())
     }
 
     override fun onPause() {

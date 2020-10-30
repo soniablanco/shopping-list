@@ -1,6 +1,7 @@
 package ga.piscos.shoppinglist.collection
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.ktx.database
@@ -17,7 +18,7 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
     val storesData= MutableLiveData<List<ProductItem.Store.Template>>()
 
 
-        fun loadData(){
+        fun loadData(selectedStoreIndexObservable:Observable<Int>){
 
 
             val storesObservable = Firebase.database.reference.child("stores")
@@ -36,11 +37,10 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                         )
                     }
                 }.share()
-
-            val selectedStoreCodeObservable = Observable.just("lidl")
-            val selectedStoreObservable = Observable.combineLatest(storesObservable,selectedStoreCodeObservable,{ sto,selectedStoreCode ->
-                sto.first { it.code == selectedStoreCode }
-            })
+            val selectedStoreObservable = Observable.combineLatest(storesObservable,selectedStoreIndexObservable,{ sto,selectedStoreIndex ->
+                val indexToUse =  if (selectedStoreIndex<0) 0 else selectedStoreIndex
+                sto[indexToUse]
+            }).distinct()
 
             val allProductsObservable = { stores:List<ProductItem.Store.Template>, pickedProducts:List<ProductItem.PickedData> ->
                 Firebase.database.reference.child("allproducts").observable().map { dataSnapshot ->
