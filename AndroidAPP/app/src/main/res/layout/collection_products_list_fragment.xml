@@ -34,8 +34,15 @@
         android:id="@+id/rv_collection_products_list"
         android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@id/textStoreSelection"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rv_colselectedProducts_collection"
         android:layout_height="0dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_colselectedProducts_collection"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="75dp"/>
 
 
 
