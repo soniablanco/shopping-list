@@ -98,6 +98,15 @@ class ProductListFragment: Fragment() {
         val model by viewModels<ProductsListViewModel>()
         observe(model.data){
             adapter.updateElements(selectedStore = it.selectedStore, stockList = it.list)
+
+            val selectedElements = it.list.filterIsInstance<ProductItem>()
+            selectedAdapter.updateElements(selectedElements.sortedByDescending { p -> p.picked.pickedTimeStamp })
+            if (selectedElements.any()) {
+                rv_colselectedProducts_collection.visibility=View.VISIBLE
+            }
+            else{
+                rv_colselectedProducts_collection.visibility=View.GONE
+            }
         }
         observe(model.storesData){
 

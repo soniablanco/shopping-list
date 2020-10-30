@@ -69,8 +69,9 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                 dataSnapshot.children.map {
                     ProductItem.PickedData(
                         code = it.key!!,
-                        neededQty = (it.child("neededQty").value as Long).toInt(),
-                        pickedQty = (it.child("pickedQty").value as Long?)?.toInt()
+                        neededQty = (it.child("planning/neededQty").value as Long).toInt(),
+                        pickedQty = (it.child("collecting/pickedQty").value as Long?)?.toInt(),
+                        pickedTimeStamp = (it.child("collecting/pickedTimeStamp").value as Long?)?.toInt()
                     )
                 }
             }

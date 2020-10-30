@@ -3,6 +3,7 @@ package ga.piscos.shoppinglist.collection
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ga.piscos.shoppinglist.observable
+import java.util.*
 
 class ProductItem(
     val code:String,
@@ -30,7 +31,7 @@ class Store(val code:String, val photoURL:String?, val logoURL: String, val sect
         class Section(val code: String, val index: Int, val name: String)
     }
 }
-    class PickedData(val code:String, val neededQty:Int,val  pickedQty:Int?){
+    class PickedData(val code:String, val neededQty:Int,val  pickedQty:Int?, val pickedTimeStamp:Int?){
         val hasPicked get() = pickedQty!=null && pickedQty==neededQty
     }
 
@@ -57,11 +58,11 @@ class Store(val code:String, val photoURL:String?, val logoURL: String, val sect
 
 
     fun selectItem() {
-        Firebase.database.reference.child("lists/current/products/${code}/pickedQty").setValue(picked.neededQty).observable().subscribe()
+        Firebase.database.reference.child("lists/current/products/${code}/collecting").setValue(mapOf("pickedQty" to picked.neededQty, "pickedTimeStamp" to (Date().time/1000).toInt())).observable().subscribe()
     }
 
     fun unSelect() {
-        Firebase.database.reference.child("lists/current/products/${code}/pickedQty").setValue(null).observable().subscribe()
+        Firebase.database.reference.child("lists/current/products/${code}/collecting").setValue(null).observable().subscribe()
     }
     override val type get() = CollectionItemRow.Type.Item
 }

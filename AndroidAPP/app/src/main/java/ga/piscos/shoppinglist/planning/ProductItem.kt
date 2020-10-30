@@ -46,7 +46,7 @@ class Store(val code:String, val photoURL:String?, val logoURL: String){
         val neededQty = if (selectedData==null) 1 else (selectedData.neededQty+1)
         val firebaseDatabaseObservable =
             Observable.just(1).flatMap { Observable.just(mapOf("neededQty" to neededQty, "addedTimeStamp" to (Date().time/1000).toInt())) }
-                .flatMap { Firebase.database.reference.child("lists/current/products/${code}").updateChildren(it).observable()}
+                .flatMap { Firebase.database.reference.child("lists/current/products/${code}/planning").updateChildren(it).observable()}
         firebaseDatabaseObservable.subscribe()
     }
 
