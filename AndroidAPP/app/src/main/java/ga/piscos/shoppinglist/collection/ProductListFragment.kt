@@ -83,7 +83,7 @@ class ProductListFragment: Fragment() {
 
         val model by viewModels<ProductsListViewModel>()
         observe(model.data){
-            adapter.updateElements(it)
+            adapter.updateElements(selectedStore = it.selectedStore, stockList = it.list)
         }
         observe(model.storesData){
 
@@ -116,10 +116,10 @@ class ProductListFragment: Fragment() {
         }
     }
     interface ItemRowHolder{//holder
-    fun bind(item: CollectionItemRow, allItems:List<CollectionItemRow>, listener: (CollectionItemRow) -> Unit)
+    fun bind(selectedStore: ProductItem.Store.Template, item: CollectionItemRow, allItems:List<CollectionItemRow>, listener: (CollectionItemRow) -> Unit)
     }
     private inner class ProductsListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),ItemRowHolder {
-        override fun bind(item: CollectionItemRow, allItems:List<CollectionItemRow>, listener: (CollectionItemRow) -> Unit)= with(
+        override fun bind(selectedStore: ProductItem.Store.Template, item: CollectionItemRow, allItems:List<CollectionItemRow>, listener: (CollectionItemRow) -> Unit)= with(
             itemView
         ){
             val product = item as ProductItem
@@ -140,7 +140,7 @@ class ProductListFragment: Fragment() {
                 tvCollectionProductQty.paintFlags = tvCollectionProductQty.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             }
 
-            product.getCurrentVisibleStore("lidl").let {
+            product.getCurrentVisibleStore(selectedStoreCode = selectedStore.code).let {
                 Glide.with(itemView)
                     .load(it?.photoURL)
                     //.transition(DrawableTransitionOptions.with(DrawableAlwaysCrossFadeFactory()))
@@ -163,7 +163,7 @@ class ProductListFragment: Fragment() {
 
     private inner class StoreSectionItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         ItemRowHolder {
-        override fun bind(item: CollectionItemRow, allItems: List<CollectionItemRow>, listener: (CollectionItemRow) -> Unit)= with(
+        override fun bind(selectedStore: ProductItem.Store.Template, item: CollectionItemRow, allItems: List<CollectionItemRow>, listener: (CollectionItemRow) -> Unit)= with(
             itemView
         ){
             val section = item as StoreSection
@@ -186,18 +186,20 @@ class ProductListFragment: Fragment() {
 
     private inner class ProductsListItemAdapter(
         private var elements: MutableList<CollectionItemRow> = arrayListOf(),
+        private var selectedStore: ProductItem.Store.Template? = null,
         val listener: (CollectionItemRow) -> Unit
     ) : StickyAdapter<StoreSectionItemHolder,RecyclerView.ViewHolder>() {
 
 
-        fun updateElements(stockList: List<CollectionItemRow>){
+        fun updateElements(selectedStore:ProductItem.Store.Template, stockList: List<CollectionItemRow>){
+            this.selectedStore = selectedStore
             itemDisposables.clear()
             elements.clear()
             elements.addAll(stockList)
             notifyDataSetChanged()
             val elementsReference = elements
             itemDisposables += Observable.interval(4,4, TimeUnit.SECONDS)
-                .map { elementsReference.filterIsInstance<ProductItem>().filter { it.moveNextStoreIndex("lidl") } }
+                .map { elementsReference.filterIsInstance<ProductItem>().filter { it.moveNextStoreIndex(selectedStore.code) } }
                 .flatMap { Observable.fromIterable(it) }
                 .map {  elementsReference.indexOf(element = it) }
                 .observeOn(AndroidSchedulers.mainThread())
@@ -226,7 +228,10 @@ class ProductListFragment: Fragment() {
         }
         override fun getItemViewType(position: Int)=elements[position].type.intValue
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) = (holder as ItemRowHolder).bind(
-            elements[position], elements,listener
+            selectedStore = selectedStore!!,
+            item = elements[position],
+            allItems = elements,
+            listener = listener
         )
 
         override fun getItemCount(): Int {  return elements.size  }
@@ -243,7 +248,12 @@ class ProductListFragment: Fragment() {
         }
 
         override fun onBindHeaderViewHolder(holder: StoreSectionItemHolder, position: Int) {
-            holder.bind(elements[position],elements, listener)
+            holder.bind(
+                selectedStore = selectedStore!!,
+                item = elements[position],
+                allItems = elements,
+                listener = listener
+            )
         }
 
         override fun onCreateHeaderViewHolder(viewGroup: ViewGroup?): StoreSectionItemHolder{

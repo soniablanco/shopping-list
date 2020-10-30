@@ -13,8 +13,10 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class ProductsListViewModel(application: Application) : AndroidViewModel(application){
 
+    data class Result(val list:List<CollectionItemRow>, val selectedStore: ProductItem.Store.Template)
+
     var disposables = CompositeDisposable()
-    val data= MutableLiveData<List<CollectionItemRow>>()
+    val data= MutableLiveData<Result>()
     val storesData= MutableLiveData<List<ProductItem.Store.Template>>()
 
 
@@ -40,7 +42,7 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
             val selectedStoreObservable = Observable.combineLatest(storesObservable,selectedStoreIndexObservable,{ sto,selectedStoreIndex ->
                 val indexToUse =  if (selectedStoreIndex<0) 0 else selectedStoreIndex
                 sto[indexToUse]
-            }).distinct()
+            }).distinctUntilChanged()
 
             val allProductsObservable = { stores:List<ProductItem.Store.Template>, pickedProducts:List<ProductItem.PickedData> ->
                 Firebase.database.reference.child("allproducts").observable().map { dataSnapshot ->
@@ -94,7 +96,7 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                     val rows = mutableListOf<CollectionItemRow>()
                     addRows(finishedProducts = false, selectedStore= selectedStore,products=products.filter { !it.picked.hasPicked },rows=rows)
                     addRows(finishedProducts = true, selectedStore= selectedStore,products=products.filter { it.picked.hasPicked },rows=rows)
-                    rows
+                    Result(list = rows, selectedStore =selectedStore)
                 })
 
 
