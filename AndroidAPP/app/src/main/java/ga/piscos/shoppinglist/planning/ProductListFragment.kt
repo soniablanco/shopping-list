@@ -153,7 +153,7 @@ class ProductListFragment: Fragment() {
 
             }
             else{
-                tvPlanningProductQty.visibility = View.GONE
+                tvPlanningProductQty.visibility = View.INVISIBLE
             }
             product.currentVisibleStore.let {
                 Glide.with(itemView)

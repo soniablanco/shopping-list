@@ -57,9 +57,10 @@
 
     <TextView
         android:id="@+id/tvPlanningProductQty"
-        android:layout_width="0dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:textAlignment="center"
         android:text="x3"
         android:textColor="@color/cardview_light_background"
         android:textSize="20sp"
