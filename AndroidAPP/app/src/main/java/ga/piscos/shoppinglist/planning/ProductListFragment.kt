@@ -149,7 +149,7 @@ class ProductListFragment: Fragment() {
             imMinus.setOnClickListener { product.decrement()  }
             if (product.selectedData!=null){
                 tvPlanningProductQty.visibility = View.VISIBLE
-                tvPlanningProductQty.text = "x${product.selectedData!!.neededQty}"
+                tvPlanningProductQty.text = "x ${product.selectedData!!.neededQty}"
 
             }
             else{

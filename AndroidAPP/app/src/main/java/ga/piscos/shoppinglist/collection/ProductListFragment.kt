@@ -72,8 +72,6 @@ class ProductListFragment: Fragment() {
         )
         rv_collection_products_list.setHasFixedSize(true)
         val adapter = ProductsListItemAdapter{
-            val productItem = it as? ProductItem
-            productItem?.selectItem()
         }
         val decorator =
             StickyHeaderItemDecorator(
@@ -147,20 +145,20 @@ class ProductListFragment: Fragment() {
         ){
             val product = item as ProductItem
             tvCollectionProductProductName.text = product.name
-            tvCollectionProductQty.text = "x${product.picked.neededQty}"
+            tvCollectionProductQty.text = "x ${product.picked.neededQty}"
+            imTakeIn.setOnClickListener { product.selectItem()  }
+            imTakeOut.setOnClickListener { product.unSelect() }
             if (product.picked.hasPicked){
-                imCollectionRemove.visibility=View.VISIBLE
-                imCollectionCheck.visibility = View.VISIBLE
                 tvCollectionProductProductName.paintFlags = tvCollectionProductProductName.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 tvCollectionProductQty.paintFlags = tvCollectionProductQty.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                imCollectionRemove.setOnClickListener { product.unSelect()  }
+                imTakeIn.visibility=View.GONE
+                imTakeOut.visibility=View.VISIBLE
             }
             else{
-                imCollectionRemove.visibility=View.GONE
-                imCollectionCheck.visibility = View.GONE
-                imCollectionRemove.setOnClickListener {}
                 tvCollectionProductProductName.paintFlags = tvCollectionProductProductName.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                 tvCollectionProductQty.paintFlags = tvCollectionProductQty.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                imTakeOut.visibility=View.GONE
+                imTakeIn.visibility=View.VISIBLE
             }
 
             product.getCurrentVisibleStore(selectedStoreCode = selectedStore.code).let {
