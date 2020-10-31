@@ -146,6 +146,7 @@ class ProductListFragment: Fragment() {
             val product = item as ProductItem
             tvCollectionProductProductName.text = product.name
             tvCollectionProductQty.text = "x ${product.picked.neededQty}"
+            imNotFound.setOnClickListener { product.markAsNotAvailable() }
             imTakeIn.setOnClickListener { product.selectItem()  }
             imTakeOut.setOnClickListener { product.unSelect() }
             if (product.picked.hasPicked){
@@ -188,12 +189,24 @@ class ProductListFragment: Fragment() {
             itemView
         ){
             val section = item as StoreSection
-            this.setBackgroundResource(if (section.finishedSection) R.color.colorFinished else R.color.colorUnFinished)
+            this.setBackgroundResource(if (section.finishedSection){
+                R.color.colorFinished
+            }
+            else if (!section.finishedSection && !section.notAvailableSection){
+                R.color.colorUnFinished
+            }
+            else{
+                R.color.colorNotAvailable
+            }
+            )
             tvAllProductsHouseSection.text = "\uD83C\uDFE0 ${section.name}"
             if (section.finishedSection){
                 tvAllProductsHouseSection.paintFlags = tvAllProductsHouseSection.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
-            else{
+            else if (!section.finishedSection && !section.notAvailableSection){
+                tvAllProductsHouseSection.paintFlags = tvAllProductsHouseSection.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            }
+            else if (!section.finishedSection && section.notAvailableSection){
                 tvAllProductsHouseSection.paintFlags = tvAllProductsHouseSection.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             }
             setOnClickListener {

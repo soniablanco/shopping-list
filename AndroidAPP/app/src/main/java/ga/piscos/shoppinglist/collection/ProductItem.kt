@@ -31,7 +31,7 @@ class Store(val code:String, val photoURL:String?, val logoURL: String, val sect
         class Section(val code: String, val index: Int, val name: String)
     }
 }
-    class PickedData(val code:String, val neededQty:Int,val  pickedQty:Int?, val pickedTimeStamp:Int?){
+    class PickedData(val code:String, val neededQty:Int,val  pickedQty:Int?, val pickedTimeStamp:Int?, val notAvailable:Boolean){
         val hasPicked get() = pickedQty!=null && pickedQty==neededQty
     }
 
@@ -59,6 +59,9 @@ class Store(val code:String, val photoURL:String?, val logoURL: String, val sect
 
     fun selectItem() {
         Firebase.database.reference.child("lists/current/products/${code}/collecting").setValue(mapOf("pickedQty" to picked.neededQty, "pickedTimeStamp" to (Date().time/1000).toInt())).observable().subscribe()
+    }
+    fun markAsNotAvailable() {
+        Firebase.database.reference.child("lists/current/products/${code}/collecting").setValue(mapOf("notAvailable" to true, "pickedTimeStamp" to (Date().time/1000).toInt())).observable().subscribe()
     }
 
     fun unSelect() {

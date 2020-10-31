@@ -10,4 +10,5 @@
     <color name="darkred">#E42828</color>
     <color name="colorFinished">#558B2F</color>
     <color name="colorUnFinished">#C62828</color>
+    <color name="colorNotAvailable">#FF6D00</color>
 </resources>

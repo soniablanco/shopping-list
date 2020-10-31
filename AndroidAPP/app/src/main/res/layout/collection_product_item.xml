@@ -39,7 +39,6 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@id/imCollectionProductPhotoView"
-        app:layout_constraintBottom_toTopOf="@+id/imMinus"
         app:layout_constraintTop_toTopOf="parent"/>
 
 
@@ -64,6 +63,19 @@
         android:textColor="@color/white"
         android:background="@null"
         app:layout_constraintEnd_toStartOf="@id/imTakeOut"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvCollectionProductQty"
+        />
+
+    <Button
+        android:id="@+id/imNotFound"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="16dp"
+        android:drawableStart="@drawable/notfound"
+        android:text=""
+        android:textColor="@color/white"
+        android:background="@null"
+        app:layout_constraintEnd_toStartOf="@id/imTakeIn"
         app:layout_constraintBaseline_toBaselineOf="@id/tvCollectionProductQty"
         />
 

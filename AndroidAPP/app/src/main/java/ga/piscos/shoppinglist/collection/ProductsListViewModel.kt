@@ -71,7 +71,8 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                         code = it.key!!,
                         neededQty = (it.child("planning/neededQty").value as Long).toInt(),
                         pickedQty = (it.child("collecting/pickedQty").value as Long?)?.toInt(),
-                        pickedTimeStamp = (it.child("collecting/pickedTimeStamp").value as Long?)?.toInt()
+                        pickedTimeStamp = (it.child("collecting/pickedTimeStamp").value as Long?)?.toInt(),
+                        notAvailable = (it.child("collecting/notAvailable").value as Boolean?)?:false,
                     )
                 }
             }
@@ -95,9 +96,17 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
                 productListObservable,
                 { selectedStore:ProductItem.Store.Template, products:List<ProductItem> ->
                     val rows = mutableListOf<CollectionItemRow>()
-                    addRows(finishedProducts = false, selectedStore= selectedStore,products=products.filter { !it.picked.hasPicked },rows=rows)
-                    addRows(finishedProducts = true, selectedStore= selectedStore,products=products.filter { it.picked.hasPicked },rows=rows)
-                    Result(list = rows, selectedStore =selectedStore)
+                    addRows(finishedProducts = false, selectedStore= selectedStore,products=products.filter { !it.picked.notAvailable && !it.picked.hasPicked },rows=rows)
+                    addRows(finishedProducts = true, selectedStore= selectedStore,products=products.filter { !it.picked.notAvailable && it.picked.hasPicked },rows=rows)
+
+                    val notAvailableProducts = products.filter { it.picked.notAvailable }
+                    if (notAvailableProducts.any()){
+                        val houseSectionNotAvailable = StoreSection(finishedSection = false, notAvailableSection = true, code = "notAvailable",name = "Not Available",index = -1,products = notAvailableProducts)
+                        houseSectionNotAvailable.assignSection()
+                        rows.addAll(houseSectionNotAvailable.getAllRows())
+                    }
+
+                    Result(list = rows, selectedStore = selectedStore)
                 })
 
 
@@ -112,7 +121,7 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
         }
     private fun addRows(finishedProducts:Boolean, selectedStore:ProductItem.Store.Template, products:List<ProductItem>, rows:MutableList<CollectionItemRow>){
         val sufix = if (finishedProducts) " ✔" else ""
-        val storeSections =selectedStore.sections.map { ss-> StoreSection(finishedSection = finishedProducts, code = ss.code,name = ss.name + sufix, index = ss.index)}
+        val storeSections =selectedStore.sections.map { ss-> StoreSection(finishedSection = finishedProducts, code = ss.code,name = ss.name + sufix, notAvailableSection = false, index = ss.index)}
         storeSections.forEach {hs-> hs.products =
             products
                 .filter { p-> p.stores.any   { store -> store.code==selectedStore.code }}
@@ -124,7 +133,7 @@ class ProductsListViewModel(application: Application) : AndroidViewModel(applica
         storeSections.forEach { hs->productsWithSections.addAll(hs.products!!)}
         val productsWithNoSection = products.filter { !productsWithSections.contains(it) }
         if (productsWithNoSection.count()>0){
-            val houseSectionNotEntered = StoreSection(finishedSection = finishedProducts, code = "unknown",name = "No Section$sufix",index = -1,products = productsWithNoSection)
+            val houseSectionNotEntered = StoreSection(finishedSection = finishedProducts,notAvailableSection = false, code = "unknown",name = "No Section$sufix",index = -1,products = productsWithNoSection)
             houseSectionNotEntered.assignSection()
             rows.addAll(houseSectionNotEntered.getAllRows())
         }
