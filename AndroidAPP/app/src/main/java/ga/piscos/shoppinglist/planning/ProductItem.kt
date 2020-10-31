@@ -42,7 +42,7 @@ class Store(val code:String, val photoURL:String?, val logoURL: String){
         return indexChanged
     }
 
-    fun selectItem() {
+    fun increment() {
         val neededQty = if (selectedData==null) 1 else (selectedData.neededQty+1)
         val firebaseDatabaseObservable =
             Observable.just(1).flatMap { Observable.just(mapOf("neededQty" to neededQty, "addedTimeStamp" to (Date().time/1000).toInt())) }
@@ -50,11 +50,25 @@ class Store(val code:String, val photoURL:String?, val logoURL: String){
         firebaseDatabaseObservable.subscribe()
     }
 
-    fun unSelect() {
-        val firebaseDatabaseObservable =
-            Observable.just(1).flatMap { Observable.just(mapOf(code to null)) }
-                .flatMap { Firebase.database.reference.child("lists/current/products").updateChildren(it).observable()}
-        firebaseDatabaseObservable.subscribe()
+    fun decrement() {
+         if (selectedData==null || selectedData.neededQty<1)
+             return;
+        val neededQty = selectedData.neededQty - 1
+        if (neededQty<1) {
+            val firebaseDatabaseObservable =
+                Observable.just(1).flatMap { Observable.just(mapOf(code to null)) }
+                    .flatMap {
+                        Firebase.database.reference.child("lists/current/products")
+                            .updateChildren(it).observable()
+                    }
+            firebaseDatabaseObservable.subscribe()
+        }
+        else{
+            val firebaseDatabaseObservable =
+                Observable.just(1).flatMap { Observable.just(mapOf("neededQty" to neededQty, "addedTimeStamp" to (Date().time/1000).toInt())) }
+                    .flatMap { Firebase.database.reference.child("lists/current/products/${code}/planning").updateChildren(it).observable()}
+            firebaseDatabaseObservable.subscribe()
+        }
     }
     override val type get() = AllProductItemRow.Type.Item
 }

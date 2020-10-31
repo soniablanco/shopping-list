@@ -70,8 +70,6 @@ class ProductListFragment: Fragment() {
         rv_planning_products_list.setHasFixedSize(true)
 
         val adapter = ProductsListItemAdapter{
-            val productItem = it as? ProductItem
-            productItem?.selectItem()
         }
         val decorator =
             StickyHeaderItemDecorator(
@@ -146,17 +144,16 @@ class ProductListFragment: Fragment() {
             itemView
         ){
             val product = item as ProductItem
-                    tvPlanningProductProductName.text = product.name
+            tvPlanningProductProductName.text = product.name
+            imPlus.setOnClickListener { product.increment()  }
+            imMinus.setOnClickListener { product.decrement()  }
             if (product.selectedData!=null){
                 tvPlanningProductQty.visibility = View.VISIBLE
                 tvPlanningProductQty.text = "x${product.selectedData!!.neededQty}"
-                imRemove.visibility=View.VISIBLE
-                imRemove.setOnClickListener { product.unSelect()  }
+
             }
             else{
                 tvPlanningProductQty.visibility = View.GONE
-                imRemove.visibility=View.GONE
-                imRemove.setOnClickListener {}
             }
             product.currentVisibleStore.let {
                 Glide.with(itemView)

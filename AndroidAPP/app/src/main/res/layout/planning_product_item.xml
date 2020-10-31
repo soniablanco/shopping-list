@@ -68,7 +68,7 @@
         app:layout_constraintStart_toEndOf="@id/imMinus" />
 
     <Button
-        android:id="@+id/imRemove"
+        android:id="@+id/imPlus"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="16dp"
