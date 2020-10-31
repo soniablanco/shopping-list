@@ -170,7 +170,6 @@ class ProductListFragment: Fragment() {
                 imNotFound.visibility=View.GONE
                 imTakeOut.visibility=View.VISIBLE
             }
-
             product.getCurrentVisibleStore(selectedStoreCode = selectedStore.code).let {
                 Glide.with(itemView)
                     .load(it?.photoURL)
@@ -328,6 +327,11 @@ class ProductListFragment: Fragment() {
                     .into(imPlanningSelectedImage)
             }
             setOnClickListener { listener(item) }
+            imOverLap.setBackgroundResource(if (item.picked.hasPicked) {
+                R.color.colorFinished
+            } else {
+                R.color.colorNotAvailable
+            })
         }
     }
     private inner class SelectedProductsListItemAdapter(

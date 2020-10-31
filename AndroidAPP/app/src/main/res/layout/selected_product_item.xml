@@ -9,13 +9,27 @@
     <ImageView
         android:id="@+id/imPlanningSelectedImage"
         android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="3dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginStart="3dp"
         android:layout_marginEnd="3dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="1dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+    <ImageView
+        android:id="@+id/imOverLap"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginTop="1dp"
+        android:alpha="0.2"
+        app:layout_constraintStart_toStartOf="@id/imPlanningSelectedImage"
+        app:layout_constraintEnd_toEndOf="@id/imPlanningSelectedImage"
+        app:layout_constraintTop_toTopOf="@id/imPlanningSelectedImage"
+        app:layout_constraintBottom_toBottomOf="@id/imPlanningSelectedImage"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
