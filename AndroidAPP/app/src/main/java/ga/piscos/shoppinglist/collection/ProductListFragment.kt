@@ -153,13 +153,22 @@ class ProductListFragment: Fragment() {
                 tvCollectionProductProductName.paintFlags = tvCollectionProductProductName.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 tvCollectionProductQty.paintFlags = tvCollectionProductQty.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 imTakeIn.visibility=View.GONE
+                imNotFound.visibility=View.GONE
                 imTakeOut.visibility=View.VISIBLE
             }
-            else{
+            else if (!product.picked.hasPicked && !product.picked.notAvailable){
                 tvCollectionProductProductName.paintFlags = tvCollectionProductProductName.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                 tvCollectionProductQty.paintFlags = tvCollectionProductQty.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                 imTakeOut.visibility=View.GONE
                 imTakeIn.visibility=View.VISIBLE
+                imNotFound.visibility=View.VISIBLE
+            }
+            else if (!product.picked.hasPicked && product.picked.notAvailable){
+                tvCollectionProductProductName.paintFlags = tvCollectionProductProductName.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                tvCollectionProductQty.paintFlags = tvCollectionProductQty.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                imTakeIn.visibility=View.GONE
+                imNotFound.visibility=View.GONE
+                imTakeOut.visibility=View.VISIBLE
             }
 
             product.getCurrentVisibleStore(selectedStoreCode = selectedStore.code).let {
