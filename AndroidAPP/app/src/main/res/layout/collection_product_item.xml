@@ -75,7 +75,7 @@
         android:text=""
         android:textColor="@color/white"
         android:background="@null"
-        app:layout_constraintEnd_toStartOf="@id/imTakeIn"
+        app:layout_constraintStart_toEndOf="@id/tvCollectionProductQty"
         app:layout_constraintBaseline_toBaselineOf="@id/tvCollectionProductQty"
         />
 
