@@ -1,0 +1,2786 @@
+{
+  "allproducts" : {
+    "016f03ce-d6f9-4f57-96b8-e0e87b910fbe" : {
+      "houseSection" : "fridge_vegetables",
+      "name" : "Blackberries ",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F016f03ce-d6f9-4f57-96b8-e0e87b910fbe%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=5533347e-ac43-464d-802c-499146d9943d",
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "section" : "fruits"
+        }
+      }
+    },
+    "01cc5abe-0968-479e-a453-161df3f063b8" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Cashews",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F01cc5abe-0968-479e-a453-161df3f063b8%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=ed30a50c-3a47-4b44-bea4-64e6ddd442f6",
+          "section" : "nuts"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F01cc5abe-0968-479e-a453-161df3f063b8%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=db55ef5b-22a1-4577-84b5-dc314fc84d02",
+          "section" : "nuts_seeds"
+        }
+      }
+    },
+    "02a39efe-e44f-4f02-b10d-f6aa4ebea911" : {
+      "houseSection" : "freezer",
+      "name" : "Garlic bread",
+      "stores" : {
+        "lidl" : {
+          "section" : "salads_readymeals"
+        }
+      }
+    },
+    "02a4a07d-3d65-497a-97d0-caf5be08fc53" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Olives",
+      "stores" : {
+        "aldi" : {
+          "section" : "frozen_foods_cans"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F02a4a07d-3d65-497a-97d0-caf5be08fc53%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=f5fa2f5b-ede0-4ca6-9162-5437807b03c4",
+          "section" : "pasta_sauces"
+        }
+      }
+    },
+    "03498ece-6abf-4bb6-88e7-5e7e3bc0fd66" : {
+      "houseSection" : "kitchen_fruits",
+      "name" : "Mandarins ",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F03498ece-6abf-4bb6-88e7-5e7e3bc0fd66%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=83b5f9f7-536c-4c8c-96fc-761bb0a0ffab",
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F03498ece-6abf-4bb6-88e7-5e7e3bc0fd66%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=1d3c98ef-4600-4ea0-86b2-e3ca462a59b2",
+          "section" : "fruits"
+        }
+      }
+    },
+    "0360a5ba-4816-494e-ad33-ec84f002ca48" : {
+      "houseSection" : "bathroom_toilet",
+      "name" : "Wet wipes Fruity",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F0360a5ba-4816-494e-ad33-ec84f002ca48%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=28ad8cf5-f258-44a0-9c93-b92d9d5dac53",
+          "section" : "hygiene"
+        },
+        "lidl" : {
+          "section" : "higyene"
+        }
+      }
+    },
+    "053b58b8-1055-4ad0-b8a6-22be32bf1d2c" : {
+      "houseSection" : "fridge_vegetables",
+      "name" : "Brocoli fresh",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F053b58b8-1055-4ad0-b8a6-22be32bf1d2c%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=590b1ab7-a827-4f56-a572-4a44652f8dcd",
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "section" : "veggies"
+        }
+      }
+    },
+    "074e170a-b316-4745-9d97-392e74d7c5ca" : {
+      "houseSection" : "fridge",
+      "name" : "Soda bread",
+      "stores" : {
+        "aldi" : {
+          "section" : "bread"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F074e170a-b316-4745-9d97-392e74d7c5ca%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=0673b56f-3887-4b16-a6ad-c4e92f1f5294",
+          "section" : "breaD"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F074e170a-b316-4745-9d97-392e74d7c5ca%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=56404fe5-4555-48f8-9041-874689ce3363"
+        }
+      }
+    },
+    "07588ba9-061e-4142-ab3a-1ecb29bea3d9" : {
+      "houseSection" : "bathroom_migue",
+      "name" : "Shaving Foam",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F07588ba9-061e-4142-ab3a-1ecb29bea3d9%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=7cdb5d75-0dce-4ac8-b9cb-d105507d6abb",
+          "section" : "hygiene"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F07588ba9-061e-4142-ab3a-1ecb29bea3d9%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=e4bb48c1-9e8f-4dad-b5b1-e0b998453511",
+          "section" : "higyene"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/allproducts%2F07588ba9-061e-4142-ab3a-1ecb29bea3d9%2Fstores%2Ftesco%2Fb8d0f895-bc94-46cc-9f5e-d0e2dcc76721.jpg?alt=media&token=a734bb8e-34e4-42ec-9249-b0a600be1118"
+        }
+      }
+    },
+    "07da1d8c-a908-4566-8583-f7d29eb229cd" : {
+      "houseSection" : "kitchen_cleaning",
+      "name" : "jabón loza",
+      "stores" : {
+        "aldi" : {
+          "section" : "cleaning_products"
+        },
+        "lidl" : {
+          "section" : "cleaning_products"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F07da1d8c-a908-4566-8583-f7d29eb229cd%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=6531cfde-5d5f-4cfe-824d-5e01cff5f8e6"
+        }
+      }
+    },
+    "08fcab04-430e-443f-a72e-85a0238d637c" : {
+      "houseSection" : "bathroom_toilet",
+      "name" : "Toilet tissue",
+      "stores" : {
+        "aldi" : {
+          "section" : "toilet_paper"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F08fcab04-430e-443f-a72e-85a0238d637c%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=06354df5-2cb6-422d-aa88-2f186b9d8a62",
+          "section" : "toiletpaper_water"
+        }
+      }
+    },
+    "096fc3d4-459c-4cba-9b6b-a3f9254ba905" : {
+      "houseSection" : "baby",
+      "name" : "Nappies ",
+      "stores" : {
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F096fc3d4-459c-4cba-9b6b-a3f9254ba905%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=e316f29a-d948-4719-b00d-22fdac724367",
+          "section" : "higyene"
+        }
+      }
+    },
+    "0aeb3ee9-213e-4bd9-8f62-088c73966f87" : {
+      "houseSection" : "hardware",
+      "name" : "Glue"
+    },
+    "0b89fa1f-04b1-46e2-aeec-4e5779ed5b9a" : {
+      "houseSection" : "fridge_vegetables",
+      "name" : "Fresh Tomatoes ",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F0b89fa1f-04b1-46e2-aeec-4e5779ed5b9a%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=69c087d9-55ed-4860-a628-d9885d2d0158",
+          "section" : "ground_veggies"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F0b89fa1f-04b1-46e2-aeec-4e5779ed5b9a%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=c5012dde-5062-454d-a520-ee5a8299cd44",
+          "section" : "veggies"
+        }
+      }
+    },
+    "0ba00978-0a13-4073-a767-7ce1df6b0759" : {
+      "houseSection" : "bathroom",
+      "name" : "windows & glass cleaner",
+      "stores" : {
+        "dunnes" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F0ba00978-0a13-4073-a767-7ce1df6b0759%2Fstores%2Fdunnes%2Fphoto.jpg?alt=media&token=ba08b12a-883c-4640-a9f3-871ca460c1b0"
+        }
+      }
+    },
+    "0dab4590-f904-43c4-b17e-d3c2396d3c22" : {
+      "houseSection" : "kitchen_ground_food",
+      "name" : "Butternut squash",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F0dab4590-f904-43c4-b17e-d3c2396d3c22%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=4cc02f6b-1ed5-4746-b69d-4a8fdcf7c675"
+        }
+      }
+    },
+    "122c430d-3fe3-40d7-8d32-8eadd2095bcf" : {
+      "houseSection" : "hardware",
+      "name" : "kids scisors",
+      "stores" : {
+        "ikea" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F122c430d-3fe3-40d7-8d32-8eadd2095bcf%2Fstores%2Fikea%2Fphoto.jpg?alt=media&token=478ab8e6-8193-41b2-a9e7-a2d6a13f701c"
+        }
+      }
+    },
+    "135fe64a-73e7-42ff-88db-45f4ab40715f" : {
+      "houseSection" : "fridge_dairy",
+      "name" : "Yogurt red fruits",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F135fe64a-73e7-42ff-88db-45f4ab40715f%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=712c9163-7f90-4127-9447-76d5e02f0087",
+          "section" : "yogurts"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F135fe64a-73e7-42ff-88db-45f4ab40715f%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=dc0a30ba-4e0d-48cd-90a3-8e9006e15c77",
+          "section" : "cheese_yogurts"
+        }
+      }
+    },
+    "144f8807-516e-4c3b-85b1-80a634d8363a" : {
+      "houseSection" : "freezer_meat",
+      "name" : "Mince beef 4%",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F144f8807-516e-4c3b-85b1-80a634d8363a%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=598db476-859d-4c53-84b9-5d235a75c045",
+          "section" : "meat"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F144f8807-516e-4c3b-85b1-80a634d8363a%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=b7d3337b-2bee-4efe-8323-93e5f7c0f8a7",
+          "section" : "beef_fish"
+        }
+      }
+    },
+    "16ce49bf-c9ef-4219-ad40-19ea29e9817e" : {
+      "houseSection" : "kitchen",
+      "name" : "Small food bags",
+      "stores" : {
+        "ikea" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F16ce49bf-c9ef-4219-ad40-19ea29e9817e%2Fstores%2Fikea%2Fphoto.jpg?alt=media&token=6ef5103f-8350-4ce4-8a93-99d88a3c8b41"
+        }
+      }
+    },
+    "16f7a387-68c0-4977-9e42-3bd53d99dfd6" : {
+      "houseSection" : "fridge",
+      "name" : "Almond milk",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F16f7a387-68c0-4977-9e42-3bd53d99dfd6%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=d4b7b81a-e2e5-4361-a34a-e7cd08994fc9",
+          "section" : "milk_juice"
+        },
+        "lidl" : {
+          "section" : "milk_juices"
+        }
+      }
+    },
+    "17439d5a-c036-4c35-92e2-dec64297c774" : {
+      "houseSection" : "fridge_vegetables",
+      "name" : "Fresh Ginger",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F17439d5a-c036-4c35-92e2-dec64297c774%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=0a16afa3-c850-40ea-bd42-b543fcd5288c",
+          "section" : "fruits_veggies"
+        }
+      }
+    },
+    "17786c1b-1fd9-46b2-851e-bed8ac362f50" : {
+      "houseSection" : "fridge_dairy",
+      "name" : "Yogurt Vainilla",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F17786c1b-1fd9-46b2-851e-bed8ac362f50%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=8eb9f353-2bc0-42cd-aaab-03b0a83e9264",
+          "section" : "yogurts"
+        },
+        "lidl" : {
+          "section" : "cheese_yogurts"
+        }
+      }
+    },
+    "17e841e5-9add-41e9-8a9e-8edfd90ce479" : {
+      "houseSection" : "kitchen_condiments",
+      "name" : "rapeseed oil",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F17e841e5-9add-41e9-8a9e-8edfd90ce479%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=b2231b9f-86df-4e07-8d5c-0da971ff3154",
+          "section" : "sauces_pasta"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F17e841e5-9add-41e9-8a9e-8edfd90ce479%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=d9623c8d-71e1-4ef0-ac13-a6445c94de9a",
+          "section" : "pasta_sauces"
+        }
+      }
+    },
+    "1a1c8435-5ec4-49d8-95e0-d2e554bed746" : {
+      "houseSection" : "freezer_veggies",
+      "name" : "Mash potato",
+      "stores" : {
+        "ikea" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F1a1c8435-5ec4-49d8-95e0-d2e554bed746%2Fstores%2Fikea%2Fphoto.jpg?alt=media&token=f8338616-16cb-4048-a096-f38dc7a38be6"
+        }
+      }
+    },
+    "1bf738ba-0a1b-41ea-b78b-24f6e971a21d" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Almond Butter 🐹",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F1bf738ba-0a1b-41ea-b78b-24f6e971a21d%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=4bca7620-eec9-4866-aead-f5333526ec5b",
+          "section" : "conserves"
+        },
+        "dunnes" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F1bf738ba-0a1b-41ea-b78b-24f6e971a21d%2Fstores%2Fdunnes%2Fphoto.jpg?alt=media&token=ac47941d-a1fe-4303-8fe9-e0954e3c3c28"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F1bf738ba-0a1b-41ea-b78b-24f6e971a21d%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=06469bef-b025-4142-a7b7-c701322994d2"
+        }
+      }
+    },
+    "1c65520f-5eb0-4614-80e8-a3b6345c6467" : {
+      "houseSection" : "hardware",
+      "name" : "Cat food"
+    },
+    "1c944155-0239-48b7-ba4e-5678a53872fe" : {
+      "houseSection" : "hardware",
+      "name" : "Gummy bears bags",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F1c944155-0239-48b7-ba4e-5678a53872fe%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=92953d5b-f533-4abd-85bb-4ab7f1cba905"
+        }
+      }
+    },
+    "1d2f5405-95c4-444a-811f-65022535011d" : {
+      "houseSection" : "kitchen_fruits",
+      "name" : "Lemons",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F1d2f5405-95c4-444a-811f-65022535011d%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=ccc89614-008c-49bc-9abf-13214da00824",
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "section" : "fruits"
+        }
+      }
+    },
+    "1e3d04bc-f5dc-40f9-9835-638b3442bcc7" : {
+      "houseSection" : "kitchen_fruits",
+      "name" : "Pomegranate ",
+      "stores" : {
+        "aldi" : {
+          "section" : "fruits_veggies"
+        }
+      }
+    },
+    "261dc872-707d-4f92-af65-6b24c35dc297" : {
+      "houseSection" : "fridge_dairy",
+      "name" : "Yogurt Greek Full Fat",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F261dc872-707d-4f92-af65-6b24c35dc297%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=b2059cc0-f2a4-420f-845e-9d801e4a0ea8",
+          "section" : "yogurts"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F261dc872-707d-4f92-af65-6b24c35dc297%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=228deb59-b291-42ba-b0fa-2a60db759e44",
+          "section" : "cheese_yogurts"
+        }
+      }
+    },
+    "2b8c2331-647f-4516-8592-152b8fcd1751" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Chopped Tomatoes ",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F2b8c2331-647f-4516-8592-152b8fcd1751%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=fe9e803e-3d14-43bd-8cec-aa112581bfd8",
+          "section" : "sauces_pasta"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F2b8c2331-647f-4516-8592-152b8fcd1751%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=a40ff9b9-848e-4076-bc49-0a8d4ff8fea1",
+          "section" : "pasta_sauces"
+        }
+      }
+    },
+    "312fc1ec-df60-4ba7-914f-22212accbcfd" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Chickpeas ",
+      "stores" : {
+        "aldi" : {
+          "section" : "frozen_foods_cans"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F312fc1ec-df60-4ba7-914f-22212accbcfd%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=5a4fd95f-a58d-44b6-a496-34a7394af2b6",
+          "section" : "cans_rice"
+        }
+      }
+    },
+    "32052540-9458-4957-8b03-963e800b53b9" : {
+      "houseSection" : "hardware",
+      "name" : "Whiteboard marker ",
+      "stores" : {
+        "ikea" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F32052540-9458-4957-8b03-963e800b53b9%2Fstores%2Fikea%2Fphoto.jpg?alt=media&token=3f9220e2-9f17-4b61-a3aa-f0f56ff760ac"
+        }
+      }
+    },
+    "3241fb6f-b2f4-4c40-890a-7b3e0f2e9d9e" : {
+      "houseSection" : "freezer_meat",
+      "name" : "Fish fingers"
+    },
+    "34703464-9b21-4063-a605-c13c990d21bc" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Muffins",
+      "stores" : {
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F34703464-9b21-4063-a605-c13c990d21bc%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=91617431-534d-4450-a439-8b5cd44bb3d4",
+          "section" : "eggs_pastries"
+        }
+      }
+    },
+    "373b42e1-ed14-46da-80f1-003c3551b423" : {
+      "houseSection" : "fridge_vegetables",
+      "name" : "spinach leaves",
+      "stores" : {
+        "aldi" : {
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/allproducts%2F373b42e1-ed14-46da-80f1-003c3551b423%2Fstores%2Flidl%2Ff3bb7167-58a7-448c-b692-63bbc7f0c03f.jpg?alt=media&token=d2fb33ba-8a62-4f41-9e9f-3db5576193be"
+        }
+      }
+    },
+    "39bf8b19-ea0b-4357-802d-583e72b40982" : {
+      "houseSection" : "freezer",
+      "name" : "Gravy",
+      "stores" : {
+        "ikea" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F39bf8b19-ea0b-4357-802d-583e72b40982%2Fstores%2Fikea%2Fphoto.jpg?alt=media&token=f941c59e-422b-481a-b8c8-f5adc4450797"
+        }
+      }
+    },
+    "3a147022-a527-492c-bda2-00c289599e71" : {
+      "houseSection" : "freezer_meat",
+      "name" : "Breaded haddock ",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F3a147022-a527-492c-bda2-00c289599e71%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=b4ccfe11-c21b-445e-b564-875df6a39c8c"
+        }
+      }
+    },
+    "3a61e876-5cfb-4767-88a5-56f96f17daa5" : {
+      "houseSection" : "hardware",
+      "name" : "Colouring roll",
+      "stores" : {
+        "ikea" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F3a61e876-5cfb-4767-88a5-56f96f17daa5%2Fstores%2Fikea%2Fphoto.jpg?alt=media&token=e5f54783-d8cb-4602-b6d0-735c4a429516"
+        }
+      }
+    },
+    "3af166b2-76a5-4931-b708-760761f2ea14" : {
+      "houseSection" : "freezer_meat",
+      "name" : "meatballs",
+      "stores" : {
+        "ikea" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F3af166b2-76a5-4931-b708-760761f2ea14%2Fstores%2Fikea%2Fphoto.jpg?alt=media&token=0dd7ef55-5671-425d-8985-266ab6fb2738"
+        }
+      }
+    },
+    "3bffdd08-ebc4-4141-8439-534eef6110ae" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Flax seeds",
+      "stores" : {
+        "aldi" : {
+          "section" : "nuts"
+        },
+        "lidl" : {
+          "section" : "nuts_seeds"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F3bffdd08-ebc4-4141-8439-534eef6110ae%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=be1548a4-d3b1-4c02-b82c-523c3c35a705"
+        }
+      }
+    },
+    "3e38e339-d665-4de9-be6a-6256a3556cc5" : {
+      "houseSection" : "kitchen_condiments",
+      "name" : "Salt",
+      "stores" : {
+        "dunnes" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F3e38e339-d665-4de9-be6a-6256a3556cc5%2Fstores%2Fdunnes%2Fphoto.jpg?alt=media&token=fa146fd1-d866-4ebf-a992-e691d0841e9a"
+        },
+        "lidl" : {
+          "section" : "pasta_sauces"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F3e38e339-d665-4de9-be6a-6256a3556cc5%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=6d95276d-d53b-4f18-b202-50889af94149"
+        }
+      }
+    },
+    "42c1dfa8-c305-452a-93e7-00fdfa3d2518" : {
+      "houseSection" : "kitchen",
+      "name" : "Donuts"
+    },
+    "436c721b-6bab-427d-9c9a-8681ec9ce6b9" : {
+      "houseSection" : "hardware",
+      "name" : "Twine roll",
+      "stores" : {
+        "other" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F436c721b-6bab-427d-9c9a-8681ec9ce6b9%2Fstores%2Fother%2Fphoto.jpg?alt=media&token=a27db15b-aed7-403d-ac60-a2141213380a"
+        }
+      }
+    },
+    "443a4e9d-c5bc-4024-8c8b-0d52af62eca3" : {
+      "houseSection" : "fridge",
+      "name" : "Houmous plain",
+      "stores" : {
+        "aldi" : {
+          "section" : "salads_and_meals"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F443a4e9d-c5bc-4024-8c8b-0d52af62eca3%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=9108e1b5-dd6b-4cd9-bc63-a16d25474d48",
+          "section" : "salads_readymeals"
+        }
+      }
+    },
+    "45c6fdee-af1b-43c6-8c6a-6cb6fa7b48f4" : {
+      "houseSection" : "kitchen_vitamins_tea",
+      "name" : "Kids probiotics ",
+      "stores" : {
+        "boots" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F45c6fdee-af1b-43c6-8c6a-6cb6fa7b48f4%2Fstores%2Fboots%2Fphoto.jpg?alt=media&token=0b954a18-539f-4210-a07a-e4102fecc6fa"
+        }
+      }
+    },
+    "46cea298-9fa0-4fc0-acf2-7c4b7a275189" : {
+      "houseSection" : "kitchen_vitamins_tea",
+      "name" : "Pregnacare breastfeeding ",
+      "stores" : {
+        "boots" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F46cea298-9fa0-4fc0-acf2-7c4b7a275189%2Fstores%2Fboots%2Fphoto.jpg?alt=media&token=d47921ce-f56e-4471-87e3-df3b6419e85d"
+        }
+      }
+    },
+    "479f761b-7a6b-4e2f-8310-382acd38de87" : {
+      "houseSection" : "bathroom",
+      "name" : "Tissues",
+      "stores" : {
+        "lidl" : {
+          "section" : "higyene"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F479f761b-7a6b-4e2f-8310-382acd38de87%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=4dc88edf-abca-4e53-9b71-7a4fc45528f1"
+        }
+      }
+    },
+    "47a112b7-44f7-4306-a9b5-606fe831cd93" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Penne pasta",
+      "stores" : {
+        "aldi" : {
+          "section" : "sauces_pasta"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F47a112b7-44f7-4306-a9b5-606fe831cd93%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=96a673cb-3d2f-49f2-82fc-a636a9e0da15",
+          "section" : "pasta_sauces"
+        }
+      }
+    },
+    "48e3b254-ca53-482a-843e-d80f11c07671" : {
+      "houseSection" : "bathroom_migue",
+      "name" : "boston clean leby",
+      "stores" : {
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F48e3b254-ca53-482a-843e-d80f11c07671%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=b56bd960-fe6f-4aff-b474-728d5886f57c"
+        }
+      }
+    },
+    "490ff264-f359-45ad-83b5-79aca336be08" : {
+      "houseSection" : "fridge_vegetables",
+      "name" : "Cucumber ",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F490ff264-f359-45ad-83b5-79aca336be08%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=301a6a21-aba8-4950-a811-2e74b8e24a03",
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F490ff264-f359-45ad-83b5-79aca336be08%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=c6a1d24d-bf49-4572-85cf-7fbcec4351c0",
+          "section" : "veggies"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F490ff264-f359-45ad-83b5-79aca336be08%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=7b8ad0cb-f177-4ebf-a4a9-5e20843481f1"
+        }
+      }
+    },
+    "49b1423c-3378-4d66-9ad7-851abf96cab6" : {
+      "houseSection" : "kitchen_cleaning",
+      "name" : "paper towel",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F49b1423c-3378-4d66-9ad7-851abf96cab6%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=ba603a73-dba2-434d-a91b-147bd4592f8f",
+          "section" : "toilet_paper"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F49b1423c-3378-4d66-9ad7-851abf96cab6%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=f9a50878-f184-49b7-8931-485f539e0e90",
+          "section" : "toiletpaper_water"
+        }
+      }
+    },
+    "4ae572ac-55c5-4c3b-bbad-8d6ac9bb20b4" : {
+      "houseSection" : "kitchen_cleaning",
+      "name" : "Floor cleaner",
+      "stores" : {
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F4ae572ac-55c5-4c3b-bbad-8d6ac9bb20b4%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=bfbe54b0-9cc8-4d72-a362-03c4e359db0a",
+          "section" : "cleaning_products"
+        }
+      }
+    },
+    "4c897b63-5cd3-4dab-bae9-e7ffae1bace3" : {
+      "houseSection" : "fridge",
+      "name" : "Houmus Red pepper",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F4c897b63-5cd3-4dab-bae9-e7ffae1bace3%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=32c5319c-ae82-486d-992a-eb3f5e11cf96",
+          "section" : "salads_and_meals"
+        }
+      }
+    },
+    "4d382280-7cc8-4baf-8669-caebc7ead87a" : {
+      "houseSection" : "fridge",
+      "name" : "Brown Bread 🍞",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F4d382280-7cc8-4baf-8669-caebc7ead87a%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=a55a9f2e-81fe-4a57-8b5b-f54ab1b30bd7",
+          "section" : "bread"
+        },
+        "dunnes" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F4d382280-7cc8-4baf-8669-caebc7ead87a%2Fstores%2Fdunnes%2Fphoto.jpg?alt=media&token=3ac22360-e2cf-481e-bab0-a0c48603c3d7"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F4d382280-7cc8-4baf-8669-caebc7ead87a%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=ab7225cf-242c-40d8-bac8-c50900366ef2",
+          "section" : "breaD"
+        }
+      }
+    },
+    "4e227864-1d73-4769-99b0-df88e32c64e3" : {
+      "houseSection" : "kitchen_cleaning",
+      "name" : "Bolsa de basura",
+      "stores" : {
+        "aldi" : {
+          "section" : "cleaning_products"
+        },
+        "lidl" : {
+          "section" : "cleaning_products"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F4e227864-1d73-4769-99b0-df88e32c64e3%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=b09d2d43-b72c-41ea-bf24-393f14eb504a"
+        }
+      }
+    },
+    "50fb9e8c-15c1-49ca-89f8-bff2345556f7" : {
+      "houseSection" : "kitchen_condiments",
+      "name" : "Fresh garlic",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F50fb9e8c-15c1-49ca-89f8-bff2345556f7%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=5d8da227-a661-49df-a3c6-070a943dc171",
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "section" : "veggies"
+        }
+      }
+    },
+    "52480792-ec41-4c6c-88b9-1166a935757b" : {
+      "houseSection" : "fridge_ham",
+      "name" : "Ham Trimmings",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F52480792-ec41-4c6c-88b9-1166a935757b%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=14ac8f21-310d-4bc7-ac2f-c5676182b0b7",
+          "section" : "ham_sausages"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F52480792-ec41-4c6c-88b9-1166a935757b%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=e80c9e8e-b63e-4345-a493-cc1d0fec3a5e",
+          "section" : "ham_embutidos"
+        }
+      }
+    },
+    "5810649b-1ef5-41a4-8cbf-7c70e440f4f7" : {
+      "houseSection" : "freezer_meat",
+      "name" : "Chicken tights",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F5810649b-1ef5-41a4-8cbf-7c70e440f4f7%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=c4afce93-4f02-47e6-99a9-354ce4f04aa5",
+          "section" : "meat"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F5810649b-1ef5-41a4-8cbf-7c70e440f4f7%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=e6fd6fd5-3377-4988-acf7-a656530a5df2",
+          "section" : "chicken_turkey"
+        }
+      }
+    },
+    "5a3dbaf3-3438-47ac-b293-071ca4b9e518" : {
+      "houseSection" : "hardware",
+      "name" : "Spray bottle ",
+      "stores" : {
+        "aldi" : {
+          "section" : "toilet_paper"
+        },
+        "ikea" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F5a3dbaf3-3438-47ac-b293-071ca4b9e518%2Fstores%2Fikea%2Fphoto.jpg?alt=media&token=40997c76-3752-4797-ae8f-5659641b7580"
+        },
+        "other" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F5a3dbaf3-3438-47ac-b293-071ca4b9e518%2Fstores%2Fother%2Fphoto.jpg?alt=media&token=fb75120b-c85c-4f36-9310-c315fd979779"
+        }
+      }
+    },
+    "5b878d4a-c76b-4986-80aa-51ed7007eb9a" : {
+      "houseSection" : "utility_room",
+      "name" : "Laundry Detergent",
+      "stores" : {
+        "aldi" : {
+          "section" : "cleaning_products"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F5b878d4a-c76b-4986-80aa-51ed7007eb9a%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=6354a9c6-f2b3-4d36-bdee-973d70430ab7",
+          "section" : "cleaning_products"
+        }
+      }
+    },
+    "5bb44681-3b85-48ec-bf31-f1eb9366bdff" : {
+      "houseSection" : "bathroom_shower",
+      "name" : "Shampoo ",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F5bb44681-3b85-48ec-bf31-f1eb9366bdff%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=5d1cb6f9-c3c4-4441-98b3-794f155153d9",
+          "section" : "hygiene"
+        },
+        "lidl" : {
+          "section" : "higyene"
+        }
+      }
+    },
+    "5bbc5e6f-86e0-464b-9c63-09041e9c8777" : {
+      "houseSection" : "hardware",
+      "name" : "Kinder hippo",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F5bbc5e6f-86e0-464b-9c63-09041e9c8777%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=99c06d2a-3b2a-41f3-9029-48802492f5b8"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F5bbc5e6f-86e0-464b-9c63-09041e9c8777%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=ea00925c-e6b3-4678-b76a-bb92d0acfe31"
+        }
+      }
+    },
+    "5c110c75-d7ab-47f7-aecc-3a9e4f97cf40" : {
+      "houseSection" : "baby",
+      "name" : "Nappy Rash crea",
+      "stores" : {
+        "boots" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F5c110c75-d7ab-47f7-aecc-3a9e4f97cf40%2Fstores%2Fboots%2Fphoto.jpg?alt=media&token=8c7ebf0e-30c1-48aa-99e0-c802cc787898"
+        }
+      }
+    },
+    "5c7a6c93-cd34-443c-b139-7bc1f60112a1" : {
+      "houseSection" : "bathroom_toilet",
+      "name" : "Wet wipes fragrance free",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F5c7a6c93-cd34-443c-b139-7bc1f60112a1%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=d9603854-88d5-4e61-b1d9-d95aabf9bce2",
+          "section" : "hygiene"
+        },
+        "lidl" : {
+          "section" : "higyene"
+        }
+      }
+    },
+    "5cb5b048-df28-4957-8fa2-8002a1324c55" : {
+      "houseSection" : "kitchen",
+      "name" : "Ginger\n",
+      "stores" : {
+        "aldi" : {
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "section" : "veggies"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F5cb5b048-df28-4957-8fa2-8002a1324c55%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=4e3733bd-96b7-461d-9f59-5fcf0070b302"
+        }
+      }
+    },
+    "5d339bbd-1080-4c11-9cc0-42d3bfae51e8" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Coconut milk canned ",
+      "stores" : {
+        "lidl" : {
+          "section" : "pasta_sauces"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F5d339bbd-1080-4c11-9cc0-42d3bfae51e8%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=8ccb0590-2db3-499a-a739-b9ebb9834321"
+        }
+      }
+    },
+    "5fe43972-b92f-4a19-bf43-ee80d8de6ab5" : {
+      "houseSection" : "kitchen",
+      "name" : "Kitchen Foil",
+      "stores" : {
+        "aldi" : {
+          "section" : "cleaning_products"
+        },
+        "lidl" : {
+          "section" : "cleaning_products"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F5fe43972-b92f-4a19-bf43-ee80d8de6ab5%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=18404e2e-b2e0-479a-b9e3-7b854761db47"
+        }
+      }
+    },
+    "6038359a-c449-4655-8dd7-e20db3bbac09" : {
+      "houseSection" : "fridge_dairy",
+      "name" : "Unsalted Butter",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F6038359a-c449-4655-8dd7-e20db3bbac09%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=a3cf3184-d6b2-46df-843d-16486da65e50"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F6038359a-c449-4655-8dd7-e20db3bbac09%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=4715c788-fb16-4bbc-ac79-78f1a8c0be53"
+        }
+      }
+    },
+    "633b7e72-c18c-412e-a7e8-4ed2d492993a" : {
+      "houseSection" : "kitchen_fruits",
+      "name" : "Grapes",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F633b7e72-c18c-412e-a7e8-4ed2d492993a%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=0312677f-c25b-4c66-a2bb-05275ba00349",
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F633b7e72-c18c-412e-a7e8-4ed2d492993a%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=c18d4865-5d24-43d1-abfd-611acb4b4214",
+          "section" : "fruits"
+        }
+      }
+    },
+    "660ba7c0-81f2-492d-b493-dad7bcaa0740" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Pepinillos🥒",
+      "stores" : {
+        "aldi" : {
+          "section" : "frozen_foods_cans"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F660ba7c0-81f2-492d-b493-dad7bcaa0740%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=8a93b84d-8ce8-40d4-9293-885da252897e",
+          "section" : "cans_rice"
+        }
+      }
+    },
+    "6884686a-9d59-409a-928d-9a749bcaa02a" : {
+      "houseSection" : "fridge_vegetables",
+      "name" : "Mushrooms ",
+      "stores" : {
+        "aldi" : {
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F6884686a-9d59-409a-928d-9a749bcaa02a%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=9bd51112-09d2-4544-a412-c45758b475af",
+          "section" : "salads_readymeals"
+        }
+      }
+    },
+    "6b3257e2-1814-45e4-acbd-b171e60ff0a7" : {
+      "houseSection" : "kitchen_condiments",
+      "name" : "Balsamic vinegar",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F6b3257e2-1814-45e4-acbd-b171e60ff0a7%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=344a7b46-b576-47db-92ae-a3cb55b96799",
+          "section" : "sauces_pasta"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F6b3257e2-1814-45e4-acbd-b171e60ff0a7%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=0f30d09f-f6b2-4cb0-a017-301255e99054",
+          "section" : "pasta_sauces"
+        }
+      }
+    },
+    "6b3cc633-3cb0-453c-b322-54db12bbd54f" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Wheat Bisks",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F6b3cc633-3cb0-453c-b322-54db12bbd54f%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=1c76933c-8ca3-4c7a-89a8-21fb453c1d1a",
+          "section" : "breakfast_cereal"
+        }
+      }
+    },
+    "6b68d3ea-b997-4e8b-a2cb-d9453b4d04c0" : {
+      "houseSection" : "bathroom",
+      "name" : "shower cleaner",
+      "stores" : {
+        "dunnes" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F6b68d3ea-b997-4e8b-a2cb-d9453b4d04c0%2Fstores%2Fdunnes%2Fphoto.jpg?alt=media&token=07f55863-540f-4ea5-a6fa-769d4ba5d4c2"
+        }
+      }
+    },
+    "6e0fe319-4a95-416a-a5bd-f6992aafb842" : {
+      "houseSection" : "bathroom_toilet",
+      "name" : "Toilet Gel",
+      "stores" : {
+        "aldi" : {
+          "section" : "cleaning_products"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F6e0fe319-4a95-416a-a5bd-f6992aafb842%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=9cb6d29a-63b6-46c1-a493-fe616eaa5386",
+          "section" : "cleaning_products"
+        }
+      }
+    },
+    "6e6dc4e1-daff-416a-b096-3329c12681c3" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Macadamias",
+      "stores" : {
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F6e6dc4e1-daff-416a-b096-3329c12681c3%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=cacf0a9f-1095-4c76-9ddb-618678295f9b",
+          "section" : "nuts_seeds"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F6e6dc4e1-daff-416a-b096-3329c12681c3%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=7494838b-5c41-4c61-acb7-bac4a2ff6400"
+        }
+      }
+    },
+    "7171dada-5ba0-427d-bd51-243b2c69c4a0" : {
+      "name" : "Vanilla essence",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F7171dada-5ba0-427d-bd51-243b2c69c4a0%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=251f10e6-62b6-458e-a070-879caaf4c35b"
+        },
+        "dunnes" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F7171dada-5ba0-427d-bd51-243b2c69c4a0%2Fstores%2Fdunnes%2Fphoto.jpg?alt=media&token=06ea98ac-abca-4824-9ce8-9881b2939e34"
+        },
+        "lidl" : {
+          "section" : "eggs_pastries"
+        }
+      }
+    },
+    "7505be3f-0fec-4455-8ebf-85e339dc22b9" : {
+      "houseSection" : "baby",
+      "name" : "dermexa",
+      "stores" : {
+        "boots" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F7505be3f-0fec-4455-8ebf-85e339dc22b9%2Fstores%2Fboots%2Fphoto.jpg?alt=media&token=2167b891-1559-4150-85fa-0cbf06e2272d"
+        }
+      }
+    },
+    "7763aa1e-030a-4ae0-a7e2-23b391e0e4c9" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Poppy seeds",
+      "stores" : {
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F7763aa1e-030a-4ae0-a7e2-23b391e0e4c9%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=b1fc7ad5-e3cd-4e32-bb38-0335aa4d1569"
+        }
+      }
+    },
+    "799fe43f-c204-4109-89c1-eacc77298206" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Olive oil",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F799fe43f-c204-4109-89c1-eacc77298206%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=867d0cab-59a4-40cd-b122-197416192d28",
+          "section" : "sauces_pasta"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F799fe43f-c204-4109-89c1-eacc77298206%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=c3ea7fd5-92bc-476e-b2d8-4b89698a4bbe",
+          "section" : "pasta_sauces"
+        }
+      }
+    },
+    "7b8a8e20-2daf-418f-a4ef-c925fef5339e" : {
+      "houseSection" : "kitchen_cleaning",
+      "name" : "Cream Cleaner",
+      "stores" : {
+        "aldi" : {
+          "section" : "cleaning_products"
+        },
+        "lidl" : {
+          "section" : "cleaning_products"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F7b8a8e20-2daf-418f-a4ef-c925fef5339e%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=cee63cce-cd38-48de-a917-ac8be7233ed6"
+        }
+      }
+    },
+    "7d04f8d1-0071-49f8-a265-ee9cd6ad0925" : {
+      "houseSection" : "kitchen_ground_food",
+      "name" : "Onions",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F7d04f8d1-0071-49f8-a265-ee9cd6ad0925%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=2ba85c72-a6e1-4d83-b64d-db2c5f549eb4",
+          "section" : "ground_veggies"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F7d04f8d1-0071-49f8-a265-ee9cd6ad0925%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=49df9df8-b5e3-426c-ab59-b168f3edbe54",
+          "section" : "ground_veggies"
+        }
+      }
+    },
+    "7d84378e-97fd-4128-b3ca-72b6734eaeeb" : {
+      "houseSection" : "kitchen_fruits",
+      "name" : "Pineapple 🍍 ",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F7d84378e-97fd-4128-b3ca-72b6734eaeeb%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=7e879b5b-0b28-43ff-b38e-893d7471d95c"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F7d84378e-97fd-4128-b3ca-72b6734eaeeb%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=150b2275-6bd4-444e-95b1-855aae1d5c97",
+          "section" : "fruits"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F7d84378e-97fd-4128-b3ca-72b6734eaeeb%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=92a2f9cf-099c-49ff-b2ca-452ba6d713f1"
+        }
+      }
+    },
+    "7e2e57d5-8750-45d7-aac8-3ed716be9762" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Tomato paste toothpaste ",
+      "stores" : {
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F7e2e57d5-8750-45d7-aac8-3ed716be9762%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=7d758fc2-5761-4372-b32f-da827217e8f9",
+          "section" : "pasta_sauces"
+        }
+      }
+    },
+    "7e3a3520-dd03-4401-8872-9835d1946c1e" : {
+      "houseSection" : "kitchen_vitamins_tea",
+      "name" : "Kids vitamins ",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F7e3a3520-dd03-4401-8872-9835d1946c1e%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=f6b5e917-4267-45b0-92ba-8f66deb25c79",
+          "section" : "hygiene"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F7e3a3520-dd03-4401-8872-9835d1946c1e%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=2ae475aa-b801-4cf4-a405-c37b982c5b6f",
+          "section" : "higyene"
+        }
+      }
+    },
+    "7e7e468b-6e79-49b5-b042-78e8d42a8790" : {
+      "houseSection" : "bathroom",
+      "name" : "Dental floss",
+      "stores" : {
+        "aldi" : {
+          "section" : "hygiene"
+        },
+        "lidl" : {
+          "section" : "higyene"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F7e7e468b-6e79-49b5-b042-78e8d42a8790%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=25412e60-b800-404e-9ddd-01a87f2eccdf"
+        }
+      }
+    },
+    "7eb2b4e1-d423-4bbe-818f-8b36cffa8a26" : {
+      "houseSection" : "kitchen",
+      "name" : "Juices lunchbox orange",
+      "stores" : {
+        "aldi" : {
+          "section" : "sauces_pasta"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F7eb2b4e1-d423-4bbe-818f-8b36cffa8a26%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=d1cd23ee-b2c8-4606-8f4f-d8a64a70f620",
+          "section" : "toiletpaper_water"
+        }
+      }
+    },
+    "81710e56-1aac-457d-8eee-a898aabfdc17" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Breadsticks",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F81710e56-1aac-457d-8eee-a898aabfdc17%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=ae1f39bf-a7d7-4f05-8691-dfac821e3e78",
+          "section" : "crackers_snacks"
+        },
+        "lidl" : {
+          "section" : "crackers"
+        }
+      }
+    },
+    "8489c413-3870-4cf3-97db-dad5586581cc" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Milled flaxseed",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F8489c413-3870-4cf3-97db-dad5586581cc%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=9f1f988b-8762-4381-993a-b295f5b2fc38",
+          "section" : "nuts"
+        },
+        "lidl" : {
+          "section" : "nuts_seeds"
+        }
+      }
+    },
+    "886c93d3-2695-4d3b-a636-91289b439f28" : {
+      "houseSection" : "kitchen_cleaning",
+      "name" : "Esponjas",
+      "stores" : {
+        "aldi" : {
+          "section" : "cleaning_products"
+        },
+        "lidl" : {
+          "section" : "cleaning_products"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F886c93d3-2695-4d3b-a636-91289b439f28%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=4b1a5159-4e10-46d3-9d8a-2a9ab639d0d7"
+        }
+      }
+    },
+    "8d3469f4-491b-4c0d-840c-8f4f99cd336a" : {
+      "houseSection" : "fridge_vegetables",
+      "name" : "Aubergine",
+      "stores" : {
+        "aldi" : {
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F8d3469f4-491b-4c0d-840c-8f4f99cd336a%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=c887ba20-2b97-4ce5-a5b2-d34228917a84",
+          "section" : "veggies"
+        }
+      }
+    },
+    "911c9418-cfeb-4bb9-a295-12762164001c" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Tomato Passata 🍅",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F911c9418-cfeb-4bb9-a295-12762164001c%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=9a6079da-131c-4b85-b005-4cd629f47e5f",
+          "section" : "sauces_pasta"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F911c9418-cfeb-4bb9-a295-12762164001c%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=21b7632f-7eba-45a1-8125-a9ec79dfd158"
+        }
+      }
+    },
+    "91a3bbbd-df0d-4b3f-a178-644ff1e7a314" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "oatmeal",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F91a3bbbd-df0d-4b3f-a178-644ff1e7a314%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=518c5bd0-b6c7-4544-99a6-7352e2effbcb",
+          "section" : "breakfast_cereal"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F91a3bbbd-df0d-4b3f-a178-644ff1e7a314%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=49750f1a-dac5-4eba-add6-dc4ba9388a22",
+          "section" : "cereals"
+        }
+      }
+    },
+    "9571f23d-9109-4807-a37b-afe8d96eb739" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "cereal chocolate",
+      "stores" : {
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F9571f23d-9109-4807-a37b-afe8d96eb739%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=60baebd3-d4fe-44ed-8d98-297b62206f68",
+          "section" : "cereals"
+        }
+      }
+    },
+    "95de3f5d-432c-4e11-a3b0-37f9119f6357" : {
+      "houseSection" : "fridge_dairy",
+      "name" : "Yogurt Bebe 🍶",
+      "stores" : {
+        "aldi" : {
+          "section" : "yogurts"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F95de3f5d-432c-4e11-a3b0-37f9119f6357%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=be2b9dfc-8956-4857-a340-6c359bbab785",
+          "section" : "cheese_yogurts"
+        }
+      }
+    },
+    "97356d79-02d6-474a-9d2f-d7148afc19e3" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Goji berries",
+      "stores" : {
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F97356d79-02d6-474a-9d2f-d7148afc19e3%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=9de92cca-b207-43f4-85ef-4bfdbb59b163"
+        }
+      }
+    },
+    "9809d2cf-d47f-4a4b-b43d-9fe3afd996f0" : {
+      "houseSection" : "fridge",
+      "name" : "Oat milk",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F9809d2cf-d47f-4a4b-b43d-9fe3afd996f0%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=0c19e2f9-0153-4cb0-8cda-32f746d388b8",
+          "section" : "milk_juice"
+        },
+        "lidl" : {
+          "section" : "milk_juices"
+        }
+      }
+    },
+    "9810b82e-8780-4b06-8229-7bb03206e73d" : {
+      "houseSection" : "hardware",
+      "name" : "Spiderweb",
+      "stores" : {
+        "other" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F9810b82e-8780-4b06-8229-7bb03206e73d%2Fstores%2Fother%2Fphoto.jpg?alt=media&token=0ea165f2-04bc-4f10-9cf4-750e356d9cc3"
+        }
+      }
+    },
+    "98b271cc-e497-4458-a3f8-d0d453ab86b2" : {
+      "houseSection" : "fridge_dairy",
+      "name" : "Yogurt Greek fat free",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F98b271cc-e497-4458-a3f8-d0d453ab86b2%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=3e0f115d-5a89-4790-bd2c-c49be68a73d9",
+          "section" : "yogurts"
+        }
+      }
+    },
+    "9b68350d-d5ce-44c8-8977-781437b3b057" : {
+      "houseSection" : "fridge",
+      "name" : "Coconut milk box",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F9b68350d-d5ce-44c8-8977-781437b3b057%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=17e69688-853e-434b-99b5-ee91ad383990",
+          "section" : "sauces_pasta"
+        },
+        "lidl" : {
+          "section" : "pasta_sauces"
+        }
+      }
+    },
+    "9e2b73aa-4d95-4173-a04d-f63eac622116" : {
+      "houseSection" : "bathroom_migue",
+      "name" : "Hair Gel",
+      "stores" : {
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F9e2b73aa-4d95-4173-a04d-f63eac622116%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=125514cf-4658-4425-a7b9-52bd27faf7e1"
+        }
+      }
+    },
+    "9ffc861a-9c08-4563-ba75-8380a3fa811c" : {
+      "houseSection" : "hardware",
+      "name" : "Cat food 🐈",
+      "stores" : {
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2F9ffc861a-9c08-4563-ba75-8380a3fa811c%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=cab0cfec-449d-4eb7-ac26-bbe3c5a56722"
+        }
+      }
+    },
+    "a148fa87-8802-4894-8af3-36e64591aa72" : {
+      "houseSection" : "freezer_meat",
+      "name" : "Salmon",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fa148fa87-8802-4894-8af3-36e64591aa72%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=b81a62f7-717d-4cbc-808e-098961602693",
+          "section" : "meat"
+        },
+        "lidl" : {
+          "section" : "beef_fish"
+        }
+      }
+    },
+    "a3a7585c-4d1b-4ad5-b17a-bd96d5cd0a3c" : {
+      "houseSection" : "kitchen_ground_food",
+      "name" : "Carrots",
+      "stores" : {
+        "aldi" : {
+          "section" : "ground_veggies"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fa3a7585c-4d1b-4ad5-b17a-bd96d5cd0a3c%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=5bae792b-547d-4b35-82cb-6899cea74063",
+          "section" : "ground_veggies"
+        }
+      }
+    },
+    "a3d531f1-e131-4a69-9d14-fff5d02dd5d0" : {
+      "houseSection" : "kitchen_vitamins_tea",
+      "name" : "Anise tea",
+      "stores" : {
+        "avoca" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fa3d531f1-e131-4a69-9d14-fff5d02dd5d0%2Fstores%2Favoca%2Fphoto.jpg?alt=media&token=cd026984-3448-42c1-b478-fadbce42e386"
+        }
+      }
+    },
+    "a6a67213-aa33-4d23-af52-9addfad4f0ca" : {
+      "houseSection" : "fridge",
+      "name" : "Ham slices",
+      "stores" : {
+        "aldi" : {
+          "section" : "ham_sausages"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fa6a67213-aa33-4d23-af52-9addfad4f0ca%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=c91391ae-6d61-4565-98ce-2bdefb93309f",
+          "section" : "ham_embutidos"
+        }
+      }
+    },
+    "a80c8c69-e13b-49e8-8ed3-fe145f69d7d4" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Honey , 🐝",
+      "stores" : {
+        "aldi" : {
+          "section" : "conserves"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fa80c8c69-e13b-49e8-8ed3-fe145f69d7d4%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=acf435e6-752e-40bd-ba7c-53910d5d226c",
+          "section" : "conserves_tea"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fa80c8c69-e13b-49e8-8ed3-fe145f69d7d4%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=0db7dfee-e25b-483d-a65f-325a87b72c36"
+        }
+      }
+    },
+    "a81e2048-cd12-4236-961d-b05128793d03" : {
+      "houseSection" : "fridge_ham",
+      "name" : "Sausages",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fa81e2048-cd12-4236-961d-b05128793d03%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=af976a74-bad2-4ab1-a4c9-2a638d38c729"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fa81e2048-cd12-4236-961d-b05128793d03%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=f8354392-8da3-4f65-9578-b6ca55115579",
+          "section" : "ham_embutidos"
+        }
+      }
+    },
+    "a847fb1d-d1d2-4847-bfc6-a9e6d614932d" : {
+      "houseSection" : "freezer_meat",
+      "name" : "Chicken nuggets",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fa847fb1d-d1d2-4847-bfc6-a9e6d614932d%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=aeec4c8b-c273-439a-9f37-35327fd4fec1",
+          "section" : "frozen_foods_cans"
+        },
+        "lidl" : {
+          "section" : "frozen_veggies"
+        }
+      }
+    },
+    "aa9fa49a-62d1-44e1-a463-c482306e7b47" : {
+      "houseSection" : "fridge_vegetables",
+      "name" : "Spinach",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Faa9fa49a-62d1-44e1-a463-c482306e7b47%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=5a747287-5d30-44b4-925d-75fb6c61fd1c",
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Faa9fa49a-62d1-44e1-a463-c482306e7b47%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=9b7c164b-8ad2-4e11-8cee-3717d5f26a09",
+          "section" : "salads_readymeals"
+        }
+      }
+    },
+    "ab193907-31c1-4ee7-a61a-86aca3b467c9" : {
+      "houseSection" : "kitchen_vitamins_tea",
+      "name" : "Calpol",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fab193907-31c1-4ee7-a61a-86aca3b467c9%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=e6a5ba6a-31a5-4d05-99cd-b33dfd0619c6"
+        },
+        "boots" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fab193907-31c1-4ee7-a61a-86aca3b467c9%2Fstores%2Fboots%2Fphoto.jpg?alt=media&token=658abf42-c8a5-49ba-b99a-82f048a2323e"
+        }
+      }
+    },
+    "acde0ef4-24a0-45fb-a270-814de9fdf8c8" : {
+      "houseSection" : "kitchen",
+      "name" : "Cling Film",
+      "stores" : {
+        "aldi" : {
+          "section" : "cleaning_products"
+        },
+        "lidl" : {
+          "section" : "cleaning_products"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Facde0ef4-24a0-45fb-a270-814de9fdf8c8%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=1938ec22-f2b1-4a10-ac1b-1c2ac5b9a737"
+        }
+      }
+    },
+    "af5b764b-55b3-4125-bc85-f519913e46ae" : {
+      "houseSection" : "freezer_veggies",
+      "name" : "Brocoli ",
+      "stores" : {
+        "aldi" : {
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "section" : "frozen_veggies"
+        }
+      }
+    },
+    "afbba6b2-d77c-4e78-9f51-f675bb57a9e5" : {
+      "houseSection" : "freezer_fruits",
+      "name" : "blueberries frozen",
+      "stores" : {
+        "aldi" : {
+          "section" : "frozen_fruits"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fafbba6b2-d77c-4e78-9f51-f675bb57a9e5%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=4ce8e59e-9447-4add-a6c0-33569030b156",
+          "section" : "frozen_fruits"
+        }
+      }
+    },
+    "b04247c8-b53f-46d7-bb1f-8775fe16e811" : {
+      "houseSection" : "hardware",
+      "name" : "Aaa test",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb04247c8-b53f-46d7-bb1f-8775fe16e811%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=3ddb6c19-375b-486e-84cd-92756468bdd1"
+        },
+        "avoca" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb04247c8-b53f-46d7-bb1f-8775fe16e811%2Fstores%2Favoca%2Fphoto.jpg?alt=media&token=3a8cc03c-d800-4132-a46d-ed7d4bf95f3c"
+        },
+        "boots" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb04247c8-b53f-46d7-bb1f-8775fe16e811%2Fstores%2Fboots%2Fphoto.jpg?alt=media&token=31ce2ab2-99a4-48cc-ae6b-41a378d5fb28"
+        },
+        "dunnes" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb04247c8-b53f-46d7-bb1f-8775fe16e811%2Fstores%2Fdunnes%2Fphoto.jpg?alt=media&token=4eac7db8-a28e-44e3-bb11-7641a8a312e7"
+        },
+        "ikea" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb04247c8-b53f-46d7-bb1f-8775fe16e811%2Fstores%2Fikea%2Fphoto.jpg?alt=media&token=f9e4d992-a960-4f9e-b16c-c4b81a410748"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb04247c8-b53f-46d7-bb1f-8775fe16e811%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=bd626e4b-1f22-4acd-a469-3ee6f83a5097"
+        }
+      }
+    },
+    "b0ac36e5-dbe2-4d9b-b24f-90a1722ef1a5" : {
+      "houseSection" : "baby",
+      "name" : "Sterimar",
+      "stores" : {
+        "boots" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb0ac36e5-dbe2-4d9b-b24f-90a1722ef1a5%2Fstores%2Fboots%2Fphoto.jpg?alt=media&token=4a4b156b-d47c-4038-a489-5f3596acc843"
+        }
+      }
+    },
+    "b1ec9a12-d42d-4914-9821-6ad7fe3a8bed" : {
+      "houseSection" : "kitchen_fruits",
+      "name" : "Avocados",
+      "stores" : {
+        "aldi" : {
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "section" : "veggies"
+        }
+      }
+    },
+    "b2767278-104c-4c9b-8bc1-d061952e180e" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "BBQ Sauce Ketchup",
+      "stores" : {
+        "lidl" : {
+          "section" : "pasta_sauces"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb2767278-104c-4c9b-8bc1-d061952e180e%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=560feef8-fe09-4992-a22b-f9796ffa3b97"
+        }
+      }
+    },
+    "b2882a84-70dc-4c4c-ba0b-4809504bf378" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Seed mix",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb2882a84-70dc-4c4c-ba0b-4809504bf378%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=727e7aa5-df21-468d-bd1f-727331f659be",
+          "section" : "nuts"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb2882a84-70dc-4c4c-ba0b-4809504bf378%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=4eec5b7d-a5b8-471a-a407-b0405a88e6a5",
+          "section" : "nuts_seeds"
+        }
+      }
+    },
+    "b2b47151-356e-4780-9102-0af548d7eecb" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Corn Flakes",
+      "stores" : {
+        "aldi" : {
+          "section" : "breakfast_cereal"
+        },
+        "lidl" : {
+          "section" : "cereals"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb2b47151-356e-4780-9102-0af548d7eecb%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=47cddd2c-c0ec-4da3-a4fd-0521ea08b5ea"
+        }
+      }
+    },
+    "b44695c8-e612-4118-badc-babfcaf874bd" : {
+      "houseSection" : "fridge_dairy",
+      "name" : "Maasdam cheese 🧀",
+      "stores" : {
+        "aldi" : {
+          "section" : "cheese"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb44695c8-e612-4118-badc-babfcaf874bd%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=fb2f9341-4c92-4d98-8a7a-e95236349e44",
+          "section" : "cheese_yogurts"
+        }
+      }
+    },
+    "b4d37c78-fa4b-40ca-9d24-923e1f4d787e" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Nutella",
+      "stores" : {
+        "lidl" : {
+          "section" : "conserves_tea"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb4d37c78-fa4b-40ca-9d24-923e1f4d787e%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=c75656e5-b51c-4926-8b1e-d2b9f903fa51"
+        }
+      }
+    },
+    "b52bb3f0-1858-484d-b961-977a01d56e82" : {
+      "houseSection" : "fridge_dairy",
+      "name" : "Gouda cheese ",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb52bb3f0-1858-484d-b961-977a01d56e82%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=324f5cdd-f687-46bf-a558-977bc762d756",
+          "section" : "cheese"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb52bb3f0-1858-484d-b961-977a01d56e82%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=8840af58-c4da-4e5d-af10-3067d6de0c30",
+          "section" : "cheese_yogurts"
+        }
+      }
+    },
+    "b585ce4d-0fdb-4d6f-88ce-ccfd20c876d1" : {
+      "houseSection" : "fridge",
+      "name" : "Strawberries ",
+      "stores" : {
+        "aldi" : {
+          "section" : "fruits_veggies"
+        },
+        "dunnes" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb585ce4d-0fdb-4d6f-88ce-ccfd20c876d1%2Fstores%2Fdunnes%2Fphoto.jpg?alt=media&token=9dc092b2-2d58-4ff0-8c87-3a6222a97432"
+        }
+      }
+    },
+    "b5fc663f-fe66-484f-a4b5-738a26a3945a" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Mushy peas",
+      "stores" : {
+        "aldi" : {
+          "section" : "frozen_foods_cans"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb5fc663f-fe66-484f-a4b5-738a26a3945a%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=0e245052-9b4c-4274-bef1-455e5dabafff",
+          "section" : "cans_rice"
+        }
+      }
+    },
+    "b6833867-7201-436d-a79f-1cab50429dc8" : {
+      "houseSection" : "fridge",
+      "name" : "houmus moroccan",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb6833867-7201-436d-a79f-1cab50429dc8%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=5298fd4a-f291-4126-820d-66cb5336ad72",
+          "section" : "salads_and_meals"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb6833867-7201-436d-a79f-1cab50429dc8%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=331643d1-afe3-426a-9127-f1bd81f99276",
+          "section" : "salads_readymeals"
+        }
+      }
+    },
+    "b69003a7-72ba-466a-941b-59eccfa48a9a" : {
+      "houseSection" : "fridge",
+      "name" : "pancakes",
+      "stores" : {
+        "aldi" : {
+          "section" : "bread"
+        },
+        "lidl" : {
+          "section" : "breaD"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb69003a7-72ba-466a-941b-59eccfa48a9a%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=74d87936-c391-498a-bfba-6115f07448f1"
+        }
+      }
+    },
+    "b850c6c4-81b8-4faa-bc71-3116a8bf0126" : {
+      "houseSection" : "fridge_dairy",
+      "name" : "Cream",
+      "stores" : {
+        "aldi" : {
+          "section" : "milk_juice"
+        },
+        "dunnes" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb850c6c4-81b8-4faa-bc71-3116a8bf0126%2Fstores%2Fdunnes%2Fphoto.jpg?alt=media&token=2a65a136-1d9b-4ec7-9d19-d3aab82a789a"
+        },
+        "lidl" : {
+          "section" : "milk_juices"
+        }
+      }
+    },
+    "b865ef13-26ff-4e2a-a42c-583be05bfb1b" : {
+      "houseSection" : "kitchen_fruits",
+      "name" : "Fresh coconut ",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fb865ef13-26ff-4e2a-a42c-583be05bfb1b%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=1d46be79-85f3-4e19-8dc5-a2fc3b344946"
+        }
+      }
+    },
+    "bba3cdd6-e6ce-481e-9277-804b912eb684" : {
+      "houseSection" : "fridge_vegetables",
+      "name" : "Salad Italian",
+      "stores" : {
+        "aldi" : {
+          "section" : "salads_and_meals"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fbba3cdd6-e6ce-481e-9277-804b912eb684%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=7f13b078-3fcb-48e0-97b8-76673becb69e",
+          "section" : "salads_readymeals"
+        }
+      }
+    },
+    "bbf323d5-37ef-4d03-8d66-7a37d177d5bb" : {
+      "houseSection" : "kitchen_vitamins_tea",
+      "name" : "vitamin c",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fbbf323d5-37ef-4d03-8d66-7a37d177d5bb%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=2d152985-8a0f-4ab4-80a6-05f8e9490f66",
+          "section" : "hygiene"
+        }
+      }
+    },
+    "bc16674f-ed27-4c2c-808d-93d8f4bccd03" : {
+      "houseSection" : "fridge",
+      "name" : "Soups",
+      "stores" : {
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fbc16674f-ed27-4c2c-808d-93d8f4bccd03%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=3d668472-28c5-4879-9980-5075cfad7b12",
+          "section" : "salads_readymeals"
+        }
+      }
+    },
+    "bc9d908b-9930-4576-a836-6d22598a398c" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Kidney beans",
+      "stores" : {
+        "aldi" : {
+          "section" : "frozen_foods_cans"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fbc9d908b-9930-4576-a836-6d22598a398c%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=66f1aa2f-7d9d-4d37-9c25-167863b5f376",
+          "section" : "cans_rice"
+        }
+      }
+    },
+    "bd80b650-b948-4759-b367-ba6d58d56653" : {
+      "houseSection" : "kitchen_fruits",
+      "name" : "Peras 🍐",
+      "stores" : {
+        "aldi" : {
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fbd80b650-b948-4759-b367-ba6d58d56653%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=ecc4e6d2-e3e5-4a9c-bc6e-936724cc4860"
+        }
+      }
+    },
+    "bda1c5fc-eff5-4984-925b-aba01ee9cc63" : {
+      "houseSection" : "fridge_ham",
+      "name" : "ham turkey",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fbda1c5fc-eff5-4984-925b-aba01ee9cc63%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=271fb102-1011-479d-99cf-8b67423ec4e4",
+          "section" : "ham_sausages"
+        },
+        "lidl" : {
+          "section" : "ham_embutidos"
+        }
+      }
+    },
+    "c23f8bfc-4a2f-4e55-9f65-5c17495b364c" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Prunes",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fc23f8bfc-4a2f-4e55-9f65-5c17495b364c%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=cb801749-150f-4953-aa6c-174401fc652f",
+          "section" : "nuts"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fc23f8bfc-4a2f-4e55-9f65-5c17495b364c%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=323e4137-e301-49a3-b7ce-5b35827637ce",
+          "section" : "nuts_seeds"
+        }
+      }
+    },
+    "c2fbc48e-aea0-4d45-bfed-7a728b1e3f20" : {
+      "houseSection" : "utility_room",
+      "name" : "Laundry detergent sensitive",
+      "stores" : {
+        "aldi" : {
+          "section" : "cleaning_products"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fc2fbc48e-aea0-4d45-bfed-7a728b1e3f20%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=e32acfe3-b90b-4d82-a300-080497962824",
+          "section" : "cleaning_products"
+        }
+      }
+    },
+    "c30b35b4-3455-4aff-9a01-ee35013371c3" : {
+      "houseSection" : "bathroom_migue",
+      "name" : "Eye drops intensive 👀",
+      "stores" : {
+        "dunnes" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fc30b35b4-3455-4aff-9a01-ee35013371c3%2Fstores%2Fdunnes%2Fphoto.jpg?alt=media&token=a9424c91-fda9-4d78-bfc4-c148e0fec70e"
+        }
+      }
+    },
+    "c47c4aac-3716-4b2c-9682-f5786591aeab" : {
+      "houseSection" : "utility_room",
+      "name" : "Fabric Conditioner",
+      "stores" : {
+        "aldi" : {
+          "section" : "cleaning_products"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fc47c4aac-3716-4b2c-9682-f5786591aeab%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=61c9ecc0-0865-4a82-a606-3eb821df5d3c"
+        }
+      }
+    },
+    "c5a9722e-0915-41a4-99be-8a1a95f4d4a2" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "pistachio ",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fc5a9722e-0915-41a4-99be-8a1a95f4d4a2%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=b0b1af8d-e545-4739-89a5-cf087b6617db",
+          "section" : "nuts"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fc5a9722e-0915-41a4-99be-8a1a95f4d4a2%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=64c83866-a88b-48b2-992b-6f5d7d66465e",
+          "section" : "nuts_seeds"
+        }
+      }
+    },
+    "c651b8b2-fdfd-4630-8b96-abe6a6984516" : {
+      "houseSection" : "freezer_fruits",
+      "name" : "Red Fruits frozen",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fc651b8b2-fdfd-4630-8b96-abe6a6984516%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=97e9d78e-796e-4492-a02f-657440a16af1",
+          "section" : "frozen_fruits"
+        },
+        "lidl" : {
+          "section" : "frozen_fruits"
+        }
+      }
+    },
+    "c67cfe26-f0eb-4748-9e5e-e5529d309810" : {
+      "houseSection" : "kitchen_fruits",
+      "name" : "bananas 🍌",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fc67cfe26-f0eb-4748-9e5e-e5529d309810%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=9e663329-5d59-4e5f-ab66-7b5393a05a37",
+          "section" : "fruits_veggies"
+        },
+        "dunnes" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fc67cfe26-f0eb-4748-9e5e-e5529d309810%2Fstores%2Fdunnes%2Fphoto.jpg?alt=media&token=38b71d15-be3c-4e23-8f87-79ca8d4f2e2a"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fc67cfe26-f0eb-4748-9e5e-e5529d309810%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=e67f024f-ca35-4e5a-9f90-682570dcf973",
+          "section" : "fruits"
+        }
+      }
+    },
+    "c7548e95-0a90-4fa3-b52a-d497eb2799b5" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Ketchup 🍅",
+      "stores" : {
+        "aldi" : {
+          "section" : "frozen_foods_cans"
+        },
+        "lidl" : {
+          "section" : "pasta_sauces"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fc7548e95-0a90-4fa3-b52a-d497eb2799b5%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=2d1f9eba-6efd-42f4-9e34-64b730179129"
+        }
+      }
+    },
+    "c78be35f-d3a4-4b92-adc3-a7d2c453e201" : {
+      "houseSection" : "kitchen_ground_food",
+      "name" : "Sweet potatoes ",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fc78be35f-d3a4-4b92-adc3-a7d2c453e201%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=02c27c03-d75d-4968-b1fe-e00acd465257",
+          "section" : "ground_veggies"
+        },
+        "lidl" : {
+          "section" : "ground_veggies"
+        }
+      }
+    },
+    "c8bfc2ca-ac0c-4806-9805-231a94cb14da" : {
+      "houseSection" : "kitchen",
+      "name" : "Hot chicken legs",
+      "stores" : {
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fc8bfc2ca-ac0c-4806-9805-231a94cb14da%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=53a5918f-bd0b-4e8c-82a9-f4ccab0e1cb0"
+        }
+      }
+    },
+    "ca63515d-2b56-4b30-aa8b-fbac94b1f526" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "seeds chia",
+      "stores" : {
+        "aldi" : {
+          "section" : "nuts"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fca63515d-2b56-4b30-aa8b-fbac94b1f526%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=81226c5b-afae-4777-b4d1-f546244dd70f"
+        }
+      }
+    },
+    "cb0259af-004f-4c5a-96dc-e3201bc0b232" : {
+      "houseSection" : "kitchen",
+      "name" : "Big food bags",
+      "stores" : {
+        "ikea" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fcb0259af-004f-4c5a-96dc-e3201bc0b232%2Fstores%2Fikea%2Fphoto.jpg?alt=media&token=a5c50e4e-a905-4987-a068-41bbcbdd85ee"
+        }
+      }
+    },
+    "cb13cf77-47f6-4f31-b6f9-6398979609cd" : {
+      "houseSection" : "bathroom_migue",
+      "name" : "boston lens",
+      "stores" : {
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fcb13cf77-47f6-4f31-b6f9-6398979609cd%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=c6539910-c4b5-4dc7-95e2-53dce4f0df66"
+        }
+      }
+    },
+    "cb4a01d8-5011-4473-ab91-f590ad7c50b5" : {
+      "houseSection" : "kitchen_ground_food",
+      "name" : "Potatoes ",
+      "stores" : {
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fcb4a01d8-5011-4473-ab91-f590ad7c50b5%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=f8e948b3-8f7c-4dfa-b7e2-be82c90720c8",
+          "section" : "ground_veggies"
+        }
+      }
+    },
+    "ce0c00f8-3c11-468c-85e7-bc3d8bc7d1a4" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "BBQ beans",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fce0c00f8-3c11-468c-85e7-bc3d8bc7d1a4%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=cabaa755-2e79-41c0-b849-5bcba31c4d35",
+          "section" : "sauces_pasta"
+        },
+        "lidl" : {
+          "section" : "cans_rice"
+        }
+      }
+    },
+    "ce0ee429-9449-4d04-9fdb-96dd9959f12d" : {
+      "houseSection" : "bathroom_shower",
+      "name" : "body wash",
+      "stores" : {
+        "aldi" : {
+          "section" : "hygiene"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/allproducts%2Fce0ee429-9449-4d04-9fdb-96dd9959f12d%2Fstores%2Flidl%2Ff555068e-7591-4c27-b8d9-a582b921ca89.jpg?alt=media&token=44deeae7-9818-4474-aff7-dab4ea735ea3"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fce0ee429-9449-4d04-9fdb-96dd9959f12d%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=b7fad9c4-b489-469c-80f8-fcdfb8bec9c1"
+        }
+      }
+    },
+    "ceb09897-2c3c-45ef-839b-e6e403b77e5d" : {
+      "houseSection" : "kitchen_fruits",
+      "name" : "kiwis 🥝",
+      "stores" : {
+        "aldi" : {
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fceb09897-2c3c-45ef-839b-e6e403b77e5d%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=eac3c9f2-f8e6-4ba3-965a-967feac5466b",
+          "section" : "fruits"
+        }
+      }
+    },
+    "d004c8d9-778e-4e0a-908a-c70ea7234816" : {
+      "houseSection" : "bathroom_toilet",
+      "name" : "Air freshener",
+      "stores" : {
+        "aldi" : {
+          "section" : "cleaning_products"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd004c8d9-778e-4e0a-908a-c70ea7234816%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=4ba5c836-de0a-40af-95ed-5cb94b75c85b"
+        }
+      }
+    },
+    "d02e6506-dd80-4966-8084-15d5c5980069" : {
+      "name" : "los piscos",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd02e6506-dd80-4966-8084-15d5c5980069%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=b9c832f3-3134-46a8-abf9-48cf4b7660a8",
+          "section" : "milk_juice"
+        },
+        "dunnes" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd02e6506-dd80-4966-8084-15d5c5980069%2Fstores%2Fdunnes%2Fphoto.jpg?alt=media&token=3807f10a-7a77-471d-acd7-3483e4b123e7"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd02e6506-dd80-4966-8084-15d5c5980069%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=c7d3271b-1d8f-4d35-a70e-eefcbde1bf53"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd02e6506-dd80-4966-8084-15d5c5980069%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=737ae52c-faca-470f-adc8-9f70c06176d2"
+        }
+      }
+    },
+    "d0c4c79f-ee78-42f2-a3f4-b0fe842c3b57" : {
+      "houseSection" : "freezer",
+      "name" : "Lasagna Beef",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd0c4c79f-ee78-42f2-a3f4-b0fe842c3b57%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=ece25a93-034c-4925-9dca-4d5f23855f91",
+          "section" : "salads_and_meals"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd0c4c79f-ee78-42f2-a3f4-b0fe842c3b57%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=4caf6f80-1a89-4781-8448-c36683f8c94b",
+          "section" : "salads_readymeals"
+        }
+      }
+    },
+    "d22a5f47-234d-4c2c-b4c8-677927958996" : {
+      "houseSection" : "bathroom",
+      "name" : "Tooth paste",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd22a5f47-234d-4c2c-b4c8-677927958996%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=ccec722d-438b-4fd1-badb-5fef50fc09dd",
+          "section" : "hygiene"
+        },
+        "lidl" : {
+          "section" : "higyene"
+        }
+      }
+    },
+    "d2ec9cbc-a5b3-41fb-a86a-d1c2a17e6083" : {
+      "houseSection" : "fridge_dairy",
+      "name" : "Strawberry Yogurt 🍓 🥛",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd2ec9cbc-a5b3-41fb-a86a-d1c2a17e6083%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=a5ed7b3f-5bc1-497f-8ff1-6b07383da5b6",
+          "section" : "yogurts"
+        },
+        "lidl" : {
+          "section" : "cheese_yogurts"
+        }
+      }
+    },
+    "d378a21a-94b5-4ca9-a05d-50789c77c194" : {
+      "houseSection" : "baby",
+      "name" : "Baby wipes",
+      "stores" : {
+        "boots" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd378a21a-94b5-4ca9-a05d-50789c77c194%2Fstores%2Fboots%2Fphoto.jpg?alt=media&token=c0dbcc28-7c1f-41c1-895b-546564047c87"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd378a21a-94b5-4ca9-a05d-50789c77c194%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=3c9ffa84-de06-4ee5-b09e-5894e8ea5d9a",
+          "section" : "higyene"
+        }
+      }
+    },
+    "d466243b-cc9b-4a0f-a9de-442f82345b34" : {
+      "houseSection" : "kitchen_vitamins_tea",
+      "name" : "Tea berries",
+      "stores" : {
+        "lidl" : {
+          "section" : "conserves_tea"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd466243b-cc9b-4a0f-a9de-442f82345b34%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=fc66a3a7-e24c-4193-b524-fc5ca2795f30"
+        }
+      }
+    },
+    "d550b042-4c20-4026-a6b8-360c9291634b" : {
+      "houseSection" : "kitchen_condiments",
+      "name" : "Soy Sauce",
+      "stores" : {
+        "aldi" : {
+          "section" : "sauces_pasta"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd550b042-4c20-4026-a6b8-360c9291634b%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=b77dd573-6e5f-4008-a134-4d3048f732f0",
+          "section" : "pasta_sauces"
+        }
+      }
+    },
+    "d5ad3b41-b201-45e2-9173-ba3cdef12266" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Lentils can",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd5ad3b41-b201-45e2-9173-ba3cdef12266%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=ac2b19e5-bec1-4747-a53c-10d8d5bf7787",
+          "section" : "frozen_foods_cans"
+        },
+        "lidl" : {
+          "section" : "cans_rice"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd5ad3b41-b201-45e2-9173-ba3cdef12266%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=b4630343-8cfa-466d-b197-2e51818a9e6a"
+        }
+      }
+    },
+    "d6525458-662c-4ed1-bc02-0091daf49f42" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Risotto rice",
+      "stores" : {
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd6525458-662c-4ed1-bc02-0091daf49f42%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=7d73278b-a5e9-490a-9ecf-5cde5129ffda"
+        }
+      }
+    },
+    "d9037403-adc0-4128-bbc7-36e840cb6e3b" : {
+      "houseSection" : "hardware",
+      "name" : "Crafts wooden pegs",
+      "stores" : {
+        "other" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fd9037403-adc0-4128-bbc7-36e840cb6e3b%2Fstores%2Fother%2Fphoto.jpg?alt=media&token=3f913da4-0ebe-4f75-804c-9cc49c811d31"
+        }
+      }
+    },
+    "dabf6489-16c0-4071-8c6e-2dde5d1c9612" : {
+      "houseSection" : "fridge_dairy",
+      "name" : "Mozzarella Cheese",
+      "stores" : {
+        "aldi" : {
+          "section" : "cheese"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fdabf6489-16c0-4071-8c6e-2dde5d1c9612%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=02a8f0e6-63d5-4d3a-9f00-46e6e09bf680",
+          "section" : "cheese_yogurts"
+        }
+      }
+    },
+    "dafa227c-1d3e-4f94-8a2b-38f0042db8af" : {
+      "houseSection" : "freezer_meat",
+      "name" : "Panceta ",
+      "stores" : {
+        "aldi" : {
+          "section" : "meat"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fdafa227c-1d3e-4f94-8a2b-38f0042db8af%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=26eb748e-af4a-4f33-9cc6-76d2d7bd5497",
+          "section" : "ham_embutidos"
+        }
+      }
+    },
+    "db3edc30-c4bb-4d2c-9dca-95c83048c40c" : {
+      "houseSection" : "fridge_vegetables",
+      "name" : "rocket leaves",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fdb3edc30-c4bb-4d2c-9dca-95c83048c40c%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=84a830e5-30ad-4913-ab76-acfd2b71cca8",
+          "section" : "salads_and_meals"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fdb3edc30-c4bb-4d2c-9dca-95c83048c40c%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=72dd4d09-8237-461f-8699-f07221b6d239",
+          "section" : "salads_readymeals"
+        }
+      }
+    },
+    "dbb672af-e3a8-4c22-9d04-6bb0da980a59" : {
+      "houseSection" : "fridge_dairy",
+      "name" : "Cheese Triangles",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fdbb672af-e3a8-4c22-9d04-6bb0da980a59%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=d251df9e-3e76-49a0-ad10-f9799bf1c171",
+          "section" : "cheese"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fdbb672af-e3a8-4c22-9d04-6bb0da980a59%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=5d7e5e0a-d4ac-45ed-9759-30d6d3e53db4",
+          "section" : "cheese_yogurts"
+        }
+      }
+    },
+    "dc35c3c3-d853-44ab-b4ce-58f1ee903462" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Wheat germ",
+      "stores" : {
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fdc35c3c3-d853-44ab-b4ce-58f1ee903462%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=ee8667b8-15ba-4310-b422-597554015e13"
+        }
+      }
+    },
+    "df7a8070-933f-41f0-afd2-58d4539abded" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Bake beans",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fdf7a8070-933f-41f0-afd2-58d4539abded%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=ee7e2654-e803-4571-a7a6-4a8bf9b7bc3f",
+          "section" : "sauces_pasta"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fdf7a8070-933f-41f0-afd2-58d4539abded%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=4c47450a-dc1a-446a-86db-47ddb633484f",
+          "section" : "cans_rice"
+        }
+      }
+    },
+    "e0010850-8548-4b1d-b16e-a5b91ae3daa9" : {
+      "houseSection" : "fridge",
+      "name" : "Beer 0% 🍻",
+      "stores" : {
+        "dunnes" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/allproducts%2Fe0010850-8548-4b1d-b16e-a5b91ae3daa9%2Fstores%2Fdunnes%2Fe8238239-5317-424b-8ec0-a4900d5eab2e.jpg?alt=media&token=19406719-11cd-438c-84a9-f4785f44a067"
+        }
+      }
+    },
+    "e137f834-0eb5-47fe-8666-7085fe6e1995" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Wheat bran",
+      "stores" : {
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fe137f834-0eb5-47fe-8666-7085fe6e1995%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=2eea4762-09ee-45ab-ab0c-9953510178d4"
+        }
+      }
+    },
+    "e25d1c75-d0c4-48dd-a2dc-01741a86496d" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Passata",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fe25d1c75-d0c4-48dd-a2dc-01741a86496d%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=ecb1375b-919b-4a84-9128-1a4549fd9c90",
+          "section" : "sauces_pasta"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fe25d1c75-d0c4-48dd-a2dc-01741a86496d%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=f3c9bff5-6e29-4e37-a3f3-c6b4dde7a53a",
+          "section" : "pasta_sauces"
+        }
+      }
+    },
+    "e2a58fb2-6677-49e0-9002-62a3e2063f71" : {
+      "houseSection" : "kitchen_vitamins_tea",
+      "name" : "Fennel tea",
+      "stores" : {
+        "avoca" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fe2a58fb2-6677-49e0-9002-62a3e2063f71%2Fstores%2Favoca%2Fphoto.jpg?alt=media&token=71427dbf-b04b-47a5-b0a1-0cab91fef31f"
+        }
+      }
+    },
+    "e2e9efac-0338-4e81-9115-90d802139725" : {
+      "houseSection" : "fridge",
+      "name" : "Coconut vegan yogurt"
+    },
+    "e3d417c7-f2df-44db-93b3-5328042a5397" : {
+      "houseSection" : "bathroom_migue",
+      "name" : "lens case",
+      "stores" : {
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fe3d417c7-f2df-44db-93b3-5328042a5397%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=1edecf37-04a6-4ade-bab8-c24f94090213"
+        }
+      }
+    },
+    "e4371a69-0d71-4964-a385-71c5a7812b93" : {
+      "houseSection" : "hardware",
+      "name" : "Kinder bueno chocolate ",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fe4371a69-0d71-4964-a385-71c5a7812b93%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=dfe791b5-e68a-4cff-8e2b-e6e352c36855"
+        }
+      }
+    },
+    "e66b817d-dbee-4e6d-bc0f-f6ba79e83854" : {
+      "houseSection" : "kitchen_fruits",
+      "name" : "pineapple 🍍",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fe66b817d-dbee-4e6d-bc0f-f6ba79e83854%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=86019ce5-59c2-4052-8392-659f73132708",
+          "section" : "fruits_veggies"
+        }
+      }
+    },
+    "e8eff37d-869f-43c4-847f-0b5ad18fa78e" : {
+      "houseSection" : "fridge_vegetables",
+      "name" : "Celery",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fe8eff37d-869f-43c4-847f-0b5ad18fa78e%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=be08fd9f-5af8-4c81-a31e-d5503508123e"
+        },
+        "lidl" : {
+          "section" : "veggies"
+        }
+      }
+    },
+    "e9f0f5b8-323c-421e-a0b8-531b98b05e1d" : {
+      "houseSection" : "fridge_vegetables",
+      "name" : "Peppers",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fe9f0f5b8-323c-421e-a0b8-531b98b05e1d%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=ad46d65d-2607-4014-b2ae-fa9b1dce2226",
+          "section" : "ground_veggies"
+        },
+        "lidl" : {
+          "section" : "veggies"
+        }
+      }
+    },
+    "eae0fb89-b5b2-415f-9339-3d5bd1794210" : {
+      "houseSection" : "fridge",
+      "name" : "Raspberries fresh",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Feae0fb89-b5b2-415f-9339-3d5bd1794210%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=11345ae7-24fb-47e1-a339-b43f79de0b64",
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Feae0fb89-b5b2-415f-9339-3d5bd1794210%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=28f1c0b4-a8b3-4cd7-8c8d-84cf06fbdd41",
+          "section" : "fruits"
+        }
+      }
+    },
+    "ebb6f06a-d574-4f48-a03b-17a75a62a537" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Jasmine Rice 🍚",
+      "stores" : {
+        "aldi" : {
+          "section" : "sauces_pasta"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Febb6f06a-d574-4f48-a03b-17a75a62a537%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=bcb8ec2b-57c4-4d0c-93ba-03b42c1954ab",
+          "section" : "cans_rice"
+        }
+      }
+    },
+    "edc0c566-4be7-48a4-88de-828661158cdd" : {
+      "houseSection" : "freezer_veggies",
+      "name" : "Frozen Peas",
+      "stores" : {
+        "lidl" : {
+          "section" : "frozen_veggies"
+        }
+      }
+    },
+    "efa995c7-cab5-4cd4-ab8c-efe05f489e40" : {
+      "houseSection" : "fridge_dairy",
+      "name" : "Cheesy Singles Light 🧀",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fefa995c7-cab5-4cd4-ab8c-efe05f489e40%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=e5abe185-da58-4880-8927-4b909511979d",
+          "section" : "cheese"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fefa995c7-cab5-4cd4-ab8c-efe05f489e40%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=2e35e858-ef6d-4fc6-b8f4-8c243bc5ead9",
+          "section" : "cheese_yogurts"
+        }
+      }
+    },
+    "f0e17463-014b-476b-86b5-d41029a7cae8" : {
+      "houseSection" : "kitchen_meal_ingredients",
+      "name" : "Croutons",
+      "stores" : {
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Ff0e17463-014b-476b-86b5-d41029a7cae8%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=e42f6ebb-8e66-4eeb-bfbc-01580e363aa0",
+          "section" : "pasta_sauces"
+        }
+      }
+    },
+    "f0f59183-dccf-4f8e-9e8c-7f426949a76b" : {
+      "houseSection" : "bathroom",
+      "name" : "Hand wash",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Ff0f59183-dccf-4f8e-9e8c-7f426949a76b%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=62271a8f-2567-406e-8090-464f052b7d6a",
+          "section" : "hygiene"
+        },
+        "lidl" : {
+          "section" : "higyene"
+        }
+      }
+    },
+    "f14cad0a-7e90-420f-bb14-f39926b6c552" : {
+      "houseSection" : "bathroom_shower",
+      "name" : "Hair conditioner",
+      "stores" : {
+        "aldi" : {
+          "section" : "hygiene"
+        }
+      }
+    },
+    "f232afee-3092-4030-b5a1-b71e50075cc0" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Eggs",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Ff232afee-3092-4030-b5a1-b71e50075cc0%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=a527fc82-e9b4-4c9a-8a9b-92e946346f81"
+        },
+        "lidl" : {
+          "section" : "eggs_pastries"
+        }
+      }
+    },
+    "f31906dd-98cf-4eb7-9ac0-317e0f467e13" : {
+      "houseSection" : "baby",
+      "name" : "Cotton",
+      "stores" : {
+        "lidl" : {
+          "section" : "higyene"
+        },
+        "other" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Ff31906dd-98cf-4eb7-9ac0-317e0f467e13%2Fstores%2Fother%2Fphoto.jpg?alt=media&token=58161e35-694c-4724-aaa2-9d36fa59b142"
+        }
+      }
+    },
+    "f335bda2-8108-45ad-a496-680d02392859" : {
+      "houseSection" : "fridge_dairy",
+      "name" : "Milk Full Fat 🐄",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Ff335bda2-8108-45ad-a496-680d02392859%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=f2991cef-d5e9-4773-918f-f7e97acaa6bd",
+          "section" : "milk_juice"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Ff335bda2-8108-45ad-a496-680d02392859%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=3a98fac4-471a-4c7d-8028-30844148a040",
+          "section" : "milk_juices"
+        }
+      }
+    },
+    "f38b82a8-11a7-4e2c-837c-378d11a74328" : {
+      "houseSection" : "utility_room",
+      "name" : "Vinegar",
+      "stores" : {
+        "lidl" : {
+          "section" : "pasta_sauces"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Ff38b82a8-11a7-4e2c-837c-378d11a74328%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=c50629fb-353e-42a3-9330-1aad35fbf91d"
+        }
+      }
+    },
+    "f5d17f72-11db-4ba4-a739-ebabd11f9389" : {
+      "houseSection" : "fridge",
+      "name" : "Tortillas",
+      "stores" : {
+        "aldi" : {
+          "section" : "bread"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Ff5d17f72-11db-4ba4-a739-ebabd11f9389%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=073fc450-1f6b-431f-874c-14bbcf51f380",
+          "section" : "breaD"
+        }
+      }
+    },
+    "f6e8f92c-a3ea-4007-95af-1b078727139e" : {
+      "houseSection" : "kitchen_fruits",
+      "name" : "Apples 🍎",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Ff6e8f92c-a3ea-4007-95af-1b078727139e%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=91db59f3-847f-4ee8-af28-de8389290052",
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "section" : "fruits"
+        }
+      }
+    },
+    "f836e8a5-b473-4682-b636-26a6564695f8" : {
+      "houseSection" : "kitchen_vitamins_tea",
+      "name" : "Adult probiotics ",
+      "stores" : {
+        "boots" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Ff836e8a5-b473-4682-b636-26a6564695f8%2Fstores%2Fboots%2Fphoto.jpg?alt=media&token=06e1605a-d408-4077-bcc9-49654037f2e6"
+        }
+      }
+    },
+    "f83deb96-049c-42c6-b507-cae074cff2c4" : {
+      "houseSection" : "kitchen_cleaning",
+      "name" : "Dishwasher tablet",
+      "stores" : {
+        "aldi" : {
+          "section" : "cleaning_products"
+        },
+        "lidl" : {
+          "section" : "cleaning_products"
+        },
+        "tesco" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Ff83deb96-049c-42c6-b507-cae074cff2c4%2Fstores%2Ftesco%2Fphoto.jpg?alt=media&token=69ba1647-e27d-499f-98c6-6f4102b9ea24"
+        }
+      }
+    },
+    "fa034e10-d3ee-40fd-81af-c2b7c31d704c" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Nuts Pine",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Ffa034e10-d3ee-40fd-81af-c2b7c31d704c%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=f35b2f38-1dff-42ea-ad05-bcab878c5e77",
+          "section" : "nuts"
+        },
+        "lidl" : {
+          "section" : "nuts_seeds"
+        }
+      }
+    },
+    "fc71dc94-346e-4420-b2fa-269664d934a3" : {
+      "houseSection" : "fridge",
+      "name" : "Fresh Blueberries ",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Ffc71dc94-346e-4420-b2fa-269664d934a3%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=2fbeed7d-ec45-49bd-9060-55d5f6a5a165",
+          "section" : "fruits_veggies"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Ffc71dc94-346e-4420-b2fa-269664d934a3%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=b3d0ad34-06e9-4434-8828-3532907dc38d",
+          "section" : "fruits"
+        }
+      }
+    },
+    "ff135338-7316-4611-ae9c-ba9f5bafb32f" : {
+      "houseSection" : "kitchen_breakfast",
+      "name" : "Crackers multigrain",
+      "stores" : {
+        "aldi" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fff135338-7316-4611-ae9c-ba9f5bafb32f%2Fstores%2Faldi%2Fphoto.jpg?alt=media&token=0574c9d2-88cc-4f62-993a-1d41054c7ecd",
+          "section" : "crackers_snacks"
+        },
+        "lidl" : {
+          "photoURL" : "https://firebasestorage.googleapis.com/v0/b/shopping-ire.appspot.com/o/v1%2Fallproducts%2Fff135338-7316-4611-ae9c-ba9f5bafb32f%2Fstores%2Flidl%2Fphoto.jpg?alt=media&token=67d5342e-185e-4bf7-a5bc-2bc56603eb93",
+          "section" : "crackers"
+        }
+      }
+    }
+  },
+  "house" : {
+    "sections" : {
+      "baby" : {
+        "index" : 2100,
+        "name" : "Baby",
+        "photoURL" : "http"
+      },
+      "bathroom" : {
+        "index" : 1500,
+        "name" : "Bathroom",
+        "photoURL" : "http"
+      },
+      "bathroom_boys" : {
+        "index" : 2000,
+        "name" : "Bathroom - Boys",
+        "photoURL" : "http"
+      },
+      "bathroom_migue" : {
+        "index" : 1900,
+        "name" : "Bathroom - Migue",
+        "photoURL" : "http"
+      },
+      "bathroom_shower" : {
+        "index" : 1600,
+        "name" : "Bathroom - Shower",
+        "photoURL" : "http"
+      },
+      "bathroom_sonia" : {
+        "index" : 1800,
+        "name" : "Bathroom - Sonia",
+        "photoURL" : "http"
+      },
+      "bathroom_toilet" : {
+        "index" : 1700,
+        "name" : "Bathroom - Toilet",
+        "photoURL" : "http"
+      },
+      "freezer" : {
+        "index" : 400,
+        "name" : "Freezer",
+        "photoURL" : "http"
+      },
+      "freezer_fruits" : {
+        "index" : 500,
+        "name" : "Freezer - Fruits",
+        "photoURL" : "http"
+      },
+      "freezer_meat" : {
+        "index" : 700,
+        "name" : "Freezer - Meat",
+        "photoURL" : "http"
+      },
+      "freezer_veggies" : {
+        "index" : 600,
+        "name" : "Freezer - Veggies",
+        "photoURL" : "http"
+      },
+      "fridge" : {
+        "index" : 100,
+        "name" : "Fridge",
+        "photoURL" : "http"
+      },
+      "fridge_dairy" : {
+        "index" : 200,
+        "name" : "Fridge - Dairy",
+        "photoURL" : "http"
+      },
+      "fridge_ham" : {
+        "index" : 250,
+        "name" : "Fridge - Ham & Meat",
+        "photoURL" : "http"
+      },
+      "fridge_vegetables" : {
+        "index" : 300,
+        "name" : "Fridge - Veggies",
+        "photoURL" : "http"
+      },
+      "hardware" : {
+        "index" : 2200,
+        "name" : "Hardware & Pets",
+        "photoURL" : "http"
+      },
+      "kitchen" : {
+        "index" : 750,
+        "name" : "Kitchen",
+        "photoURL" : "http"
+      },
+      "kitchen_breakfast" : {
+        "index" : 1000,
+        "name" : "Kitchen - Breakfast",
+        "photoURL" : "http"
+      },
+      "kitchen_cleaning" : {
+        "index" : 1300,
+        "name" : "Kitchen - Cleaning",
+        "photoURL" : "http"
+      },
+      "kitchen_condiments" : {
+        "index" : 1100,
+        "name" : "Kitchen - Condiments",
+        "photoURL" : "http"
+      },
+      "kitchen_fruits" : {
+        "index" : 950,
+        "name" : "Kitchen - Fruits",
+        "photoURL" : "http"
+      },
+      "kitchen_ground_food" : {
+        "index" : 900,
+        "name" : "Kitchen - Ground Food",
+        "photoURL" : "http"
+      },
+      "kitchen_meal_ingredients" : {
+        "index" : 800,
+        "name" : "Kitchen - Meal Ingredients",
+        "photoURL" : "http"
+      },
+      "kitchen_vitamins_tea" : {
+        "index" : 1200,
+        "name" : "Kitchen - Vitamins & Tea",
+        "photoURL" : "http"
+      },
+      "utility_room" : {
+        "index" : 1400,
+        "name" : "Utility Room",
+        "photoURL" : "http"
+      }
+    }
+  },
+  "lists" : {
+    "current" : {
+      "products" : {
+        "e2a58fb2-6677-49e0-9002-62a3e2063f71" : {
+          "planning" : {
+            "addedTimeStamp" : 1604422196,
+            "neededQty" : 1
+          }
+        }
+      }
+    }
+  },
+  "stores" : {
+    "aldi" : {
+      "index" : 20,
+      "name" : "Aldi",
+      "photoURL" : "https://www.freefromheaven.com/wp-content/uploads/2020/08/Portrait-logo.jpg",
+      "sections" : {
+        "bread" : {
+          "index" : 40,
+          "name" : "Bread"
+        },
+        "breakfast_cereal" : {
+          "index" : 20,
+          "name" : "Breakfast Cereal"
+        },
+        "cheese" : {
+          "index" : 120,
+          "name" : "Cheese"
+        },
+        "cleaning_products" : {
+          "index" : 190,
+          "name" : "Cleaning Products"
+        },
+        "conserves" : {
+          "index" : 10,
+          "name" : "Conserves & Honey"
+        },
+        "crackers_snacks" : {
+          "index" : 110,
+          "name" : "Crackers & Snacks"
+        },
+        "frozen_foods_cans" : {
+          "index" : 170,
+          "name" : "Frozen Food & Cans"
+        },
+        "frozen_fruits" : {
+          "index" : 150,
+          "name" : "Frozen Fruits"
+        },
+        "frozen_veggies_condiments" : {
+          "index" : 160,
+          "name" : "Frozen Veggies & Condiments"
+        },
+        "fruits_veggies" : {
+          "index" : 50,
+          "name" : "Fruits & Veggies"
+        },
+        "ground_veggies" : {
+          "index" : 80,
+          "name" : "Ground Veggies"
+        },
+        "ham_sausages" : {
+          "index" : 100,
+          "name" : "Embutidos"
+        },
+        "hygiene" : {
+          "index" : 180,
+          "name" : "Hygiene"
+        },
+        "meat" : {
+          "index" : 70,
+          "name" : "Meat"
+        },
+        "milk_juice" : {
+          "index" : 140,
+          "name" : "Milk & Juices"
+        },
+        "nuts" : {
+          "index" : 30,
+          "name" : "Nuts"
+        },
+        "salads_and_meals" : {
+          "index" : 60,
+          "name" : "Salads & Meals"
+        },
+        "sauces_pasta" : {
+          "index" : 90,
+          "name" : "Pasta Rice & Sauces"
+        },
+        "toilet_paper" : {
+          "index" : 200,
+          "name" : "Toilet Kitchen Paper"
+        },
+        "yogurts" : {
+          "index" : 130,
+          "name" : "Yogurts"
+        }
+      }
+    },
+    "avoca" : {
+      "index" : 60,
+      "name" : "Avoca",
+      "photoURL" : "https://zenprospect-production.s3.amazonaws.com/uploads/pictures/5d79a55ba3ae61ec1dd1132c/picture"
+    },
+    "boots" : {
+      "index" : 50,
+      "name" : "Boots",
+      "photoURL" : "https://mm.aiircdn.com/157/771181.png"
+    },
+    "dunnes" : {
+      "index" : 40,
+      "name" : "Dunnes",
+      "photoURL" : "https://thesquare.ie/wp-content/uploads/2014/09/Logo_DunnesStores.png"
+    },
+    "ikea" : {
+      "index" : 70,
+      "name" : "IKEA",
+      "photoURL" : "https://logos-world.net/wp-content/uploads/2020/09/IKEA-Logo-700x394.png"
+    },
+    "lidl" : {
+      "index" : 10,
+      "name" : "Lidl",
+      "photoURL" : "https://www.irishtimes.com/polopoly_fs/1.2926751.1483636039!/image/image.jpg_gen/derivatives/ratio_1x1_w1200/image.jpg",
+      "sections" : {
+        "beef_fish" : {
+          "index" : 70,
+          "name" : "Beef & Fish"
+        },
+        "breaD" : {
+          "index" : 30,
+          "name" : "Bread"
+        },
+        "cans_rice" : {
+          "index" : 150,
+          "name" : "Rice & Food Cans"
+        },
+        "cereals" : {
+          "index" : 110,
+          "name" : "Cereals"
+        },
+        "cheese_yogurts" : {
+          "index" : 60,
+          "name" : "Cheese & Yogurts"
+        },
+        "chicken_turkey" : {
+          "index" : 90,
+          "name" : "Chicken & Turkey"
+        },
+        "cleaning_products" : {
+          "index" : 220,
+          "name" : "Cleaning Products"
+        },
+        "conserves_tea" : {
+          "index" : 140,
+          "name" : "Conserves & Tea"
+        },
+        "crackers" : {
+          "index" : 170,
+          "name" : "Crackers & Snacks"
+        },
+        "eggs_pastries" : {
+          "index" : 100,
+          "name" : "Eggs & Pastries"
+        },
+        "frozen_fruits" : {
+          "index" : 200,
+          "name" : "Frozen Fruits"
+        },
+        "frozen_veggies" : {
+          "index" : 190,
+          "name" : "Frozen Veggies"
+        },
+        "fruits" : {
+          "index" : 10,
+          "name" : "Fruits"
+        },
+        "ground_veggies" : {
+          "index" : 130,
+          "name" : "Ground Vegetables"
+        },
+        "ham_embutidos" : {
+          "index" : 40,
+          "name" : "Ham & Embutidos"
+        },
+        "higyene" : {
+          "index" : 210,
+          "name" : "Hygiene"
+        },
+        "milk_juices" : {
+          "index" : 80,
+          "name" : "Milk Dairy & Juices"
+        },
+        "nuts_seeds" : {
+          "index" : 50,
+          "name" : "Nuts & Seeds"
+        },
+        "pasta_sauces" : {
+          "index" : 160,
+          "name" : "Pasta & Sauces"
+        },
+        "pizza_frozen_potatoes" : {
+          "index" : 180,
+          "name" : "Pizza & Frozen Potatoes"
+        },
+        "salads_readymeals" : {
+          "index" : 20,
+          "name" : "Salads & Ready Meals"
+        },
+        "toiletpaper_water" : {
+          "index" : 210,
+          "name" : "Toilet - Kitchen Paper & Water"
+        },
+        "veggies" : {
+          "index" : 120,
+          "name" : "Vegetables"
+        }
+      }
+    },
+    "other" : {
+      "index" : 500,
+      "name" : "Other",
+      "photoURL" : "https://forcebrands.com/uploads/company/logo_image_url/c43781f3-3e31-4b08-8555-2d51625554c3/large_walmart_logo.jpg"
+    },
+    "tesco" : {
+      "index" : 30,
+      "name" : "Tesco",
+      "photoURL" : "https://pbs.twimg.com/profile_images/643648185882152960/UGSEW4mc.jpg"
+    }
+  }
+}
